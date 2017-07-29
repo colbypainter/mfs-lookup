@@ -1,0 +1,32 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  height: 150px;
+  padding: 20px;
+
+}
+
+.container {
+  max-width: 85%;
+}
+
+#zip_input {
+  width: 120px;
+}
+
+#zip_submit {
+  width: 120px;
+}
+
+.zip-alert {
+  max-width: 250px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.mfs-key {
+  text-align: left;
+}
+

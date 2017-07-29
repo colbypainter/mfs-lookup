@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Grid, Row, Col, Navbar, Jumbotron, ListGroup, ListGroupItem, 
         Button, Form, FormControl, FormGroup, ControlLabel, HelpBlock, 
-        Alert } from 'react-bootstrap';
+        Alert, Table } from 'react-bootstrap';
 
 class App extends Component {
   render() {
@@ -16,8 +16,15 @@ class App extends Component {
           <div>
             <ZipLookup />
           </div>
-      
-          <div className="mfs-key">
+          <hr />
+          <div>
+            <MfsLookup />
+          </div>
+          <hr />
+          <div>
+            <Results />
+          </div>
+          <div>
             <MfsKey />
           </div>
         </div>
@@ -46,7 +53,7 @@ class Header extends Component {
 class ZipLookup extends Component {
   render() {
     return (
-      <div>
+      <div className="ZipLookup">
         <h2>Not sure what region to choose?</h2>
           <Form inline>
             <FormGroup>
@@ -67,11 +74,124 @@ class ZipLookup extends Component {
   }
 }
 
+// Should this extend the Bootstrap Form component?
+class MfsLookup extends Component {
+  render() {
+    return (
+      <div>
+        <Form>
+          <Col md={3}>
+            <FormGroup>
+              <ControlLabel>Region</ControlLabel>
+                <FormControl componentClass="select">
+                  <option value="">Choose Your Region</option>
+                  <option value="Region 1">Region 1</option>
+                  <option value="Region 2">Region 2</option>
+                  <option value="Region 3">Region 3</option>
+                  <option value="Region 4">Region 4</option>
+                  <option value="Region 5">Region 5</option>
+                  <option value="Region 6">Region 6</option>
+                </FormControl>
+            </FormGroup>
+          </Col>
+          
+          <Col md={7}>
+            <FormGroup>
+              <ControlLabel>Provider Category</ControlLabel>
+                <FormControl componentClass="select">
+                  <option value="">Select One</option>
+                  <option value="IpAcuteTypeOne">Acute Inpatient Hospital Stay - Type One Teaching Hospital</option>
+                  <option value="IpAcuteTypeTwo">Acute Inpatient Hospital Stay - Other Hospital</option>
+                  <option value="IpRehab">Rehabilitation Admissions</option>
+                  <option value=""></option>
+                  <option value=""></option>
+                  <option value=""></option>
+                </FormControl>
+            </FormGroup>
+          </Col>
+          
+          <Col md={2}>
+            <FormGroup>
+              <ControlLabel>Service Code</ControlLabel>
+              <FormControl type="text" id="service_code" />
+            </FormGroup>
+          </Col>
+          
+          <Col md={3}>
+            <FormGroup>
+              <ControlLabel>Modifier</ControlLabel>
+                <FormControl componentClass="select">
+                  <option value=""> -- </option>
+                  <option value="">PH</option>
+                  <option value="">PH</option>
+                  <option value="">PH</option>
+                  <option value="">PH</option>
+                  <option value="">PH</option>
+                  <option value="">PH</option>
+                </FormControl>
+            </FormGroup>
+          </Col>
+          
+          <Col md={2}>
+            <FormGroup>
+              <ControlLabel>Units</ControlLabel>
+              <FormControl type="text" id="" />
+            </FormGroup>
+          </Col>
+
+          <Col md={7}>
+            <FormGroup>
+              <ControlLabel></ControlLabel>
+              <FormControl type="text" id="" />
+            </FormGroup>
+          </Col>
+
+          <Button type="submit">Search</Button>
+          {"  "}
+          <Button>Add Another</Button>
+          
+        </Form>
+      </div>
+    );
+  }
+}
+
+class Results extends Component {
+  render() {
+    return (
+      <div>
+        <h3>Search Results</h3>
+        <Table bordered striped>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Region</th>
+              <th>Type</th>
+              <th>Modifier</th>
+              <th>Maximum Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>90210</td>
+              <td>4</td>
+              <td>Inpatient Hospital Stay - Type One Teaching Hospital</td>
+              <td>None</td>
+              <td>$444,000</td>
+            </tr>
+          </tbody>
+        </Table>
+      </div>
+    );
+  }
+}
+
+// Accept array of terms from results table and query MfsTerms.json
 class MfsKey extends Component {
   render() {
     return (
-        <div>
-          <h2>Key</h2>
+        <div className="mfs-key">
+          <h3>Key</h3>
           <ListGroup>
             <ListGroupItem header="Thing 1">This is the first one to show.</ListGroupItem>
             <ListGroupItem header="Thing 2">This is the second item to show.</ListGroupItem>

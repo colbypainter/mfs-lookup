@@ -75,7 +75,6 @@ class ZipLookup extends Component {
   }
 }
 
-// Should this extend the Bootstrap Form component?
 class LookupForm extends Component {
   
   static propTypes = {
@@ -108,11 +107,6 @@ class LookupForm extends Component {
                 <FormControl componentClass="select">
                   <option value="">Choose Your Region</option>
                   <option value="Region 1">Region 1</option>
-                  <option value="Region 2">Region 2</option>
-                  <option value="Region 3">Region 3</option>
-                  <option value="Region 4">Region 4</option>
-                  <option value="Region 5">Region 5</option>
-                  <option value="Region 6">Region 6</option>
                 </FormControl>
             </FormGroup>
           </Col>
@@ -125,9 +119,6 @@ class LookupForm extends Component {
                   <option value="IpAcuteTypeOne">Acute Inpatient Hospital Stay - Type One Teaching Hospital</option>
                   <option value="IpAcuteTypeTwo">Acute Inpatient Hospital Stay - Other Hospital</option>
                   <option value="IpRehab">Rehabilitation Admissions</option>
-                  <option value=""></option>
-                  <option value=""></option>
-                  <option value=""></option>
                 </FormControl>
             </FormGroup>
           </Col>
@@ -144,11 +135,6 @@ class LookupForm extends Component {
               <ControlLabel>Modifier</ControlLabel>
                 <FormControl componentClass="select">
                   <option value=""> -- </option>
-                  <option value="">PH</option>
-                  <option value="">PH</option>
-                  <option value="">PH</option>
-                  <option value="">PH</option>
-                  <option value="">PH</option>
                   <option value="">PH</option>
                 </FormControl>
             </FormGroup>

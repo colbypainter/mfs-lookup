@@ -5,6 +5,7 @@ Scenarios to account for:
 3. Inpatient Hospital (Rehab) - CMG Codes
 4. Inpatient Hospital (Rehab) - Type One Teaching Hospital - DRG Codes 
 // NOTE: WHAT IS ICD 9 & 10?
+////Use Revenue Codes
 5. Inpatient Hospital (Rehab) - Other Hospital - DRG Codes
 6. Outpatient Hospital (% of Charges) - Type One Teaching Hospital - Revenue Codes
 7. Outpatient Hospital (% of Charges) - Other Hospital - Revenue Codes 
@@ -13,6 +14,7 @@ Scenarios to account for:
 10. Outpatient Hospital (% of Charges) - Type One Teaching Hospital - HCPCS Codes
 11. Outpatient Hospital (% of Charges) - Other Hospital - HCPCS Codes
 // NOTE: ALL HCPCS CODES STARTING WITH J????? I NEED THOSE ENUMERATED
+/////Drema 08/01 - "Just use JCODE as the input for lookup."
 12. Outpatient Hospital (Per Service) - Type One Teaching Hospital - CPT  Codes 
 13. Outpatient Hospital (Per Service) - Other Hospital - CPT Codes 
 14. Outpatient Hospital (Per Service) - Type One Teaching Hospital - HCPCS  Codes 

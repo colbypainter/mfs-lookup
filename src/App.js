@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 import { Grid, Row, Col, Navbar, Jumbotron, ListGroup, ListGroupItem, 
@@ -18,7 +19,7 @@ class App extends Component {
           </div>
           <hr />
           <div>
-            <MfsLookup />
+            <LookupForm />
           </div>
           <hr />
           <div>
@@ -75,7 +76,28 @@ class ZipLookup extends Component {
 }
 
 // Should this extend the Bootstrap Form component?
-class MfsLookup extends Component {
+class LookupForm extends Component {
+  
+  static propTypes = {
+    region: PropTypes.string.required,
+    providerCategory: PropTypes.string.required,
+    serviceCode: PropTypes.string.required,
+    serviceDate: PropTypes.string,
+    modifier: PropTypes.string,
+    units: PropTypes.string,
+    maxPayment: PropTypes.string
+  };
+  
+  state = {
+    region: null,
+    providerCategory: null,
+    serviceCode: null,
+    serviceDate: null,
+    modifier: null,
+    units: null,
+    maxPayment: null
+  };
+  
   render() {
     return (
       <div>

@@ -130,8 +130,15 @@ class LookupForm extends Component {
           
           <Col md={2}>
             <FormGroup>
-              <ControlLabel>Service Code</ControlLabel>
-              <FormControl type="text" id="service_code" />
+              <ControlLabel>Code Type</ControlLabel>
+              <CodeTypeInput />
+            </FormGroup>
+          </Col>
+          
+          <Col md={2}>
+            <FormGroup>
+              <ControlLabel>Code</ControlLabel>
+              <FormControl type="text" id="" />
             </FormGroup>
           </Col>
           
@@ -142,13 +149,6 @@ class LookupForm extends Component {
                   <option value=""> -- </option>
                   <option value="">PH</option>
                 </FormControl>
-            </FormGroup>
-          </Col>
-          
-          <Col md={2}>
-            <FormGroup>
-              <ControlLabel>Units</ControlLabel>
-              <FormControl type="text" id="" />
             </FormGroup>
           </Col>
 
@@ -207,10 +207,32 @@ class SecondaryTypeSelect extends Component {
   }
 }
 
+class CodeTypeInput extends Component {
+  render() {
+    var codeTypes = [];
+    // Refactor using .map when possible?
+    for(var i=0; i<scheduleConfig.schedules[0].secondaryType[0].Acute.codeType.length; i++) {
+      let obj = scheduleConfig.schedules[0].secondaryType[0].Acute.codeType[i];
+      let objArr = Object.keys(obj);
+      for (var key in objArr) {
+        codeTypes.push(<option value={objArr[key]}>{objArr[key]}</option>);
+      }
+     }
+    
+    return(
+      <FormControl componentClass="select">
+        <option value="">Select One</option>
+        {codeTypes}
+      </FormControl>
+    );
+  }
+}
+
 class Results extends Component {
   render() {
     return (
       <div>
+      <hr />
         <h3>Search Results</h3>
         <Table bordered striped>
           <thead>

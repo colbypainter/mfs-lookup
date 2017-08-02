@@ -7,15 +7,15 @@
             "type": "Inpatient Hospital Stays",
             "secondaryType": [{
                 "Acute": {
-                    "codeType": {
+                    "codeType": [{
                         "DRG": { 
                             "providerType": ["Type One Hospital", "Other Hospital"]
                         }
-                    }
+                    }]
                 },
                 
                 "Rehab": {
-                    "codeType": {
+                    "codeType": [{
                         "CMG": {
                             "providerType": "null"
                         },
@@ -25,7 +25,7 @@
                         "REVENUE": {
                             "providerType": ["Type One Hospital", "Other Hospital"]
                         }
-                    }
+                    }]
                 }
             }]
         },
@@ -35,7 +35,7 @@
             "type": "Outpatient Hospital Stays",
             "secondaryType": [{
                 "none": {
-                    "codeType": {
+                    "codeType": [{
                         "REVENUE": {
                             "providerType": ["Type One Hospital", "Other Hospital"]
                         },
@@ -45,7 +45,7 @@
                         "HCPCS": {
                             "providerType": ["Type One Hospital", "Other Hospital"]
                         }
-                    }
+                    }]
                 } 
             }]
         }

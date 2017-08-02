@@ -6,6 +6,8 @@ import { Grid, Row, Col, Navbar, Jumbotron, ListGroup, ListGroupItem,
         Button, Form, FormControl, FormGroup, ControlLabel, HelpBlock, 
         Alert, Table } from 'react-bootstrap';
         
+var _ = require('underscore');
+        
 var scheduleConfig = require('./scheduleConfig.json');
 console.log(scheduleConfig.schedules[0].type);
 
@@ -83,11 +85,9 @@ class LookupForm extends Component {
   state = {
     region: null,
     providerCategory: null,
-    serviceCode: null,
-    serviceDate: null,
-    modifier: null,
-    units: null,
-    maxPayment: null
+    secondaryType: null,
+    codeType: null,
+    serviceCode: null
   };
   
   render() {
@@ -100,6 +100,12 @@ class LookupForm extends Component {
                 <FormControl componentClass="select">
                   <option value="">Choose Your Region</option>
                   <option value="Region 1">Region 1</option>
+                  <option value="Region 2">Region 2</option>
+                  <option value="Region 3">Region 3</option>
+                  <option value="Region 4">Region 4</option>
+                  <option value="Region 5">Region 5</option>
+                  <option value="Region 6">Region 6</option>
+                  <option value="Region 7">Region 7</option>
                 </FormControl>
             </FormGroup>
           </Col>
@@ -118,7 +124,7 @@ class LookupForm extends Component {
             </FormGroup>
           </Col>
           
-          <Col md={2}>
+          <Col md={3}>
             <FormGroup>
               <ControlLabel>Code Type</ControlLabel>
               <CodeTypeInput />
@@ -132,22 +138,14 @@ class LookupForm extends Component {
             </FormGroup>
           </Col>
           
-          <Col md={3}>
-            <FormGroup>
-              <ControlLabel>Modifier</ControlLabel>
-                <FormControl componentClass="select">
-                  <option value=""> -- </option>
-                  <option value="">PH</option>
-                </FormControl>
-            </FormGroup>
-          </Col>
-
           <Col md={7}>
             <FormGroup>
-              <ControlLabel></ControlLabel>
+              <ControlLabel>Provider Type</ControlLabel>
               <FormControl type="text" id="" />
             </FormGroup>
           </Col>
+
+
 
           <Button type="submit">Search</Button>
           {"  "}
@@ -164,7 +162,7 @@ class ProviderTypeSelect extends Component {
     var provOptions = [];
     // Refactor using .map when possible
     for(var i=0; i<scheduleConfig.schedules.length; i++) {
-      provOptions.push(<option key={scheduleConfig.schedules[i].id} value={scheduleConfig.schedules[i].type}>{scheduleConfig.schedules[i].type}</option>);
+      provOptions.push(<option key={scheduleConfig.schedules[i].id} value={scheduleConfig.schedules[i].id}>{scheduleConfig.schedules[i].type}</option>);
      }
      
     return(

@@ -6,7 +6,7 @@
             "id": "1",
             "type": "Inpatient Hospital Stays",
             "secondaryType": [{
-                "acute": {
+                "Acute": {
                     "codeType": {
                         "DRG": { 
                             "providerType": ["Type One Hospital", "Other Hospital"]
@@ -14,7 +14,7 @@
                     }
                 },
                 
-                "rehab": {
+                "Rehab": {
                     "codeType": {
                         "CMG": {
                             "providerType": "null"

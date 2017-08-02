@@ -114,14 +114,14 @@ class LookupForm extends Component {
             </FormGroup>
           </Col>
           
-          <Col md={7}>
+          <Col md={6}>
             <FormGroup>
               <ControlLabel>Provider Category</ControlLabel>
               <ProviderTypeSelect />
             </FormGroup>
           </Col>
           
-          <Col md={2}>
+          <Col md={3}>
             <FormGroup>
               <ControlLabel>Secondary Type</ControlLabel>
               <SecondaryTypeSelect />
@@ -175,7 +175,7 @@ class ProviderTypeSelect extends Component {
     // Refactor using .map when possible
     for(var i=0; i<scheduleConfig.schedules.length; i++) {
       provOptions.push(<option key={scheduleConfig.schedules[i].id} value={scheduleConfig.schedules[i].type}>{scheduleConfig.schedules[i].type}</option>);
-     };
+     }
      
     return(
       <FormControl componentClass="select">
@@ -189,16 +189,19 @@ class ProviderTypeSelect extends Component {
 class SecondaryTypeSelect extends Component {
   render() {
     var secondaryOptions = [];
-    // Refactor using .map when possible
-    for(var i=0; i<scheduleConfig.schedules.length; i++) {
-      secondaryOptions.push(<option value={scheduleConfig.schedules[i].secondaryType[0].key()}>{scheduleConfig.schedules[i].secondaryType[0].key()}</option>);
-      console.log(secondaryOptions);
+    // Refactor using .map when possible?
+    for(var i=0; i<scheduleConfig.schedules[0].secondaryType.length; i++) {
+      let obj = scheduleConfig.schedules[0].secondaryType[i];
+      let objArr = Object.keys(obj);
+      for (var key in objArr) {
+        secondaryOptions.push(<option value={objArr[key]}>{objArr[key]}</option>);
+      }
      }
-     
+    
     return(
       <FormControl componentClass="select">
         <option value="">Select One</option>
-
+        {secondaryOptions}
       </FormControl>
     );
   }

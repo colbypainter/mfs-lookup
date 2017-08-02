@@ -80,16 +80,6 @@ class ZipLookup extends Component {
 
 class LookupForm extends Component {
   
-  static propTypes = {
-    region: PropTypes.string.required,
-    providerCategory: PropTypes.string.required,
-    serviceCode: PropTypes.string.required,
-    serviceDate: PropTypes.string,
-    modifier: PropTypes.string,
-    units: PropTypes.string,
-    maxPayment: PropTypes.string
-  };
-  
   state = {
     region: null,
     providerCategory: null,

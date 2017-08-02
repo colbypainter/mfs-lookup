@@ -5,6 +5,9 @@ import './App.css';
 import { Grid, Row, Col, Navbar, Jumbotron, ListGroup, ListGroupItem, 
         Button, Form, FormControl, FormGroup, ControlLabel, HelpBlock, 
         Alert, Table } from 'react-bootstrap';
+        
+var scheduleConfig = require('./scheduleConfig.json');
+console.log(scheduleConfig.schedules[0].type);
 
 class App extends Component {
   render() {
@@ -114,12 +117,14 @@ class LookupForm extends Component {
           <Col md={7}>
             <FormGroup>
               <ControlLabel>Provider Category</ControlLabel>
-                <FormControl componentClass="select">
-                  <option value="">Select One</option>
-                  <option value="IpAcuteTypeOne">Acute Inpatient Hospital Stay - Type One Teaching Hospital</option>
-                  <option value="IpAcuteTypeTwo">Acute Inpatient Hospital Stay - Other Hospital</option>
-                  <option value="IpRehab">Rehabilitation Admissions</option>
-                </FormControl>
+              <ProviderTypeSelect />
+            </FormGroup>
+          </Col>
+          
+          <Col md={2}>
+            <FormGroup>
+              <ControlLabel>Secondary Type</ControlLabel>
+              <SecondaryTypeSelect />
             </FormGroup>
           </Col>
           
@@ -160,6 +165,41 @@ class LookupForm extends Component {
           
         </Form>
       </div>
+    );
+  }
+}
+
+class ProviderTypeSelect extends Component {
+  render() {
+    var provOptions = [];
+    // Refactor using .map when possible
+    for(var i=0; i<scheduleConfig.schedules.length; i++) {
+      provOptions.push(<option key={scheduleConfig.schedules[i].id} value={scheduleConfig.schedules[i].type}>{scheduleConfig.schedules[i].type}</option>);
+     };
+     
+    return(
+      <FormControl componentClass="select">
+        <option value="">Select One</option>
+        {provOptions}
+      </FormControl>
+    );
+  }
+}
+
+class SecondaryTypeSelect extends Component {
+  render() {
+    var secondaryOptions = [];
+    // Refactor using .map when possible
+    for(var i=0; i<scheduleConfig.schedules.length; i++) {
+      secondaryOptions.push(<option value={scheduleConfig.schedules[i].secondaryType[0].key()}>{scheduleConfig.schedules[i].secondaryType[0].key()}</option>);
+      console.log(secondaryOptions);
+     }
+     
+    return(
+      <FormControl componentClass="select">
+        <option value="">Select One</option>
+
+      </FormControl>
     );
   }
 }

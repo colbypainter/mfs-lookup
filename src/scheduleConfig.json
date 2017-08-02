@@ -1,52 +1,53 @@
-[
-    "schedules": 
-    {
-        "id": 1,
-        "schedule": "Inpatient Hospital Stays",
-        "secondaryType": {
-            "acute": {
-                "codeType": {
-                    "DRG": { 
-                        "providerType": ["Type One Hospital", "Other Hospital"]
+{  
+    "name": "Medical Fee Schedule Configuration",
+    "description": "This file populates front-end options for each schedule.",
+    "schedules": [
+        {
+            "id": "1",
+            "type": "Inpatient Hospital Stays",
+            "secondaryType": [{
+                "acute": {
+                    "codeType": {
+                        "DRG": { 
+                            "providerType": ["Type One Hospital", "Other Hospital"]
+                        }
+                    }
+                },
+                
+                "rehab": {
+                    "codeType": {
+                        "CMG": {
+                            "providerType": "null"
+                        },
+                        "DRG": {
+                            "providerType": ["Type One Hospital", "Other Hospital"]
+                        },
+                        "REVENUE": {
+                            "providerType": ["Type One Hospital", "Other Hospital"]
+                        }
                     }
                 }
-            },
-            
-            "rehab": {
-                "codeType": {
-                    "CMG": {
-                        "providerType": null,
-                    },
-                    "DRG": {
-                        "providerType": ["Type One Hospital", "Other Hospital"]
-                    },
-                    "REVENUE": {
-                        "providerType": ["Type One Hospital", "Other Hospital"]
+            }]
+        },
+        
+        {
+            "id": "2",
+            "type": "Outpatient Hospital Stays",
+            "secondaryType": [{
+                "none": {
+                    "codeType": {
+                        "REVENUE": {
+                            "providerType": ["Type One Hospital", "Other Hospital"]
+                        },
+                        "CPT": { 
+                            "providerType": ["Type One Hospital", "Other Hospital"]
+                        },
+                        "HCPCS": {
+                            "providerType": ["Type One Hospital", "Other Hospital"]
+                        }
                     }
-                }
-            }
+                } 
+            }]
         }
-    },
-    
-    {
-        "id": 2,
-        "schedule": "Outpatient Hospital Stays",
-        "secondaryType": {
-            "none": {
-                "codeType": {
-                    "REVENUE": {
-                        "providerType": ["Type One Hospital", "Other Hospital"]
-                    },
-                    "CPT": { 
-                        "providerType": ["Type One Hospital", "Other Hospital"]
-                    },
-                    "HCPCS": {
-                        // TODO - ACCOMODATE THE JCODES
-                        "providerType": ["Type One Hospital", "Other Hospital"]
-                    }
-                }
-            } 
-        }
-    }
-    
-]
+    ]
+}

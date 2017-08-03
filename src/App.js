@@ -5,8 +5,8 @@ import './App.css';
 import { Grid, Row, Col, Navbar, Jumbotron, ListGroup, ListGroupItem, 
         Button, Form, FormControl, FormGroup, ControlLabel, HelpBlock, 
         Alert, Table } from 'react-bootstrap';
-        
-var _ = require('underscore');
+
+var _ = require('lodash');
         
 var scheduleConfig = require('./scheduleConfig.json');
 console.log(scheduleConfig.schedules[0].type);
@@ -176,14 +176,19 @@ class ProviderTypeSelect extends Component {
 
 class SecondaryTypeSelect extends Component {
   render() {
+    // Get the schedule object with the ID that matches the provider type choice
+    var id = 2;
+    var obj = _.find(scheduleConfig.schedules, { 'id': id});
+    // Hide the field if it only has one option, which would be null.
+    // if (obj.secondaryType.length === 1) {
+      // return null;
+    // }
     var secondaryOptions = [];
-    // Refactor using .map when possible?
-    for(var i=0; i<scheduleConfig.schedules[0].secondaryType.length; i++) {
-      let obj = scheduleConfig.schedules[0].secondaryType[i];
-      let objArr = Object.keys(obj);
-      for (var key in objArr) {
-        secondaryOptions.push(<option value={objArr[key]}>{objArr[key]}</option>);
-      }
+    for(var i=0; i<obj.secondaryType.length; i++) {
+      // Iterate through and add to array. Note that for this component desired results are both a key AND value
+      _.forEach(obj.secondaryType[i], function(key, opt) {
+        secondaryOptions.push(<option value={opt}>{opt}</option>);
+      });
      }
     
     return(

@@ -207,9 +207,6 @@ class SecondaryTypeSelect extends Component {
     // Get the schedule object with the ID that matches the provider type choice
     var id = this.props.providerCategory;
     var obj = _.find(scheduleConfig.schedules, { 'id': id});
-    console.log("Provider Category ID is: " + id);
-    console.log("Provider Region is: " + this.props.region);
-    console.log(obj);
     // Hide the field if it only has one option, which would be null.
     // if (obj.secondaryType.length === 1) {
       // return null;

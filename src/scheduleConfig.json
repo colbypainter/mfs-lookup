@@ -9,7 +9,7 @@
                 "Acute": {
                     "codeType": [{
                         "DRG": { 
-                            "providerType": ["Type One Hospital", "Other Hospital"]
+                            "facilityType": ["Type One Hospital", "Other Hospital"]
                         }
                     }]
                 }
@@ -18,13 +18,13 @@
                 "Rehab": {
                     "codeType": [{
                         "CMG": {
-                            "providerType": "null"
+                            "facilityType": "null"
                         },
                         "DRG": {
-                            "providerType": ["Type One Hospital", "Other Hospital"]
+                            "facilityType": ["Type One Hospital", "Other Hospital"]
                         },
                         "REVENUE": {
-                            "providerType": ["Type One Hospital", "Other Hospital"]
+                            "facilityType": ["Type One Hospital", "Other Hospital"]
                         }
                     }]
                 }
@@ -38,13 +38,13 @@
                 "null": {
                     "codeType": [{
                         "REVENUE": {
-                            "providerType": ["Type One Hospital", "Other Hospital"]
+                            "facilityType": ["Type One Hospital", "Other Hospital"]
                         },
                         "CPT": { 
-                            "providerType": ["Type One Hospital", "Other Hospital"]
+                            "facilityType": ["Type One Hospital", "Other Hospital"]
                         },
                         "HCPCS": {
-                            "providerType": ["Type One Hospital", "Other Hospital"]
+                            "facilityType": ["Type One Hospital", "Other Hospital"]
                         }
                     }]
                 } 

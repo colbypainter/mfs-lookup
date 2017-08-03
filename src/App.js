@@ -82,13 +82,32 @@ class ZipLookup extends Component {
 
 class LookupForm extends Component {
   
-  state = {
-    region: null,
-    providerCategory: null,
-    secondaryType: null,
-    codeType: null,
-    serviceCode: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      region: "NONE",
+      providerCategory: "1",
+      secondaryType: null,
+      codeType: null,
+      serviceCode: null
+    };
+    this.changeRegion = this.changeRegion.bind(this);
+    this.changeProviderCategory = this.changeProviderCategory.bind(this);
+  }
+  
+  changeRegion(event) { // Correct
+    var newRegion = event.target.value;
+    this.setState((state, props) => ({
+      region: newRegion
+    }));
+  }
+  
+  changeProviderCategory(event) {
+    var newProvCat = event.target.value;
+    this.setState((state, props) => ({
+      providerCategory: newProvCat
+    }));
+  }
   
   render() {
     return (
@@ -97,7 +116,7 @@ class LookupForm extends Component {
           <Col md={3}>
             <FormGroup>
               <ControlLabel>Region</ControlLabel>
-                <FormControl componentClass="select">
+                <FormControl componentClass="select" onChange={this.changeRegion}>
                   <option value="">Choose Your Region</option>
                   <option value="Region 1">Region 1</option>
                   <option value="Region 2">Region 2</option>
@@ -113,16 +132,15 @@ class LookupForm extends Component {
           <Col md={6}>
             <FormGroup>
               <ControlLabel>Provider Category</ControlLabel>
-              <ProviderTypeSelect />
+              <ProviderTypeSelect region={this.state.region} 
+                                  providerCategory={this.state.providerCategory}
+                                  secondaryType={this.state.secondaryType}
+                                  codeType={this.state.codeType}
+                                  serviceCode={this.state.serviceCode}
+                                  changeProviderCategory={this.changeProviderCategory}/>
             </FormGroup>
           </Col>
           
-          <Col md={3}>
-            <FormGroup>
-              <ControlLabel>Secondary Type</ControlLabel>
-              <SecondaryTypeSelect />
-            </FormGroup>
-          </Col>
           
           <Col md={3}>
             <FormGroup>
@@ -158,6 +176,7 @@ class LookupForm extends Component {
 }
 
 class ProviderTypeSelect extends Component {
+  
   render() {
     var provOptions = [];
     // Refactor using .map when possible
@@ -166,19 +185,31 @@ class ProviderTypeSelect extends Component {
      }
      
     return(
-      <FormControl componentClass="select">
-        <option value="">Select One</option>
-        {provOptions}
-      </FormControl>
+      <FormGroup>
+        <FormControl componentClass="select" onChange={this.props.changeProviderCategory}>
+          <option value="">Select One</option>
+          {provOptions}
+        </FormControl>
+        
+        <SecondaryTypeSelect region={this.props.region} 
+                    providerCategory={this.props.providerCategory}
+                    secondaryType={this.props.secondaryType}
+                    codeType={this.props.codeType}
+                    serviceCode={this.props.serviceCode}/>
+      </FormGroup>
     );
   }
 }
 
 class SecondaryTypeSelect extends Component {
+  
   render() {
     // Get the schedule object with the ID that matches the provider type choice
-    var id = 2;
+    var id = this.props.providerCategory;
     var obj = _.find(scheduleConfig.schedules, { 'id': id});
+    console.log("Provider Category ID is: " + id);
+    console.log("Provider Region is: " + this.props.region);
+    console.log(obj);
     // Hide the field if it only has one option, which would be null.
     // if (obj.secondaryType.length === 1) {
       // return null;
@@ -192,10 +223,13 @@ class SecondaryTypeSelect extends Component {
      }
     
     return(
-      <FormControl componentClass="select">
-        <option value="">Select One</option>
-        {secondaryOptions}
-      </FormControl>
+      <span>
+        <ControlLabel>Secondary Type</ControlLabel>
+        <FormControl componentClass="select">
+          <option value="">Select One</option>
+          {secondaryOptions}
+        </FormControl>
+      </span>
     );
   }
 }

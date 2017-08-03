@@ -12,6 +12,34 @@ var scheduleConfig = require('./scheduleConfig.json');
 console.log(scheduleConfig.schedules[0].type);
 
 class App extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      region: "NONE",
+      providerCategory: "1",
+      secondaryType: null,
+      codeType: null,
+      serviceCode: null
+    };
+    this.changeRegion = this.changeRegion.bind(this);
+    this.changeProviderCategory = this.changeProviderCategory.bind(this);
+  }
+  
+  changeRegion(event) { // Correct
+    var newRegion = event.target.value;
+    this.setState((state, props) => ({
+      region: newRegion
+    }));
+  }
+  
+  changeProviderCategory(event) {
+    var newProvCat = event.target.value;
+    this.setState((state, props) => ({
+      providerCategory: newProvCat
+    }));
+  }
+  
   render() {
     return (
       <div className="App">
@@ -24,7 +52,13 @@ class App extends Component {
           </div>
           <hr />
           <div>
-            <LookupForm />
+            <LookupForm region={this.state.region} 
+                        providerCategory={this.state.providerCategory}
+                        secondaryType={this.state.secondaryType}
+                        codeType={this.state.codeType}
+                        serviceCode={this.state.serviceCode}
+                        changeProviderCategory={this.changeProviderCategory}
+                        changeRegion={this.changeRegion}/>
           </div>
           <hr />
           <div>
@@ -82,33 +116,6 @@ class ZipLookup extends Component {
 
 class LookupForm extends Component {
   
-  constructor(props) {
-    super(props);
-    this.state = {
-      region: "NONE",
-      providerCategory: "1",
-      secondaryType: null,
-      codeType: null,
-      serviceCode: null
-    };
-    this.changeRegion = this.changeRegion.bind(this);
-    this.changeProviderCategory = this.changeProviderCategory.bind(this);
-  }
-  
-  changeRegion(event) { // Correct
-    var newRegion = event.target.value;
-    this.setState((state, props) => ({
-      region: newRegion
-    }));
-  }
-  
-  changeProviderCategory(event) {
-    var newProvCat = event.target.value;
-    this.setState((state, props) => ({
-      providerCategory: newProvCat
-    }));
-  }
-  
   render() {
     return (
       <div>
@@ -116,31 +123,32 @@ class LookupForm extends Component {
           <Col md={3}>
             <FormGroup>
               <ControlLabel>Region</ControlLabel>
-                <FormControl componentClass="select" onChange={this.changeRegion}>
-                  <option value="">Choose Your Region</option>
-                  <option value="Region 1">Region 1</option>
-                  <option value="Region 2">Region 2</option>
-                  <option value="Region 3">Region 3</option>
-                  <option value="Region 4">Region 4</option>
-                  <option value="Region 5">Region 5</option>
-                  <option value="Region 6">Region 6</option>
-                  <option value="Region 7">Region 7</option>
-                </FormControl>
+              <RegionSelect changeRegion={this.props.changeRegion}/>
             </FormGroup>
           </Col>
           
           <Col md={6}>
             <FormGroup>
               <ControlLabel>Provider Category</ControlLabel>
-              <ProviderTypeSelect region={this.state.region} 
-                                  providerCategory={this.state.providerCategory}
-                                  secondaryType={this.state.secondaryType}
-                                  codeType={this.state.codeType}
-                                  serviceCode={this.state.serviceCode}
-                                  changeProviderCategory={this.changeProviderCategory}/>
+              <ProviderTypeSelect region={this.props.region} 
+                                  providerCategory={this.props.providerCategory}
+                                  secondaryType={this.props.secondaryType}
+                                  codeType={this.props.codeType}
+                                  serviceCode={this.props.serviceCode}
+                                  changeProviderCategory={this.props.changeProviderCategory}/>
             </FormGroup>
           </Col>
           
+          <Col md={6}>
+            <FormGroup>
+            <ControlLabel>Secondary Provider Type</ControlLabel>
+            <SecondaryTypeSelect region={this.props.region} 
+              providerCategory={this.props.providerCategory}
+              secondaryType={this.props.secondaryType}
+              codeType={this.props.codeType}
+              serviceCode={this.props.serviceCode}/>
+            </FormGroup>
+          </Col>
           
           <Col md={3}>
             <FormGroup>
@@ -175,9 +183,26 @@ class LookupForm extends Component {
   }
 }
 
-class ProviderTypeSelect extends Component {
-  
+class RegionSelect extends Component {
   render() {
+    return(
+      <FormControl componentClass="select" onChange={this.props.changeRegion}>
+        <option value="">Choose Your Region</option>
+        <option value="Region 1">Region 1</option>
+        <option value="Region 2">Region 2</option>
+        <option value="Region 3">Region 3</option>
+        <option value="Region 4">Region 4</option>
+        <option value="Region 5">Region 5</option>
+        <option value="Region 6">Region 6</option>
+        <option value="Region 7">Region 7</option>
+      </FormControl>
+    );
+  }
+}
+
+class ProviderTypeSelect extends Component {
+  render() {
+    console.log(this.props.region);
     var provOptions = [];
     // Refactor using .map when possible
     for(var i=0; i<scheduleConfig.schedules.length; i++) {
@@ -185,18 +210,11 @@ class ProviderTypeSelect extends Component {
      }
      
     return(
-      <FormGroup>
         <FormControl componentClass="select" onChange={this.props.changeProviderCategory}>
           <option value="">Select One</option>
           {provOptions}
         </FormControl>
         
-        <SecondaryTypeSelect region={this.props.region} 
-                    providerCategory={this.props.providerCategory}
-                    secondaryType={this.props.secondaryType}
-                    codeType={this.props.codeType}
-                    serviceCode={this.props.serviceCode}/>
-      </FormGroup>
     );
   }
 }
@@ -220,13 +238,10 @@ class SecondaryTypeSelect extends Component {
      }
     
     return(
-      <span>
-        <ControlLabel>Secondary Type</ControlLabel>
         <FormControl componentClass="select">
           <option value="">Select One</option>
           {secondaryOptions}
         </FormControl>
-      </span>
     );
   }
 }

@@ -35,7 +35,7 @@
             "id": "2",
             "type": "Outpatient Hospital Stays",
             "secondaryType": [{
-                "null": {
+                "N/A": {
                     "codeType": [{
                         "REVENUE": {
                             "facilityType": ["Type One Hospital", "Other Hospital"]

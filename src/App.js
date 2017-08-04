@@ -16,14 +16,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      region: "NONE",
+      region: "Region 1",
       providerCategory: "1",
-      secondaryType: null,
-      codeType: null,
+      secondaryType: "Acute",
+      codeType: "DRG",
       serviceCode: null
     };
     this.changeRegion = this.changeRegion.bind(this);
     this.changeProviderCategory = this.changeProviderCategory.bind(this);
+    this.changeSecondaryType = this.changeSecondaryType.bind(this);
+    this.changeCodeType = this.changeCodeType.bind(this);
   }
   
   changeRegion(event) { // Correct
@@ -37,6 +39,20 @@ class App extends Component {
     var newProvCat = event.target.value;
     this.setState((state, props) => ({
       providerCategory: newProvCat
+    }));
+  }
+  
+  changeSecondaryType(event) {
+    var newSecType = event.target.value;
+    this.setState((state, props) => ({
+      secondaryType: newSecType
+    }));
+  }
+  
+  changeCodeType(event) {
+    var newCodeType = event.target.value;
+    this.setState((state, props) => ({
+      codeType: newCodeType
     }));
   }
   
@@ -58,7 +74,9 @@ class App extends Component {
                         codeType={this.state.codeType}
                         serviceCode={this.state.serviceCode}
                         changeProviderCategory={this.changeProviderCategory}
-                        changeRegion={this.changeRegion}/>
+                        changeRegion={this.changeRegion}
+                        changeCodeType={this.changeCodeType} 
+                        changeSecondaryType={this.changeSecondaryType}/>
           </div>
           <hr />
           <div>
@@ -143,17 +161,23 @@ class LookupForm extends Component {
             <FormGroup>
             <ControlLabel>Secondary Provider Type</ControlLabel>
             <SecondaryTypeSelect region={this.props.region} 
-              providerCategory={this.props.providerCategory}
-              secondaryType={this.props.secondaryType}
-              codeType={this.props.codeType}
-              serviceCode={this.props.serviceCode}/>
+                                 providerCategory={this.props.providerCategory}
+                                 secondaryType={this.props.secondaryType}
+                                 codeType={this.props.codeType}
+                                 serviceCode={this.props.serviceCode} 
+                                 changeSecondaryType={this.props.changeSecondaryType}/>
             </FormGroup>
           </Col>
           
           <Col md={3}>
             <FormGroup>
               <ControlLabel>Code Type</ControlLabel>
-              <CodeTypeInput />
+              <CodeTypeInput region={this.props.region} 
+                  providerCategory={this.props.providerCategory}
+                  secondaryType={this.props.secondaryType}
+                  codeType={this.props.codeType}
+                  serviceCode={this.props.serviceCode}
+                  changeCodeType={this.props.changeCodeType} />
             </FormGroup>
           </Col>
           
@@ -187,7 +211,6 @@ class RegionSelect extends Component {
   render() {
     return(
       <FormControl componentClass="select" onChange={this.props.changeRegion}>
-        <option value="">Choose Your Region</option>
         <option value="Region 1">Region 1</option>
         <option value="Region 2">Region 2</option>
         <option value="Region 3">Region 3</option>
@@ -211,7 +234,6 @@ class ProviderTypeSelect extends Component {
      
     return(
         <FormControl componentClass="select" onChange={this.props.changeProviderCategory}>
-          <option value="">Select One</option>
           {provOptions}
         </FormControl>
         
@@ -238,8 +260,7 @@ class SecondaryTypeSelect extends Component {
      }
     
     return(
-        <FormControl componentClass="select">
-          <option value="">Select One</option>
+        <FormControl componentClass="select" onChange={this.props.changeSecondaryType}>
           {secondaryOptions}
         </FormControl>
     );
@@ -249,17 +270,22 @@ class SecondaryTypeSelect extends Component {
 class CodeTypeInput extends Component {
   render() {
     var codeTypes = [];
-    // Refactor using .map when possible?
-    for(var i=0; i<scheduleConfig.schedules[0].secondaryType[0].Acute.codeType.length; i++) {
-      let obj = scheduleConfig.schedules[0].secondaryType[0].Acute.codeType[i];
-      let objArr = Object.keys(obj);
-      for (var key in objArr) {
-        codeTypes.push(<option value={objArr[key]}>{objArr[key]}</option>);
-      }
-     }
+    var id = this.props.providerCategory;
+    var secType = this.props.secondaryType;
+    
+    /// Get the ID of ProviderType/Schedule we start with
+    var obj = _.find(scheduleConfig.schedules, {'id': id});
+    //// Get the secondary type object based on the chosen type
+    obj = _.find(obj.secondaryType, secType);
+    //// Get the codeType object 
+    obj = _.keys(obj[secType].codeType[0]);
+  
+    for (var key in obj) {
+      codeTypes.push(<option value={obj[key]}>{obj[key]}</option>);
+    }
     
     return(
-      <FormControl componentClass="select">
+      <FormControl componentClass="select" onChange={this.props.changeCodeType}>
         <option value="">Select One</option>
         {codeTypes}
       </FormControl>

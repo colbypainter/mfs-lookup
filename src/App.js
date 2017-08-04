@@ -145,9 +145,9 @@ class LookupForm extends Component {
             </FormGroup>
           </Col>
           
-          <Col md={6}>
+          <Col md={9}>
             <FormGroup>
-              <ControlLabel>Provider Category</ControlLabel>
+              <ControlLabel>Fee Schedule - Service Type</ControlLabel>
               <ProviderTypeSelect region={this.props.region} 
                                   providerCategory={this.props.providerCategory}
                                   secondaryType={this.props.secondaryType}
@@ -159,7 +159,7 @@ class LookupForm extends Component {
           
           <Col md={6}>
             <FormGroup>
-            <ControlLabel>Secondary Provider Type</ControlLabel>
+            <ControlLabel>Secondary Service Type</ControlLabel>
             <SecondaryTypeSelect region={this.props.region} 
                                  providerCategory={this.props.providerCategory}
                                  secondaryType={this.props.secondaryType}
@@ -181,27 +181,29 @@ class LookupForm extends Component {
             </FormGroup>
           </Col>
           
-          <Col md={2}>
+          <Col md={3}>
             <FormGroup>
               <ControlLabel>Code</ControlLabel>
               <FormControl type="text" id="" />
             </FormGroup>
           </Col>
           
-          <Col md={7}>
+          <Col md={12}>
             <FormGroup>
               <ControlLabel>Provider Type</ControlLabel>
               <FormControl type="text" id="" />
             </FormGroup>
           </Col>
-
-
-
-          <Button type="submit">Search</Button>
-          {"  "}
-          <Button>Add Another</Button>
+          
+          <Col md={5}>
+            <Button type="submit">Search</Button>
+            {"  "}
+            <Button>Add Another</Button>
+          </Col>
+          
           
         </Form>
+       
       </div>
     );
   }

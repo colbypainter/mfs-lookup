@@ -17,13 +17,13 @@ class App extends Component {
     super(props);
     this.state = {
       region: "Region 1",
-      providerCategory: "1",
+      serviceType: "1",
       secondaryType: "Acute",
       codeType: "DRG",
       serviceCode: null
     };
     this.changeRegion = this.changeRegion.bind(this);
-    this.changeProviderCategory = this.changeProviderCategory.bind(this);
+    this.changeServiceType = this.changeServiceType.bind(this);
     this.changeSecondaryType = this.changeSecondaryType.bind(this);
     this.changeCodeType = this.changeCodeType.bind(this);
   }
@@ -35,10 +35,10 @@ class App extends Component {
     }));
   }
   
-  changeProviderCategory(event) {
-    var newProvCat = event.target.value;
+  changeServiceType(event) {
+    var newServType = event.target.value;
     this.setState((state, props) => ({
-      providerCategory: newProvCat
+      serviceType: newServType
     }));
   }
   
@@ -69,11 +69,11 @@ class App extends Component {
           <hr />
           <div>
             <LookupForm region={this.state.region} 
-                        providerCategory={this.state.providerCategory}
+                        serviceType={this.state.serviceType}
                         secondaryType={this.state.secondaryType}
                         codeType={this.state.codeType}
                         serviceCode={this.state.serviceCode}
-                        changeProviderCategory={this.changeProviderCategory}
+                        changeServiceType={this.changeServiceType}
                         changeRegion={this.changeRegion}
                         changeCodeType={this.changeCodeType} 
                         changeSecondaryType={this.changeSecondaryType}/>
@@ -148,12 +148,12 @@ class LookupForm extends Component {
           <Col md={9}>
             <FormGroup>
               <ControlLabel>Fee Schedule - Service Type</ControlLabel>
-              <ProviderTypeSelect region={this.props.region} 
-                                  providerCategory={this.props.providerCategory}
+              <ServiceTypeSelect region={this.props.region} 
+                                  serviceType={this.props.serviceType}
                                   secondaryType={this.props.secondaryType}
                                   codeType={this.props.codeType}
                                   serviceCode={this.props.serviceCode}
-                                  changeProviderCategory={this.props.changeProviderCategory}/>
+                                  changeServiceType={this.props.changeServiceType}/>
             </FormGroup>
           </Col>
           
@@ -161,7 +161,7 @@ class LookupForm extends Component {
             <FormGroup>
             <ControlLabel>Secondary Service Type</ControlLabel>
             <SecondaryTypeSelect region={this.props.region} 
-                                 providerCategory={this.props.providerCategory}
+                                 serviceType={this.props.serviceType}
                                  secondaryType={this.props.secondaryType}
                                  codeType={this.props.codeType}
                                  serviceCode={this.props.serviceCode} 
@@ -173,7 +173,7 @@ class LookupForm extends Component {
             <FormGroup>
               <ControlLabel>Code Type</ControlLabel>
               <CodeTypeInput region={this.props.region} 
-                  providerCategory={this.props.providerCategory}
+                  serviceType={this.props.serviceType}
                   secondaryType={this.props.secondaryType}
                   codeType={this.props.codeType}
                   serviceCode={this.props.serviceCode}
@@ -225,18 +225,19 @@ class RegionSelect extends Component {
   }
 }
 
-class ProviderTypeSelect extends Component {
+class ServiceTypeSelect extends Component {
   render() {
     console.log(this.props.region);
-    var provOptions = [];
+    var servOptions = [];
     // Refactor using .map when possible
     for(var i=0; i<scheduleConfig.schedules.length; i++) {
-      provOptions.push(<option key={scheduleConfig.schedules[i].id} value={scheduleConfig.schedules[i].id}>{scheduleConfig.schedules[i].type}</option>);
+      servOptions.push(<option key={scheduleConfig.schedules[i].id} value={scheduleConfig.schedules[i].id}>{scheduleConfig.schedules[i].type}</option>);
      }
      
     return(
-        <FormControl componentClass="select" onChange={this.props.changeProviderCategory}>
-          {provOptions}
+        <FormControl componentClass="select" onChange={this.props.changeServiceType}>
+          <option value="">Select One</option>
+          {servOptions}
         </FormControl>
         
     );
@@ -246,8 +247,8 @@ class ProviderTypeSelect extends Component {
 class SecondaryTypeSelect extends Component {
   
   render() {
-    // Get the schedule object with the ID that matches the provider type choice
-    var id = this.props.providerCategory;
+    // Get the schedule object with the ID that matches the service type choice
+    var id = this.props.serviceType;
     var obj = _.find(scheduleConfig.schedules, { 'id': id});
     // Hide the field if it only has one option, which would be null.
     // if (obj.secondaryType.length === 1) {
@@ -263,6 +264,7 @@ class SecondaryTypeSelect extends Component {
     
     return(
         <FormControl componentClass="select" onChange={this.props.changeSecondaryType}>
+          <option value="">Select One</option>
           {secondaryOptions}
         </FormControl>
     );
@@ -272,15 +274,19 @@ class SecondaryTypeSelect extends Component {
 class CodeTypeInput extends Component {
   render() {
     var codeTypes = [];
-    var id = this.props.providerCategory;
+    var id = this.props.serviceType;
     var secType = this.props.secondaryType;
     
-    /// Get the ID of ProviderType/Schedule we start with
+    /// Get the ID of ServiceType/Schedule we start with
     var obj = _.find(scheduleConfig.schedules, {'id': id});
+    console.log(obj);
+    console.log(secType);
     //// Get the secondary type object based on the chosen type
     obj = _.find(obj.secondaryType, secType);
+    console.log(obj);
     //// Get the codeType object 
     obj = _.keys(obj[secType].codeType[0]);
+    console.log(obj);
   
     for (var key in obj) {
       codeTypes.push(<option value={obj[key]}>{obj[key]}</option>);

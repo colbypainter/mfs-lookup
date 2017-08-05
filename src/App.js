@@ -20,12 +20,14 @@ class App extends Component {
       serviceType: "1",
       secondaryType: "Acute",
       codeType: "DRG",
+      providerType: null,
       serviceCode: null
     };
     this.changeRegion = this.changeRegion.bind(this);
     this.changeServiceType = this.changeServiceType.bind(this);
     this.changeSecondaryType = this.changeSecondaryType.bind(this);
     this.changeCodeType = this.changeCodeType.bind(this);
+    this.changeProviderType = this.changeProviderType.bind(this);
   }
   
   changeRegion(event) { // Correct
@@ -56,6 +58,13 @@ class App extends Component {
     }));
   }
   
+  changeProviderType(event) {
+    var newProvType = event.target.value;
+    this.setState((state, props) => ({
+      providerType: newProvType
+    }));
+  }
+  
   render() {
     return (
       <div className="App">
@@ -73,10 +82,12 @@ class App extends Component {
                         secondaryType={this.state.secondaryType}
                         codeType={this.state.codeType}
                         serviceCode={this.state.serviceCode}
+                        providerType={this.state.providerType}
                         changeServiceType={this.changeServiceType}
                         changeRegion={this.changeRegion}
                         changeCodeType={this.changeCodeType} 
-                        changeSecondaryType={this.changeSecondaryType}/>
+                        changeSecondaryType={this.changeSecondaryType} 
+                        changeProviderType={this.changeProviderType}/>
           </div>
           <hr />
           <div>
@@ -152,6 +163,7 @@ class LookupForm extends Component {
                                   serviceType={this.props.serviceType}
                                   secondaryType={this.props.secondaryType}
                                   codeType={this.props.codeType}
+                                  providerType={this.props.providerType}
                                   serviceCode={this.props.serviceCode}
                                   changeServiceType={this.props.changeServiceType}/>
             </FormGroup>
@@ -164,6 +176,7 @@ class LookupForm extends Component {
                                  serviceType={this.props.serviceType}
                                  secondaryType={this.props.secondaryType}
                                  codeType={this.props.codeType}
+                                 providerType={this.props.providerType}
                                  serviceCode={this.props.serviceCode} 
                                  changeSecondaryType={this.props.changeSecondaryType}/>
             </FormGroup>
@@ -176,6 +189,7 @@ class LookupForm extends Component {
                   serviceType={this.props.serviceType}
                   secondaryType={this.props.secondaryType}
                   codeType={this.props.codeType}
+                  providerType={this.props.providerType}
                   serviceCode={this.props.serviceCode}
                   changeCodeType={this.props.changeCodeType} />
             </FormGroup>
@@ -191,8 +205,15 @@ class LookupForm extends Component {
           <Col md={12}>
             <FormGroup>
               <ControlLabel>Provider Type</ControlLabel>
-              <FormControl type="text" id="" />
-            </FormGroup>
+              <ProviderTypeInput region={this.props.region} 
+                                  serviceType={this.props.serviceType}
+                                  secondaryType={this.props.secondaryType}
+                                  codeType={this.props.codeType}
+                                  providerType={this.props.providerType}
+                                  serviceCode={this.props.serviceCode}
+                                  changeCodeType={this.props.changeCodeType} 
+                                  changeProviderType={this.props.changeProviderType}/>
+              </FormGroup>
           </Col>
           
           <Col md={5}>
@@ -279,12 +300,11 @@ class CodeTypeInput extends Component {
     
     /// Get the ID of ServiceType/Schedule we start with
     var obj = _.find(scheduleConfig.schedules, {'id': id});
-    console.log(obj);
-    console.log(secType);
     //// Get the secondary type object based on the chosen type
     obj = _.find(obj.secondaryType, secType);
     console.log(obj);
-    //// Get the codeType object 
+
+    //// Get the codeType as a single key in an array 
     obj = _.keys(obj[secType].codeType[0]);
     console.log(obj);
   
@@ -298,6 +318,38 @@ class CodeTypeInput extends Component {
         {codeTypes}
       </FormControl>
     );
+  }
+}
+
+class ProviderTypeInput extends Component {
+  render() {
+    var provTypes = [];
+    var id = this.props.serviceType;
+    var secType = this.props.secondaryType;
+    var cdType = this.props.codeType;
+    
+    
+    ///////LEFT OFF TRYING TO GET TO THE FACILITY TYPE ARRAY
+    /// Get the ID of ServiceType/Schedule we start with
+    var obj = _.find(scheduleConfig.schedules, {'id': id});
+    //// Get the secondary type object based on the chosen type
+    obj = _.find(obj.secondaryType, secType);
+    console.log(obj);
+    
+    /// Get the array of facility types attached to the chain
+    obj = _.find(obj[secType].codeType[0][cdType]);
+    console.log(obj);
+    
+    for(var i=0; i < obj.length; i++) {
+      provTypes.push(<option value={obj[i]}>{obj[i]}</option>);
+    }
+    
+    return(
+      <FormControl componentClass="select" onChange={this.props.changeProviderType}>
+        <option value="">Select One</option>
+        {provTypes}
+      </FormControl>
+      );
   }
 }
 

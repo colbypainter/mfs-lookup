@@ -18,7 +18,7 @@
                 "Rehab": {
                     "codeType": [{
                         "CMG": {
-                            "facilityType": "null"
+                            "facilityType": []
                         },
                         "DRG": {
                             "facilityType": ["Type One Hospital", "Other Hospital"]

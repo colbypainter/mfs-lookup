@@ -5,6 +5,7 @@
         {
             "id": "1",
             "type": "Inpatient Hospital Stays",
+            "basePath": "hospitalInpatient",
             "secondaryType": [{
                 "Acute": {
                     "codeType": [{
@@ -34,6 +35,7 @@
         {
             "id": "2",
             "type": "Outpatient Hospital Stays",
+            "basePath": "hospitalOutpatient",
             "secondaryType": [{
                 "N/A": {
                     "codeType": [{

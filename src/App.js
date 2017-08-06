@@ -78,13 +78,19 @@ class App extends Component {
   }
   
   createSchedulePath() {
-    var stateArray = [this.state.serviceType, this.state.secondaryType, this.state.codeType, this.state.providerType, this.state.serviceCode];
-    var path = "";
+    // Get the base schedule ID
+    var schedule = scheduleConfig.schedules[this.state.serviceType];
+    // Start the path using the basePath of that schedule
+    var path = schedule.basePath;
+    var stateArray = [this.state.secondaryType, this.state.codeType, this.state.providerType];
     for (var i = 0; i < stateArray.length; i++) {
       if (stateArray[i] !== undefined) {
         path = path.concat(stateArray[i]);
       }
     }
+    // Strip out the spaces
+    path = path.replace(/ /g, '');
+    path = path.concat('.json');
     console.log(stateArray);
     console.log(path);
   }
@@ -250,8 +256,6 @@ class LookupForm extends Component {
           
           <Col md={5}>
             <Button type="submit">Search</Button>
-            {"  "}
-            <Button>Add Another</Button>
           </Col>
           
           
@@ -330,7 +334,7 @@ class CodeTypeInput extends Component {
     var id = this.props.serviceType;
     var secType = this.props.secondaryType;
     
-    /// Get the ID of ServiceType/Schedule we start with
+    /// Get the ServiceType/Schedule we start with
     var obj = _.find(scheduleConfig.schedules, {'id': id});
     //// Get the secondary type object based on the chosen type
     obj = _.find(obj.secondaryType, secType);

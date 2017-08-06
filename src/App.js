@@ -11,6 +11,12 @@ var _ = require('lodash');
 var scheduleConfig = require('./scheduleConfig.json');
 console.log(scheduleConfig.schedules[0].type);
 
+var schedule1 = require('./hospitalInpatientRehabCMGnull.json');
+
+const schedules = {
+  './hospitalInpatientRehabCMGnull.json': schedule1 
+};
+
 class App extends Component {
   
   constructor(props) {
@@ -31,6 +37,7 @@ class App extends Component {
     this.changeServiceCode = this.changeServiceCode.bind(this);
     this.createSchedulePath = this.createSchedulePath.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.querySchedule = this.querySchedule.bind(this);
   }
   
   changeRegion(event) { 
@@ -79,7 +86,10 @@ class App extends Component {
   
   createSchedulePath() {
     // Get the base schedule ID
-    var schedule = scheduleConfig.schedules[this.state.serviceType];
+    var id = this.state.serviceType;
+    var schedule = _.find(scheduleConfig.schedules, { 'id': id});
+    console.log(schedule);
+    
     // Start the path using the basePath of that schedule
     var path = schedule.basePath;
     var stateArray = [this.state.secondaryType, this.state.codeType, this.state.providerType];
@@ -91,8 +101,20 @@ class App extends Component {
     // Strip out the spaces
     path = path.replace(/ /g, '');
     path = path.concat('.json');
+    path = "./" + path;
     console.log(stateArray);
     console.log(path);
+    
+    this.querySchedule(path, this.state.serviceCode, this.state.region);
+    
+  }
+  
+  // Use the path created with createSchedulePath, the region, and the code to find results
+  querySchedule(pathname, cd, reg) {
+    console.log(pathname);
+    var table = schedules[pathname];
+    var maxValue = table[cd][reg];
+    console.log(maxValue);
   }
   
   handleSubmit(event) {
@@ -185,7 +207,7 @@ class LookupForm extends Component {
   render() {
     return (
       <div>
-        <Form onSubmit={this.props.handleSubmit}>
+        <Form>
           <Col md={3}>
             <FormGroup>
               <ControlLabel>Region</ControlLabel>
@@ -255,7 +277,7 @@ class LookupForm extends Component {
           </Col>
           
           <Col md={5}>
-            <Button type="submit">Search</Button>
+            <Button type="button" onClick={this.props.handleSubmit}>Search</Button>
           </Col>
           
           
@@ -336,6 +358,8 @@ class CodeTypeInput extends Component {
     
     /// Get the ServiceType/Schedule we start with
     var obj = _.find(scheduleConfig.schedules, {'id': id});
+    console.log(obj);
+    console.log(secType);
     //// Get the secondary type object based on the chosen type
     obj = _.find(obj.secondaryType, secType);
     console.log(obj);

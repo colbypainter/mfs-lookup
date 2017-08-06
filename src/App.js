@@ -21,16 +21,19 @@ class App extends Component {
       secondaryType: "Acute",
       codeType: "DRG",
       providerType: null,
-      serviceCode: null
+      serviceCode: "000"
     };
     this.changeRegion = this.changeRegion.bind(this);
     this.changeServiceType = this.changeServiceType.bind(this);
     this.changeSecondaryType = this.changeSecondaryType.bind(this);
     this.changeCodeType = this.changeCodeType.bind(this);
     this.changeProviderType = this.changeProviderType.bind(this);
+    this.changeServiceCode = this.changeServiceCode.bind(this);
+    this.createSchedulePath = this.createSchedulePath.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
-  changeRegion(event) { // Correct
+  changeRegion(event) { 
     var newRegion = event.target.value;
     this.setState((state, props) => ({
       region: newRegion
@@ -63,6 +66,32 @@ class App extends Component {
     this.setState((state, props) => ({
       providerType: newProvType
     }));
+
+  }
+  
+  changeServiceCode(event) {
+    var newServiceCode = event.target.value;
+    console.log(event.target.value);
+    this.setState((state, props) => ({
+      serviceCode: newServiceCode
+    }));
+  }
+  
+  createSchedulePath() {
+    var stateArray = [this.state.serviceType, this.state.secondaryType, this.state.codeType, this.state.providerType, this.state.serviceCode];
+    var path = "";
+    for (var i = 0; i < stateArray.length; i++) {
+      if (stateArray[i] !== undefined) {
+        path = path.concat(stateArray[i]);
+      }
+    }
+    console.log(stateArray);
+    console.log(path);
+  }
+  
+  handleSubmit(event) {
+    this.createSchedulePath();
+    event.preventDefault();
   }
   
   render() {
@@ -86,8 +115,10 @@ class App extends Component {
                         changeServiceType={this.changeServiceType}
                         changeRegion={this.changeRegion}
                         changeCodeType={this.changeCodeType} 
-                        changeSecondaryType={this.changeSecondaryType} 
-                        changeProviderType={this.changeProviderType}/>
+                        changeSecondaryType={this.changeSecondaryType}
+                        changeServiceCode={this.changeServiceCode}
+                        changeProviderType={this.changeProviderType} 
+                        handleSubmit={this.handleSubmit}/>
           </div>
           <hr />
           <div>
@@ -148,7 +179,7 @@ class LookupForm extends Component {
   render() {
     return (
       <div>
-        <Form>
+        <Form onSubmit={this.props.handleSubmit}>
           <Col md={3}>
             <FormGroup>
               <ControlLabel>Region</ControlLabel>
@@ -198,7 +229,8 @@ class LookupForm extends Component {
           <Col md={3}>
             <FormGroup>
               <ControlLabel>Code</ControlLabel>
-              <FormControl type="text" id="" />
+              <ServiceCodeInput changeServiceCode={this.props.changeServiceCode} 
+                                serviceCode={this.props.serviceCode} />
             </FormGroup>
           </Col>
           
@@ -321,6 +353,14 @@ class CodeTypeInput extends Component {
   }
 }
 
+class ServiceCodeInput extends Component {
+  render() {
+    return(
+      <FormControl type="text" onChange={this.props.changeServiceCode}/>
+      );
+  }
+}
+
 class ProviderTypeInput extends Component {
   render() {
     var provTypes = [];
@@ -328,8 +368,7 @@ class ProviderTypeInput extends Component {
     var secType = this.props.secondaryType;
     var cdType = this.props.codeType;
     
-    
-    ///////LEFT OFF TRYING TO GET TO THE FACILITY TYPE ARRAY
+
     /// Get the ID of ServiceType/Schedule we start with
     var obj = _.find(scheduleConfig.schedules, {'id': id});
     //// Get the secondary type object based on the chosen type

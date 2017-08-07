@@ -32,6 +32,15 @@
   margin-top: 20px;
 }
 
+.FeeLookup h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.FeeLookup form {
+  margin-bottom: 50px;
+}
+
 .mfs-key {
   
 }

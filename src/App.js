@@ -27,7 +27,8 @@ class App extends Component {
       secondaryType: "Acute",
       codeType: "DRG",
       providerType: null,
-      serviceCode: "000"
+      serviceCode: "000",
+      maximumFee: "N/A"
     };
     this.changeRegion = this.changeRegion.bind(this);
     this.changeServiceType = this.changeServiceType.bind(this);
@@ -38,6 +39,7 @@ class App extends Component {
     this.createSchedulePath = this.createSchedulePath.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.querySchedule = this.querySchedule.bind(this);
+    this.changeMaximumFee = this.changeMaximumFee.bind(this);
   }
   
   changeRegion(event) { 
@@ -115,7 +117,19 @@ class App extends Component {
     var table = schedules[pathname];
     var maxValue = table[cd][reg];
     console.log(maxValue);
+    
+    this.changeMaximumFee(maxValue);
   }
+  
+  changeMaximumFee(fee) {
+    var newMaxFee = fee;
+    console.log(this.state.maximumFee);
+    this.setState((state, props) => ({
+      maximumFee: newMaxFee
+    }));
+    console.log("Max fee is: " + this.maximumFee);
+  }
+  
   
   handleSubmit(event) {
     this.createSchedulePath();
@@ -140,17 +154,26 @@ class App extends Component {
                         codeType={this.state.codeType}
                         serviceCode={this.state.serviceCode}
                         providerType={this.state.providerType}
+                        maximumFee={this.state.maximumFee}
                         changeServiceType={this.changeServiceType}
                         changeRegion={this.changeRegion}
                         changeCodeType={this.changeCodeType} 
                         changeSecondaryType={this.changeSecondaryType}
                         changeServiceCode={this.changeServiceCode}
                         changeProviderType={this.changeProviderType} 
-                        handleSubmit={this.handleSubmit}/>
+                        handleSubmit={this.handleSubmit}
+                        changeMaximumFee={this.changeMaximumFee} />
           </div>
           <hr />
           <div>
-            <Results />
+            <Results region={this.state.region} 
+                      serviceType={this.state.serviceType}
+                      secondaryType={this.state.secondaryType}
+                      codeType={this.state.codeType}
+                      serviceCode={this.state.serviceCode}
+                      providerType={this.state.providerType}
+                      maximumFee={this.state.maximumFee}
+                              />
           </div>
           <div>
             <MfsKey />
@@ -182,7 +205,7 @@ class ZipLookup extends Component {
   render() {
     return (
       <div className="ZipLookup">
-        <h2>Not sure what region to choose?</h2>
+        <h2>Find Your Region</h2>
           <Form inline>
             <FormGroup>
                 <HelpBlock>Enter the zip code of the location of service.</HelpBlock>
@@ -206,16 +229,17 @@ class LookupForm extends Component {
   
   render() {
     return (
-      <div>
+      <div className="FeeLookup">
+      <h1>Medical Fee Schedule Lookup</h1>
         <Form>
-          <Col md={3}>
+          <Col md={2}>
             <FormGroup>
               <ControlLabel>Region</ControlLabel>
               <RegionSelect changeRegion={this.props.changeRegion}/>
             </FormGroup>
           </Col>
           
-          <Col md={9}>
+          <Col md={6}>
             <FormGroup>
               <ControlLabel>Fee Schedule - Service Type</ControlLabel>
               <ServiceTypeSelect region={this.props.region} 
@@ -224,11 +248,12 @@ class LookupForm extends Component {
                                   codeType={this.props.codeType}
                                   providerType={this.props.providerType}
                                   serviceCode={this.props.serviceCode}
+                                  maximumFee={this.props.maximumFee}
                                   changeServiceType={this.props.changeServiceType}/>
             </FormGroup>
           </Col>
           
-          <Col md={6}>
+          <Col md={4}>
             <FormGroup>
             <ControlLabel>Secondary Service Type</ControlLabel>
             <SecondaryTypeSelect region={this.props.region} 
@@ -237,11 +262,12 @@ class LookupForm extends Component {
                                  codeType={this.props.codeType}
                                  providerType={this.props.providerType}
                                  serviceCode={this.props.serviceCode} 
+                                 maximumFee={this.props.maximumFee}
                                  changeSecondaryType={this.props.changeSecondaryType}/>
             </FormGroup>
           </Col>
           
-          <Col md={3}>
+          <Col md={2}>
             <FormGroup>
               <ControlLabel>Code Type</ControlLabel>
               <CodeTypeInput region={this.props.region} 
@@ -250,19 +276,21 @@ class LookupForm extends Component {
                   codeType={this.props.codeType}
                   providerType={this.props.providerType}
                   serviceCode={this.props.serviceCode}
+                  maximumFee={this.props.maximumFee}
                   changeCodeType={this.props.changeCodeType} />
             </FormGroup>
           </Col>
           
-          <Col md={3}>
+          <Col md={4}>
             <FormGroup>
               <ControlLabel>Code</ControlLabel>
               <ServiceCodeInput changeServiceCode={this.props.changeServiceCode} 
-                                serviceCode={this.props.serviceCode} />
+                                serviceCode={this.props.serviceCode}
+                                maximumFee={this.props.maximumFee} />
             </FormGroup>
           </Col>
           
-          <Col md={12}>
+          <Col md={6}>
             <FormGroup>
               <ControlLabel>Provider Type</ControlLabel>
               <ProviderTypeInput region={this.props.region} 
@@ -271,13 +299,15 @@ class LookupForm extends Component {
                                   codeType={this.props.codeType}
                                   providerType={this.props.providerType}
                                   serviceCode={this.props.serviceCode}
+                                  maximumFee={this.props.maximumFee}
                                   changeCodeType={this.props.changeCodeType} 
                                   changeProviderType={this.props.changeProviderType}/>
               </FormGroup>
           </Col>
           
-          <Col md={5}>
-            <Button type="button" onClick={this.props.handleSubmit}>Search</Button>
+          <Col md={12}>
+              <SearchButton handleSubmit={this.props.handleSubmit} maximumFee={this.props.maximumFee}
+                                                        changeMaximumFee={this.props.changeMaximumFee}/>
           </Col>
           
           
@@ -420,32 +450,41 @@ class ProviderTypeInput extends Component {
   }
 }
 
+class SearchButton extends Component {
+  render() {
+    return (
+      <Button type="button" onClick={this.props.handleSubmit} maximumFee={this.props.maximumFee}
+                                                        changeMaximumFee={this.props.changeMaximumFee}>
+                                                        Search</Button>
+      );
+  }
+}
+
 class Results extends Component {
   render() {
     return (
       <div>
-      <hr />
+      <Col md={12}>
         <h3>Search Results</h3>
         <Table bordered striped>
           <thead>
             <tr>
-              <th>Code</th>
+              <th>Code ({this.props.codeType})</th>
               <th>Region</th>
-              <th>Type</th>
-              <th>Modifier</th>
+              <th>Fee Schedule</th>
               <th>Maximum Payment</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>90210</td>
-              <td>4</td>
-              <td>Inpatient Hospital Stay - Type One Teaching Hospital</td>
-              <td>None</td>
-              <td>$444,000</td>
+              <td>{this.props.serviceCode}</td>
+              <td>{this.props.region}</td>
+              <td>{this.props.serviceType + "-" + this.props.secondaryType + "-" + this.props.providerType}</td>
+              <td>{this.props.maximumFee}</td>
             </tr>
           </tbody>
         </Table>
+      </Col>
       </div>
     );
   }

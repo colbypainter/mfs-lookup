@@ -22,13 +22,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      region: "Region 1",
-      serviceType: "1",
-      secondaryType: "Acute",
-      codeType: "DRG",
+      region: null,
+      serviceType: null,
+      secondaryType: null,
+      codeType: null,
       providerType: null,
-      serviceCode: "000",
-      maximumFee: "N/A",
+      // Service Code is set to empty string to assist in clearing user input on re-render. 
+      serviceCode: "",
+      maximumFee: null,
       recentResults: []
     };
     this.changeRegion = this.changeRegion.bind(this);
@@ -54,35 +55,47 @@ class App extends Component {
   changeServiceType(event) {
     var newServType = event.target.value;
     this.setState((state, props) => ({
-      serviceType: newServType
+      serviceType: newServType,
+      secondaryType: null,
+      codeType: null,
+      providerType: null,
+      serviceCode: "",
+      maximumFee: null
     }));
   }
   
   changeSecondaryType(event) {
     var newSecType = event.target.value;
     this.setState((state, props) => ({
-      secondaryType: newSecType
+      secondaryType: newSecType,
+      codeType: null,
+      providerType: null,
+      serviceCode: "",
+      maximumFee: null
     }));
   }
   
   changeCodeType(event) {
     var newCodeType = event.target.value;
     this.setState((state, props) => ({
-      codeType: newCodeType
+      codeType: newCodeType,
+      providerType: null,
+      serviceCode: "",
+      maximumFee: null
     }));
   }
   
   changeProviderType(event) {
     var newProvType = event.target.value;
     this.setState((state, props) => ({
-      providerType: newProvType
+      providerType: newProvType,
+      maximumFee: null
     }));
 
   }
   
   changeServiceCode(event) {
     var newServiceCode = event.target.value;
-    console.log(event.target.value);
     this.setState((state, props) => ({
       serviceCode: newServiceCode
     }));
@@ -92,7 +105,6 @@ class App extends Component {
     // Get the base schedule ID
     var id = this.state.serviceType;
     var schedule = _.find(scheduleConfig.schedules, { 'id': id});
-    console.log(schedule);
     
     // Start the path using the basePath of that schedule
     var path = schedule.basePath;
@@ -106,8 +118,6 @@ class App extends Component {
     path = path.replace(/ /g, '');
     path = path.concat('.json');
     path = "./" + path;
-    console.log(stateArray);
-    console.log(path);
     
     this.querySchedule(path, this.state.serviceCode, this.state.region);
     
@@ -115,17 +125,13 @@ class App extends Component {
   
   // Use the path created with createSchedulePath, the region, and the code to find results
   querySchedule(pathname, cd, reg) {
-    console.log(pathname);
     var table = schedules[pathname];
     var maxValue = table[cd][reg];
-    console.log(maxValue);
-    
     this.changeMaximumFee(maxValue);
   }
   
   changeMaximumFee(fee) {
     var newMaxFee = fee;
-    console.log(this.state.maximumFee);
     this.setState({
       maximumFee: newMaxFee
     }, function(){
@@ -136,13 +142,11 @@ class App extends Component {
   
   handleSubmit(event) {
     this.createSchedulePath();
-    //this.updateRecentResults();
     event.preventDefault();
   }
   
   updateRecentResults() {
       var results = this.state.recentResults;
-      console.log(results);
       var newResult = {
         region: this.state.region,
         serviceType: this.state.serviceType,
@@ -373,6 +377,7 @@ class RegionSelect extends Component {
   render() {
     return(
       <FormControl componentClass="select" onChange={this.props.changeRegion}>
+        <option value="">Select</option>
         <option value="Region 1">Region 1</option>
         <option value="Region 2">Region 2</option>
         <option value="Region 3">Region 3</option>
@@ -387,7 +392,6 @@ class RegionSelect extends Component {
 
 class ServiceTypeSelect extends Component {
   render() {
-    console.log(this.props.region);
     var servOptions = [];
     // Refactor using .map when possible
     for(var i=0; i<scheduleConfig.schedules.length; i++) {
@@ -396,7 +400,7 @@ class ServiceTypeSelect extends Component {
      
     return(
         <FormControl componentClass="select" onChange={this.props.changeServiceType}>
-          <option value="">Select One</option>
+          <option value="">Select</option>
           {servOptions}
         </FormControl>
         
@@ -409,22 +413,30 @@ class SecondaryTypeSelect extends Component {
   render() {
     // Get the schedule object with the ID that matches the service type choice
     var id = this.props.serviceType;
-    var obj = _.find(scheduleConfig.schedules, { 'id': id});
-    // Hide the field if it only has one option, which would be null.
+    // If the Service Type field is null, render an empty element since we can't populate
+    if (id===null) { 
+      return(
+          <FormControl componentClass="select" onChange={this.props.changeSecondaryType}>
+            <option value="">Select</option>
+          </FormControl>
+      );
+    }
+    var obj = _.find(scheduleConfig.schedules, { 'id': id});    // Hide the field if it only has one option, which would be null.
     // if (obj.secondaryType.length === 1) {
       // return null;
     // }
     var secondaryOptions = [];
+    secondaryOptions.push(<option key="default" value="">Select</option>);
     for(var i=0; i<obj.secondaryType.length; i++) {
       // Iterate through and add to array. Note that for this component desired results are both a key AND value
       _.forEach(obj.secondaryType[i], function(key, opt) {
-        secondaryOptions.push(<option value={opt}>{opt}</option>);
+        // Add a distinct key for each item depending on the chosen options
+        secondaryOptions.push(<option key={[id]+[opt]} value={opt}>{opt}</option>);
       });
      }
     
     return(
         <FormControl componentClass="select" onChange={this.props.changeSecondaryType}>
-          <option value="">Select One</option>
           {secondaryOptions}
         </FormControl>
     );
@@ -437,67 +449,85 @@ class CodeTypeInput extends Component {
     var id = this.props.serviceType;
     var secType = this.props.secondaryType;
     
+    // If secondary type is null, render an empty element
+    if (secType===null) {
+      return(
+        <FormControl componentClass="select" onChange={this.props.changeCodeType}>
+          <option value="">Select</option>
+        </FormControl>
+        );
+    }
+    
     /// Get the ServiceType/Schedule we start with
     var obj = _.find(scheduleConfig.schedules, {'id': id});
-    console.log(obj);
-    console.log(secType);
     //// Get the secondary type object based on the chosen type
     obj = _.find(obj.secondaryType, secType);
-    console.log(obj);
 
     //// Get the codeType as a single key in an array 
     obj = _.keys(obj[secType].codeType[0]);
-    console.log(obj);
-  
-    for (var key in obj) {
-      codeTypes.push(<option value={obj[key]}>{obj[key]}</option>);
-    }
+    
+    
+    codeTypes.push(<option key="default" value="">Select</option>);
+    _.forEach(obj, function(key, opt) {
+        // Make the key unique to prevent the choice from sticking on front-end
+        codeTypes.push(<option key={[id]+[secType]+[key]+[opt]} value={key}>{key}</option>);
+      });
     
     return(
       <FormControl componentClass="select" onChange={this.props.changeCodeType}>
-        <option value="">Select One</option>
         {codeTypes}
       </FormControl>
     );
+    
   }
 }
 
 class ServiceCodeInput extends Component {
   render() {
     return(
-      <FormControl type="text" onChange={this.props.changeServiceCode}/>
+      <FormControl type="text" value={this.props.serviceCode} onChange={this.props.changeServiceCode}/>
       );
   }
 }
 
 class ProviderTypeInput extends Component {
   render() {
-    var provTypes = [];
-    var id = this.props.serviceType;
-    var secType = this.props.secondaryType;
-    var cdType = this.props.codeType;
-    
-
-    /// Get the ID of ServiceType/Schedule we start with
-    var obj = _.find(scheduleConfig.schedules, {'id': id});
-    //// Get the secondary type object based on the chosen type
-    obj = _.find(obj.secondaryType, secType);
-    console.log(obj);
-    
-    /// Get the array of facility types attached to the chain
-    obj = _.find(obj[secType].codeType[0][cdType]);
-    console.log(obj);
-    
-    for(var i=0; i < obj.length; i++) {
-      provTypes.push(<option value={obj[i]}>{obj[i]}</option>);
+    try {
+      var provTypes = [];
+      var id = this.props.serviceType;
+      var secType = this.props.secondaryType;
+      var cdType = this.props.codeType;
+      
+  
+      /// Get the ID of ServiceType/Schedule we start with
+      var obj = _.find(scheduleConfig.schedules, {'id': id});
+      //// Get the secondary type object based on the chosen type
+      obj = _.find(obj.secondaryType, secType);
+      
+      /// Get the array of facility types attached to the chain
+      obj = _.find(obj[secType].codeType[0][cdType]);
+      
+      provTypes.push(<option key="default" value="">Select</option>);
+      /// IF THERE'S A BUG FOUND WITH PROVTYPES, IT PROBABLY HAS TO DO WITH THIS BEING AN ARRAY OF OBJECTS
+      _.forEach(obj, function(key, opt) {
+        // Make the key unique to prevent the choice from sticking on front-end
+        provTypes.push(<option key={[id]+[secType]+[cdType]+[key]+[opt]} value={obj[opt]}>{obj[opt]}</option>);
+      });
+      
+      return(
+        <FormControl componentClass="select" onChange={this.props.changeProviderType}>
+          {provTypes}
+        </FormControl>
+        );
     }
-    
-    return(
-      <FormControl componentClass="select" onChange={this.props.changeProviderType}>
-        <option value="">Select One</option>
-        {provTypes}
-      </FormControl>
-      );
+    catch(err) {
+      console.log(err);
+      return(
+          <FormControl componentClass="select" onChange={this.props.changeProviderType}>
+            <option value="">Select</option>
+          </FormControl>
+        );
+    }
   }
 }
 

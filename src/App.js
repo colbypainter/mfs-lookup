@@ -11,10 +11,23 @@ var _ = require('lodash');
 var scheduleConfig = require('./scheduleConfig.json');
 console.log(scheduleConfig.schedules[0].type);
 
-var schedule1 = require('./hospitalInpatientRehabCMGnull.json');
+// Cannot dynamically create a require(), so must load them then match with the query builder
+var schedule1 = require('./hospitalInpatientRehabCMG.json');
+var schedule2 = require('./hospitalInpatientAcuteDRGTypeOneHospital.json');
+var schedule3 = require('./hospitalInpatientAcuteDRGOtherHospital.json');
+var schedule4 = require('./hospitalInpatientRehabDRGTypeOneHospital.json');
+var schedule5 = require('./hospitalInpatientRehabDRGOtherHospital.json');
+var schedule6 = require('./hospitalInpatientRehabREVENUETypeOneHospital.json');
+var schedule7 = require('./hospitalInpatientRehabREVENUEOtherHospital.json');
 
 const schedules = {
-  './hospitalInpatientRehabCMGnull.json': schedule1 
+  './hospitalInpatientRehabCMG.json': schedule1,
+  './hospitalInpatientAcuteDRGTypeOneHospital.json': schedule2,
+  './hospitalInpatientAcuteDRGOtherHospital.json': schedule3,
+  './hospitalInpatientRehabDRGTypeOneHospital.json': schedule4,
+  './hospitalInpatientRehabDRGOtherHospital.json': schedule5,
+  './hospitalInpatientRehabREVENUETypeOneHospital.json': schedule6,
+  './hospitalInpatientRehabREVENUEOtherHospital.json': schedule7
 };
 
 class App extends Component {
@@ -110,7 +123,7 @@ class App extends Component {
     var path = schedule.basePath;
     var stateArray = [this.state.secondaryType, this.state.codeType, this.state.providerType];
     for (var i = 0; i < stateArray.length; i++) {
-      if (stateArray[i] !== undefined) {
+      if (stateArray[i] !== null) {
         path = path.concat(stateArray[i]);
       }
     }
@@ -218,9 +231,6 @@ class App extends Component {
                       updateRecentResults={this.updateRecentResults}  />
           </div>
           
-          <div>
-            <MfsKey />
-          </div>
         </div>
       </div>
     );

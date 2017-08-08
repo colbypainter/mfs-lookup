@@ -28,7 +28,8 @@ class App extends Component {
       codeType: "DRG",
       providerType: null,
       serviceCode: "000",
-      maximumFee: "N/A"
+      maximumFee: "N/A",
+      recentResults: []
     };
     this.changeRegion = this.changeRegion.bind(this);
     this.changeServiceType = this.changeServiceType.bind(this);
@@ -40,6 +41,7 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.querySchedule = this.querySchedule.bind(this);
     this.changeMaximumFee = this.changeMaximumFee.bind(this);
+    this.updateRecentResults = this.updateRecentResults.bind(this);
   }
   
   changeRegion(event) { 
@@ -124,17 +126,37 @@ class App extends Component {
   changeMaximumFee(fee) {
     var newMaxFee = fee;
     console.log(this.state.maximumFee);
-    this.setState((state, props) => ({
+    this.setState({
       maximumFee: newMaxFee
-    }));
-    console.log("Max fee is: " + this.maximumFee);
+    }, function(){
+      this.updateRecentResults();
+    });
   }
   
   
   handleSubmit(event) {
     this.createSchedulePath();
+    //this.updateRecentResults();
     event.preventDefault();
   }
+  
+  updateRecentResults() {
+      var results = this.state.recentResults;
+      console.log(results);
+      var newResult = {
+        region: this.state.region,
+        serviceType: this.state.serviceType,
+        secondaryType: this.state.secondaryType,
+        codeType: this.state.codeType,
+        serviceCode: this.state.serviceCode,
+        providerType: this.state.providerType,
+        maximumFee: this.state.maximumFee
+      };
+      results.unshift(newResult);
+      this.setState((state, props) => ({ 
+        recentResults: results
+      }));
+    }
   
   render() {
     return (
@@ -162,7 +184,9 @@ class App extends Component {
                         changeServiceCode={this.changeServiceCode}
                         changeProviderType={this.changeProviderType} 
                         handleSubmit={this.handleSubmit}
-                        changeMaximumFee={this.changeMaximumFee} />
+                        changeMaximumFee={this.changeMaximumFee} 
+                        recentResults={this.state.recentResults} 
+                        updateRecentResults={this.updateRecentResults} />
           </div>
           <hr />
           <div>
@@ -173,8 +197,23 @@ class App extends Component {
                       serviceCode={this.state.serviceCode}
                       providerType={this.state.providerType}
                       maximumFee={this.state.maximumFee}
+                      recentResults={this.state.recentResults} 
+                      updateRecentResults={this.updateRecentResults} 
                               />
           </div>
+          
+          <div>
+            <RecentResults region={this.state.region} 
+                      serviceType={this.state.serviceType}
+                      secondaryType={this.state.secondaryType}
+                      codeType={this.state.codeType}
+                      serviceCode={this.state.serviceCode}
+                      providerType={this.state.providerType}
+                      maximumFee={this.state.maximumFee} 
+                      recentResults={this.state.recentResults} 
+                      updateRecentResults={this.updateRecentResults}  />
+          </div>
+          
           <div>
             <MfsKey />
           </div>
@@ -249,7 +288,9 @@ class LookupForm extends Component {
                                   providerType={this.props.providerType}
                                   serviceCode={this.props.serviceCode}
                                   maximumFee={this.props.maximumFee}
-                                  changeServiceType={this.props.changeServiceType}/>
+                                  changeServiceType={this.props.changeServiceType} 
+                                  recentResults={this.props.recentResults} 
+                                  updateRecentResults={this.props.updateRecentResults} />
             </FormGroup>
           </Col>
           
@@ -263,7 +304,9 @@ class LookupForm extends Component {
                                  providerType={this.props.providerType}
                                  serviceCode={this.props.serviceCode} 
                                  maximumFee={this.props.maximumFee}
-                                 changeSecondaryType={this.props.changeSecondaryType}/>
+                                 changeSecondaryType={this.props.changeSecondaryType} 
+                                  recentResults={this.props.recentResults} 
+                                  updateRecentResults={this.props.updateRecentResults} />
             </FormGroup>
           </Col>
           
@@ -277,7 +320,9 @@ class LookupForm extends Component {
                   providerType={this.props.providerType}
                   serviceCode={this.props.serviceCode}
                   maximumFee={this.props.maximumFee}
-                  changeCodeType={this.props.changeCodeType} />
+                  changeCodeType={this.props.changeCodeType} 
+                  recentResults={this.props.recentResults} 
+                  updateRecentResults={this.props.updateRecentResults} />
             </FormGroup>
           </Col>
           
@@ -286,7 +331,9 @@ class LookupForm extends Component {
               <ControlLabel>Code</ControlLabel>
               <ServiceCodeInput changeServiceCode={this.props.changeServiceCode} 
                                 serviceCode={this.props.serviceCode}
-                                maximumFee={this.props.maximumFee} />
+                                maximumFee={this.props.maximumFee} 
+                                  recentResults={this.props.recentResults} 
+                                  updateRecentResults={this.props.updateRecentResults} />
             </FormGroup>
           </Col>
           
@@ -301,13 +348,17 @@ class LookupForm extends Component {
                                   serviceCode={this.props.serviceCode}
                                   maximumFee={this.props.maximumFee}
                                   changeCodeType={this.props.changeCodeType} 
-                                  changeProviderType={this.props.changeProviderType}/>
+                                  changeProviderType={this.props.changeProviderType} 
+                                  recentResults={this.props.recentResults} 
+                                  updateRecentResults={this.props.updateRecentResults} />
               </FormGroup>
           </Col>
           
           <Col md={12}>
               <SearchButton handleSubmit={this.props.handleSubmit} maximumFee={this.props.maximumFee}
-                                                        changeMaximumFee={this.props.changeMaximumFee}/>
+                                                        changeMaximumFee={this.props.changeMaximumFee} 
+                                                        recentResults={this.props.recentResults} 
+                                                        updateRecentResults={this.props.updateRecentResults} />
           </Col>
           
           
@@ -453,14 +504,14 @@ class ProviderTypeInput extends Component {
 class SearchButton extends Component {
   render() {
     return (
-      <Button type="button" onClick={this.props.handleSubmit} maximumFee={this.props.maximumFee}
-                                                        changeMaximumFee={this.props.changeMaximumFee}>
+      <Button type="button" onClick={this.props.handleSubmit}  >
                                                         Search</Button>
       );
   }
 }
 
 class Results extends Component {
+  
   render() {
     return (
       <div>
@@ -487,6 +538,46 @@ class Results extends Component {
       </Col>
       </div>
     );
+  }
+}
+
+class RecentResults extends Component {
+  render() {
+    var recentResults = this.props.recentResults;
+    if (recentResults.length === 0) {
+      return null;
+    }
+    var resultsRows = [];
+    for(var i=0; i < (recentResults.length); i++) {
+      resultsRows.push(
+        <Table bordered striped>
+            <thead>
+              <tr>
+                <th>Code ({recentResults[i].codeType})</th>
+                <th>Region</th>
+                <th>Fee Schedule</th>
+                <th>Maximum Payment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{recentResults[i].serviceCode}</td>
+                <td>{recentResults[i].region}</td>
+                <td>{recentResults[i].serviceType + "-" + recentResults[i].secondaryType + "-" + recentResults[i].providerType}</td>
+                <td>{recentResults[i].maximumFee}</td>
+              </tr>
+            </tbody>
+          </Table>
+        );
+    }
+    resultsRows.reverse;
+    
+    return (
+      <div>
+        <h3>Recent Searches</h3>
+        {resultsRows}
+      </div>
+      );
   }
 }
 

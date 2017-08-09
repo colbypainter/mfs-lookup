@@ -394,7 +394,6 @@ class RegionSelect extends Component {
         <option value="Region 4">Region 4</option>
         <option value="Region 5">Region 5</option>
         <option value="Region 6">Region 6</option>
-        <option value="Region 7">Region 7</option>
       </FormControl>
     );
   }

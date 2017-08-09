@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Grid, Row, Col, Navbar, Jumbotron, ListGroup, ListGroupItem, 
         Button, Form, FormControl, FormGroup, ControlLabel, HelpBlock, 
-        Alert, Table } from 'react-bootstrap';
+        Alert, Table, Panel } from 'react-bootstrap';
 
 var _ = require('lodash');
         
@@ -205,7 +205,6 @@ class App extends Component {
                         recentResults={this.state.recentResults} 
                         updateRecentResults={this.updateRecentResults} />
           </div>
-          <hr />
           <div>
             <Results region={this.state.region} 
                       serviceType={this.state.serviceType}
@@ -218,7 +217,7 @@ class App extends Component {
                       updateRecentResults={this.updateRecentResults} 
                               />
           </div>
-          
+          <hr />
           <div>
             <RecentResults region={this.state.region} 
                       serviceType={this.state.serviceType}
@@ -257,8 +256,7 @@ class Header extends Component {
 class ZipLookup extends Component {
   render() {
     return (
-      <div className="ZipLookup">
-        <h2>Find Your Region</h2>
+      <Panel className="ZipLookup" header="Find Your Region" bsStyle="primary">
           <Form inline>
             <FormGroup>
                 <HelpBlock>Enter the zip code of the location of service.</HelpBlock>
@@ -270,10 +268,7 @@ class ZipLookup extends Component {
                 <FormControl.Feedback />
             </FormGroup>
           </Form>
-          <Alert bsStyle="success" className="zip-alert">
-            Zip 23220 is: <strong>REGION 6</strong>
-          </Alert>
-      </div>
+      </Panel>
     );
   }
 }
@@ -282,8 +277,7 @@ class LookupForm extends Component {
   
   render() {
     return (
-      <div className="FeeLookup">
-      <h1>Medical Fee Schedule Lookup</h1>
+      <Panel className="FeeLookup" header="Medical Fee Schedule Lookup" bsStyle="primary">
         <Form>
           <Col md={2}>
             <FormGroup>
@@ -375,10 +369,9 @@ class LookupForm extends Component {
                                                         updateRecentResults={this.props.updateRecentResults} />
           </Col>
           
-          
         </Form>
        
-      </div>
+      </Panel>
     );
   }
 }
@@ -553,10 +546,9 @@ class Results extends Component {
   
   render() {
     return (
-      <div>
-      <Col md={12}>
-        <h3>Search Results</h3>
-        <Table bordered striped>
+      <Panel header="Search Results" bsStyle="success">
+      
+        <Table bordered fill>
           <thead>
             <tr>
               <th>Code ({this.props.codeType})</th>
@@ -574,8 +566,8 @@ class Results extends Component {
             </tr>
           </tbody>
         </Table>
-      </Col>
-      </div>
+      
+      </Panel>
     );
   }
 }
@@ -589,7 +581,7 @@ class RecentResults extends Component {
     var resultsRows = [];
     for(var i=0; i < (recentResults.length); i++) {
       resultsRows.push(
-        <Table bordered striped>
+        <Table bordered striped fill>
             <thead>
               <tr>
                 <th>Code ({recentResults[i].codeType})</th>
@@ -612,10 +604,9 @@ class RecentResults extends Component {
     resultsRows.reverse;
     
     return (
-      <div>
-        <h3>Recent Searches</h3>
+      <Panel header="Recent Searches" bsStyle="info">
         {resultsRows}
-      </div>
+      </Panel>
       );
   }
 }

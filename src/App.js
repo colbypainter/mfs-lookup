@@ -536,7 +536,7 @@ class ProviderTypeInput extends Component {
 class SearchButton extends Component {
   render() {
     return (
-      <Button type="button" onClick={this.props.handleSubmit}  >
+      <Button bsStyle="primary" type="button" onClick={this.props.handleSubmit}  >
                                                         Search</Button>
       );
   }

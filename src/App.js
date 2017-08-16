@@ -7,6 +7,9 @@ import { Grid, Row, Col, Navbar, Jumbotron, ListGroup, ListGroupItem,
         Alert, Table, Panel } from 'react-bootstrap';
 
 var _ = require('lodash');
+
+var zipMap = require('./zipMap.json');
+console.log(zipMap);
         
 var scheduleConfig = require('./scheduleConfig.json');
 console.log(scheduleConfig.schedules[0].type);
@@ -195,7 +198,7 @@ class App extends Component {
         </div>
         <div className="container">
           <div>
-            <ZipLookup />
+            <ZipLookup findRegion={this.findRegion} />
           </div>
           <hr />
           <div>
@@ -258,22 +261,91 @@ class Header extends Component {
 }
 
 class ZipLookup extends Component {
+
+    constructor(props) {
+        super(props);  
+        this.state = {
+          zip: null,
+          region: null,
+          message: null
+        };
+        this.changeZip = this.changeZip.bind(this);
+        this.findRegion = this.findRegion.bind(this);
+      }
+      
+      changeZip(event) {
+        var zipInput = event.target.value;
+        zipInput = zipInput.substring(0, 3);
+        console.log(zipInput);
+        this.setState((state, props) => ({
+          zip: zipInput,
+          message: null
+        }));
+      }
+      
+      findRegion(event) { 
+        var newRegion = _.get(zipMap, this.state.zip);
+        console.log(newRegion);
+        this.setState((state, props) => ({
+          region: newRegion,
+          message: true
+        }));
+      }
+      
+      render() {
+        return (
+          <Panel className="ZipLookup" header="Find Your Region" bsStyle="primary">
+              <Form inline>
+                <FormGroup>
+                    <HelpBlock>Enter the first three digits of the zip code for the location of service.</HelpBlock>
+                    <ControlLabel>Zip Code</ControlLabel>
+                    {"   "}
+                    <ZipInput zip={this.state.zip} changeZip={this.changeZip} />
+                    {"   "}
+                    <ZipSubmitButton zip={this.state.zip} findRegion={this.findRegion} />
+                </FormGroup>
+                <ZipMessage region={this.state.region} message={this.state.message} zip={this.state.zip}/>
+              </Form>
+          </Panel>
+        );
+      }
+  }
+  
+class ZipInput extends Component {
   render() {
     return (
-      <Panel className="ZipLookup" header="Find Your Region" bsStyle="primary">
-          <Form inline>
-            <FormGroup>
-                <HelpBlock>Enter the zip code of the location of service.</HelpBlock>
-                <ControlLabel>Zip Code</ControlLabel>
-                {"   "}
-                <FormControl type="text" id="zip_input" placeholder="23220" />
-                {"   "}
-                <Button id="zip_submit" type="submit">Find Region</Button>
-                <FormControl.Feedback />
-            </FormGroup>
-          </Form>
-      </Panel>
+      <FormControl type="text" id="zip_input" placeholder="###" onChange={this.props.changeZip} />
     );
+  }
+}
+
+
+class ZipSubmitButton extends Component {
+  render() {
+    return (
+      <Button bsStyle="primary" type="button" onClick={this.props.findRegion} zip={this.props.zip}  >
+                                                        Search</Button>
+      );
+  }
+}
+
+class ZipMessage extends Component {
+  render() {
+    if(this.props.message == null) { 
+      return(null); 
+    } else if(this.props.region === undefined && this.props.message === true) {
+      return (
+      <Alert bsStyle="danger">
+        Sorry, we couldn't find a region for zip codes beginning with {this.props.zip}. Please refer to the Ground Rules document.
+      </Alert>
+      );
+    } else {
+      return (
+      <Alert bsStyle="success">
+        Zip codes beginning with {this.props.zip} are classified as: <strong>{this.props.region}</strong>
+      </Alert>
+      );
+    }
   }
 }
 

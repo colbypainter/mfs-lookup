@@ -42,6 +42,7 @@ class App extends Component {
       providerType: null,
       // Service Code is set to empty string to assist in clearing user input on re-render. 
       serviceCode: "",
+      modifier: null,
       maximumFee: null,
       recentResults: []
     };
@@ -51,6 +52,7 @@ class App extends Component {
     this.changeCodeType = this.changeCodeType.bind(this);
     this.changeProviderType = this.changeProviderType.bind(this);
     this.changeServiceCode = this.changeServiceCode.bind(this);
+    this.changeModifier = this.changeModifier.bind(this);
     this.createSchedulePath = this.createSchedulePath.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.querySchedule = this.querySchedule.bind(this);
@@ -69,7 +71,7 @@ class App extends Component {
     var newServType = event.target.value;
     this.setState((state, props) => ({
       serviceType: newServType,
-      secondaryType: null,
+      secondaryType: "null",
       codeType: null,
       providerType: null,
       serviceCode: "",
@@ -77,6 +79,7 @@ class App extends Component {
     }));
   }
   
+  // For when users choose a type
   changeSecondaryType(event) {
     var newSecType = event.target.value;
     this.setState((state, props) => ({
@@ -87,6 +90,8 @@ class App extends Component {
       maximumFee: null
     }));
   }
+  
+
   
   changeCodeType(event) {
     var newCodeType = event.target.value;
@@ -111,6 +116,13 @@ class App extends Component {
     var newServiceCode = event.target.value;
     this.setState((state, props) => ({
       serviceCode: newServiceCode
+    }));
+  }
+  
+  changeModifier(event) {
+    var newModifier = event.target.value;
+    this.setState((state, props) => ({
+      modifier: newModifier
     }));
   }
   
@@ -192,6 +204,7 @@ class App extends Component {
                         secondaryType={this.state.secondaryType}
                         codeType={this.state.codeType}
                         serviceCode={this.state.serviceCode}
+                        modifier={this.state.modifier}
                         providerType={this.state.providerType}
                         maximumFee={this.state.maximumFee}
                         changeServiceType={this.changeServiceType}
@@ -199,24 +212,14 @@ class App extends Component {
                         changeCodeType={this.changeCodeType} 
                         changeSecondaryType={this.changeSecondaryType}
                         changeServiceCode={this.changeServiceCode}
+                        changeModifier={this.changeModifier}
                         changeProviderType={this.changeProviderType} 
                         handleSubmit={this.handleSubmit}
                         changeMaximumFee={this.changeMaximumFee} 
                         recentResults={this.state.recentResults} 
                         updateRecentResults={this.updateRecentResults} />
           </div>
-          <div>
-            <Results region={this.state.region} 
-                      serviceType={this.state.serviceType}
-                      secondaryType={this.state.secondaryType}
-                      codeType={this.state.codeType}
-                      serviceCode={this.state.serviceCode}
-                      providerType={this.state.providerType}
-                      maximumFee={this.state.maximumFee}
-                      recentResults={this.state.recentResults} 
-                      updateRecentResults={this.updateRecentResults} 
-                              />
-          </div>
+
           <hr />
           <div>
             <RecentResults region={this.state.region} 
@@ -224,6 +227,7 @@ class App extends Component {
                       secondaryType={this.state.secondaryType}
                       codeType={this.state.codeType}
                       serviceCode={this.state.serviceCode}
+                      modifier={this.state.modifier}
                       providerType={this.state.providerType}
                       maximumFee={this.state.maximumFee} 
                       recentResults={this.state.recentResults} 
@@ -303,8 +307,6 @@ class LookupForm extends Component {
           </Col>
           
           <Col md={4}>
-            <FormGroup>
-            <ControlLabel>Secondary Service Type</ControlLabel>
             <SecondaryTypeSelect region={this.props.region} 
                                  serviceType={this.props.serviceType}
                                  secondaryType={this.props.secondaryType}
@@ -315,7 +317,7 @@ class LookupForm extends Component {
                                  changeSecondaryType={this.props.changeSecondaryType} 
                                   recentResults={this.props.recentResults} 
                                   updateRecentResults={this.props.updateRecentResults} />
-            </FormGroup>
+
           </Col>
           
           <Col md={2}>
@@ -334,10 +336,11 @@ class LookupForm extends Component {
             </FormGroup>
           </Col>
           
-          <Col md={4}>
+          <Col md={2}>
             <FormGroup>
               <ControlLabel>Code</ControlLabel>
-              <ServiceCodeInput changeServiceCode={this.props.changeServiceCode} 
+              <ServiceCodeInput changeServiceCode={this.props.changeServiceCode}
+                                codeType={this.props.codeType}
                                 serviceCode={this.props.serviceCode}
                                 maximumFee={this.props.maximumFee} 
                                   recentResults={this.props.recentResults} 
@@ -345,21 +348,24 @@ class LookupForm extends Component {
             </FormGroup>
           </Col>
           
+          <Col md={2}>
+              <ModifierInput changeModifier={this.props.changeModifier} 
+                              modifier={this.props.modifier} />
+          </Col>
+          
           <Col md={6}>
-            <FormGroup>
-              <ControlLabel>Provider Type</ControlLabel>
-              <ProviderTypeInput region={this.props.region} 
-                                  serviceType={this.props.serviceType}
-                                  secondaryType={this.props.secondaryType}
-                                  codeType={this.props.codeType}
-                                  providerType={this.props.providerType}
-                                  serviceCode={this.props.serviceCode}
-                                  maximumFee={this.props.maximumFee}
-                                  changeCodeType={this.props.changeCodeType} 
-                                  changeProviderType={this.props.changeProviderType} 
-                                  recentResults={this.props.recentResults} 
-                                  updateRecentResults={this.props.updateRecentResults} />
-              </FormGroup>
+            <ProviderTypeInput region={this.props.region} 
+                                serviceType={this.props.serviceType}
+                                secondaryType={this.props.secondaryType}
+                                codeType={this.props.codeType}
+                                providerType={this.props.providerType}
+                                serviceCode={this.props.serviceCode}
+                                maximumFee={this.props.maximumFee}
+                                changeCodeType={this.props.changeCodeType} 
+                                changeProviderType={this.props.changeProviderType} 
+                                recentResults={this.props.recentResults} 
+                                updateRecentResults={this.props.updateRecentResults} />
+                          
           </Col>
           
           <Col md={12}>
@@ -370,7 +376,19 @@ class LookupForm extends Component {
           </Col>
           
         </Form>
-       
+          <Col md={12}>
+            <Results region={this.props.region} 
+                      serviceType={this.props.serviceType}
+                      secondaryType={this.props.secondaryType}
+                      codeType={this.props.codeType}
+                      serviceCode={this.props.serviceCode}
+                      modifier={this.props.modifier}
+                      providerType={this.props.providerType}
+                      maximumFee={this.props.maximumFee}
+                      recentResults={this.props.recentResults} 
+                      updateRecentResults={this.updateRecentResults} 
+                              />
+          </Col>
       </Panel>
     );
   }
@@ -405,7 +423,6 @@ class ServiceTypeSelect extends Component {
           <option value="">Select</option>
           {servOptions}
         </FormControl>
-        
     );
   }
 }
@@ -413,82 +430,117 @@ class ServiceTypeSelect extends Component {
 class SecondaryTypeSelect extends Component {
   
   render() {
-    // Get the schedule object with the ID that matches the service type choice
-    var id = this.props.serviceType;
-    // If the Service Type field is null, render an empty element since we can't populate
-    if (id===null) { 
-      return(
-          <FormControl componentClass="select" onChange={this.props.changeSecondaryType}>
-            <option value="">Select</option>
-          </FormControl>
-      );
+    try {
+      // Get the schedule object with the ID that matches the service type choice
+      var id = this.props.serviceType;
+      var obj = _.find(scheduleConfig.schedules, { 'id': id});    // Hide the field if it only has one option, which would be null.
+
+      var secondaryOptions = [];
+      secondaryOptions.push(<option key="default" value="">Select</option>);
+      for(var i=0; i<obj.secondaryType.length; i++) {
+        // Iterate through and add to array. Note that for this component desired results are both a key AND value
+        _.forEach(obj.secondaryType[i], function(key, opt) {
+          // Add a distinct key for each item depending on the chosen options
+          secondaryOptions.push(<option key={[id]+[opt]} value={opt}>{opt}</option>);
+        });
+       }
+      
+      // If the only content of the array is the default option AND the null key, don't display
+      if (secondaryOptions.length === 2) {
+        return(null);
+      } else {
+        // If the array has contents, it is valid to display
+        return(
+          <FormGroup>
+            <ControlLabel>Secondary Service Type</ControlLabel>
+            <FormControl componentClass="select" onChange={this.props.changeSecondaryType}>
+              {secondaryOptions}
+            </FormControl>
+          </FormGroup>
+        );
+      }
     }
-    var obj = _.find(scheduleConfig.schedules, { 'id': id});    // Hide the field if it only has one option, which would be null.
-    // if (obj.secondaryType.length === 1) {
-      // return null;
-    // }
-    var secondaryOptions = [];
-    secondaryOptions.push(<option key="default" value="">Select</option>);
-    for(var i=0; i<obj.secondaryType.length; i++) {
-      // Iterate through and add to array. Note that for this component desired results are both a key AND value
-      _.forEach(obj.secondaryType[i], function(key, opt) {
-        // Add a distinct key for each item depending on the chosen options
-        secondaryOptions.push(<option key={[id]+[opt]} value={opt}>{opt}</option>);
-      });
-     }
-    
-    return(
-        <FormControl componentClass="select" onChange={this.props.changeSecondaryType}>
-          {secondaryOptions}
-        </FormControl>
-    );
+    catch(err) {
+      console.log(err);
+      return(null);
+    }
   }
 }
 
 class CodeTypeInput extends Component {
   render() {
-    var codeTypes = [];
-    var id = this.props.serviceType;
-    var secType = this.props.secondaryType;
-    
-    // If secondary type is null, render an empty element
-    if (secType===null) {
+    try {
+      var codeTypes = [];
+      var id = this.props.serviceType;
+      var secType = this.props.secondaryType;
+      
+      /// Get the ServiceType/Schedule we start with
+      var obj = _.find(scheduleConfig.schedules, {'id': id});
+      //// Get the secondary type object based on the chosen type
+      obj = _.find(obj.secondaryType, secType);
+  
+      //// Get the codeType as a single key in an array 
+      obj = _.keys(obj[secType].codeType[0]);
+      
+      
+      codeTypes.push(<option key="default" value="">Select</option>);
+      _.forEach(obj, function(key, opt) {
+          // Make the key unique to prevent the choice from sticking on front-end
+          codeTypes.push(<option key={[id]+[secType]+[key]+[opt]} value={key}>{key}</option>);
+        });
+      
       return(
         <FormControl componentClass="select" onChange={this.props.changeCodeType}>
+          {codeTypes}
+        </FormControl>
+      );
+    }
+    catch(err) {
+      console.log(err);
+      return(
+        <FormControl componentClass="select" disabled>
           <option value="">Select</option>
         </FormControl>
         );
     }
-    
-    /// Get the ServiceType/Schedule we start with
-    var obj = _.find(scheduleConfig.schedules, {'id': id});
-    //// Get the secondary type object based on the chosen type
-    obj = _.find(obj.secondaryType, secType);
-
-    //// Get the codeType as a single key in an array 
-    obj = _.keys(obj[secType].codeType[0]);
-    
-    
-    codeTypes.push(<option key="default" value="">Select</option>);
-    _.forEach(obj, function(key, opt) {
-        // Make the key unique to prevent the choice from sticking on front-end
-        codeTypes.push(<option key={[id]+[secType]+[key]+[opt]} value={key}>{key}</option>);
-      });
-    
-    return(
-      <FormControl componentClass="select" onChange={this.props.changeCodeType}>
-        {codeTypes}
-      </FormControl>
-    );
-    
   }
 }
 
 class ServiceCodeInput extends Component {
   render() {
+    var codeType = this.props.codeType;
+    if (codeType === null) {
+      return(
+        <FormControl type="text" disabled/>
+        );
+    }
     return(
       <FormControl type="text" value={this.props.serviceCode} onChange={this.props.changeServiceCode}/>
       );
+  }
+}
+
+class ModifierInput extends Component {
+  render() {
+    try {
+      var modifiers = [];
+      if(modifiers.length === 0) {
+        console.log("wtf bruhhhh");
+        return(null);
+      }
+      return(
+        <FormGroup>
+          <ControlLabel>Modifier</ControlLabel>
+          <FormControl componentClass="select" onChange={this.props.changeModifier}>
+            {modifiers}
+          </FormControl>
+        </FormGroup>
+        );
+    }
+    catch(err) {
+      console.log(err);
+      return(null);
+    }
   }
 }
 
@@ -500,7 +552,6 @@ class ProviderTypeInput extends Component {
       var secType = this.props.secondaryType;
       var cdType = this.props.codeType;
       
-  
       /// Get the ID of ServiceType/Schedule we start with
       var obj = _.find(scheduleConfig.schedules, {'id': id});
       //// Get the secondary type object based on the chosen type
@@ -516,18 +567,28 @@ class ProviderTypeInput extends Component {
         provTypes.push(<option key={[id]+[secType]+[cdType]+[key]+[opt]} value={obj[opt]}>{obj[opt]}</option>);
       });
       
-      return(
-        <FormControl componentClass="select" onChange={this.props.changeProviderType}>
-          {provTypes}
-        </FormControl>
-        );
-    }
+      // If the only contents of the provTypes array is the default option we fed to it, don't render
+      if (provTypes.length === 1) {
+        return(
+          null
+          );
+      } else {
+        // If the array has contents, it is valid to display
+        return(
+          <FormGroup>
+            <ControlLabel>Provider Type</ControlLabel>
+              <FormControl componentClass="select" onChange={this.props.changeProviderType}>
+                {provTypes}
+              </FormControl>
+          </FormGroup>
+          );
+        }
+      }
     catch(err) {
       console.log(err);
+      // This catches, among other things, when the upstream inputs are still null also
       return(
-          <FormControl componentClass="select" onChange={this.props.changeProviderType}>
-            <option value="">Select</option>
-          </FormControl>
+          null
         );
     }
   }
@@ -551,17 +612,11 @@ class Results extends Component {
         <Table bordered fill>
           <thead>
             <tr>
-              <th>Code ({this.props.codeType})</th>
-              <th>Region</th>
-              <th>Fee Schedule</th>
               <th>Maximum Payment</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>{this.props.serviceCode}</td>
-              <td>{this.props.region}</td>
-              <td>{this.props.serviceType + "-" + this.props.secondaryType + "-" + this.props.providerType}</td>
               <td>{this.props.maximumFee}</td>
             </tr>
           </tbody>
@@ -584,7 +639,7 @@ class RecentResults extends Component {
         <Table bordered striped fill>
             <thead>
               <tr>
-                <th>Code ({recentResults[i].codeType})</th>
+                <th>Code {"(" + recentResults[i].codeType + ")"}</th>
                 <th>Region</th>
                 <th>Fee Schedule</th>
                 <th>Maximum Payment</th>

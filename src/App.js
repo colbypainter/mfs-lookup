@@ -336,7 +336,7 @@ class ZipMessage extends Component {
     } else if(this.props.region === undefined && this.props.message === true) {
       return (
       <Alert bsStyle="danger">
-        Sorry, we couldn't find a region for zip codes beginning with {this.props.zip}. Please refer to the Ground Rules document.
+        Sorry, we could not find a region for zip codes beginning with {this.props.zip}. Please refer to the Ground Rules document.
       </Alert>
       );
     } else {

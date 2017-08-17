@@ -22,6 +22,7 @@ var schedule4 = require('./hospitalInpatientRehabDRGTypeOneHospital.json');
 var schedule5 = require('./hospitalInpatientRehabDRGOtherHospital.json');
 var schedule6 = require('./hospitalInpatientRehabREVENUETypeOneHospital.json');
 var schedule7 = require('./hospitalInpatientRehabREVENUEOtherHospital.json');
+var schedule8 = require('./hospitalOutpatientCPTTypeOneHospital.json');
 
 const schedules = {
   './hospitalInpatientRehabCMG.json': schedule1,
@@ -30,7 +31,8 @@ const schedules = {
   './hospitalInpatientRehabDRGTypeOneHospital.json': schedule4,
   './hospitalInpatientRehabDRGOtherHospital.json': schedule5,
   './hospitalInpatientRehabREVENUETypeOneHospital.json': schedule6,
-  './hospitalInpatientRehabREVENUEOtherHospital.json': schedule7
+  './hospitalInpatientRehabREVENUEOtherHospital.json': schedule7,
+  './hospitalOutpatientCPTTypeOneHospital.json': schedule8
 };
 
 class App extends Component {
@@ -138,7 +140,7 @@ class App extends Component {
     var path = schedule.basePath;
     var stateArray = [this.state.secondaryType, this.state.codeType, this.state.providerType];
     for (var i = 0; i < stateArray.length; i++) {
-      if (stateArray[i] !== null) {
+      if (stateArray[i] !== 'null') {
         path = path.concat(stateArray[i]);
       }
     }
@@ -146,7 +148,7 @@ class App extends Component {
     path = path.replace(/ /g, '');
     path = path.concat('.json');
     path = "./" + path;
-    
+    console.log(path);
     this.querySchedule(path, this.state.serviceCode, this.state.region);
     
   }

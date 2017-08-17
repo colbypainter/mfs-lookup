@@ -22,7 +22,7 @@ var schedule4 = require('./hospitalInpatientRehabDRGTypeOneHospital.json');
 var schedule5 = require('./hospitalInpatientRehabDRGOtherHospital.json');
 var schedule6 = require('./hospitalInpatientRehabREVENUETypeOneHospital.json');
 var schedule7 = require('./hospitalInpatientRehabREVENUEOtherHospital.json');
-//var schedule8 = require('./hospitalOutpatientCPTTypeOneHospital.json');
+var schedule8 = require('./hospitalOutpatientCPTTypeOneHospital.json');
 var schedule9 = require('./hospitalOutpatientHCPCSOtherHospital.json');
 
 const schedules = {
@@ -33,7 +33,7 @@ const schedules = {
   './hospitalInpatientRehabDRGOtherHospital.json': schedule5,
   './hospitalInpatientRehabREVENUETypeOneHospital.json': schedule6,
   './hospitalInpatientRehabREVENUEOtherHospital.json': schedule7,
-//  './hospitalOutpatientCPTTypeOneHospital.json': schedule8,
+  './hospitalOutpatientCPTTypeOneHospital.json': schedule8,
   './hospitalOutpatientHCPCSOtherHospital.json': schedule9
 };
 
@@ -158,9 +158,7 @@ class App extends Component {
   // Use the path created with createSchedulePath, the region, and the code to find results
   querySchedule(pathname, cd, reg) {
     var table = schedules[pathname];
-    // TODO - Use get method instead
     var maxValue = _.get(table, [cd, reg], "Not Found");
-    // var maxValue = table[cd][reg];
     this.changeMaximumFee(maxValue);
   }
   

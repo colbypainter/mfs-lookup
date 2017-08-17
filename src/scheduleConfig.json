@@ -50,10 +50,10 @@
                             "facilityType": ["Type One Hospital", "Other Hospital"],
                             "modifiers": ["26", "TC"]
                         },
-                        "REV+CPT": { 
+                        "REVENUE+CPT": { 
                             "facilityType": ["Type One Hospital", "Other Hospital"]
                         },
-                        "REV+HCPCS": { 
+                        "REVENUE+HCPCS": { 
                             "facilityType": ["Type One Hospital", "Other Hospital"]
                         }
                     }]

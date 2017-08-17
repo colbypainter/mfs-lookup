@@ -26,8 +26,12 @@ var schedule8 = require('./hospitalOutpatientCPTTypeOneHospital.json');
 var schedule9 = require('./hospitalOutpatientCPTOtherHospital.json');
 var schedule10 = require('./hospitalOutpatientHCPCSTypeOneHospital.json');
 var schedule11 = require('./hospitalOutpatientHCPCSOtherHospital.json');
-//var schedule12 = require('./hospitalOutpatientREVENUETypeOneHospital.json');
-//var schedule13 = require('./hospitalOutpatientREVENUEOtherHospital.json');
+var schedule12 = require('./hospitalOutpatientREVENUETypeOneHospital.json');
+var schedule13 = require('./hospitalOutpatientREVENUEOtherHospital.json');
+var schedule14 = require('./hospitalOutpatientREVENUECPTTypeOneHospital.json');
+var schedule15 = require('./hospitalOutpatientREVENUECPTOtherHospital.json');
+var schedule16 = require('./hospitalOutpatientREVENUEHCPCSTypeOneHospital.json');
+var schedule17 = require('./hospitalOutpatientREVENUEHCPCSOtherHospital.json');
 
 const schedules = {
   './hospitalInpatientRehabCMG.json': schedule1,
@@ -41,8 +45,12 @@ const schedules = {
   './hospitalOutpatientCPTOtherHospital.json': schedule9,
   './hospitalOutpatientHCPCSTypeOneHospital.json': schedule10,
   './hospitalOutpatientHCPCSOtherHospital.json': schedule11,
-//  './hospitalOutpatientREVENUETypeOneHospital.json': schedule12,
-//  './hospitalOutpatientREVENUEOtherHospital.json': schedule13
+  './hospitalOutpatientREVENUETypeOneHospital.json': schedule12,
+  './hospitalOutpatientREVENUEOtherHospital.json': schedule13,
+  './hospitalOutpatientREVENUECPTTypeOneHospital.json': schedule14,
+  './hospitalOutpatientREVENUECPTOtherHospital.json': schedule15,
+  './hospitalOutpatientREVENUEHCPCSTypeOneHospital.json': schedule16,
+  './hospitalOutpatientREVENUEHCPCSOtherHospital.json': schedule17
 };
 
 class App extends Component {
@@ -161,6 +169,8 @@ class App extends Component {
     path = path.replace(/ /g, '');
     path = path.concat('.json');
     path = "./" + path;
+    // Strip + from the path
+    path = path.replace(/\+/g, "");
     console.log(path);
     this.querySchedule(path, this.state.serviceCode, this.state.region);
     
@@ -174,6 +184,7 @@ class App extends Component {
     }
     
     var table = schedules[pathname];
+    console.log("Before query, code is: " + cd + " and region is: " + reg);
     var maxValue = _.get(table, [cd, reg], "Not Found");
     this.changeMaximumFee(maxValue);
   }
@@ -605,10 +616,10 @@ class CodeTypeInput extends Component {
 class ServiceCodeLabel extends Component {
   render() {
     var codeType = this.props.codeType;
-    if (codeType == "REV+CPT") {
+    if (codeType == "REVENUE+CPT") {
       codeType = "CPT";
     }
-    if (codeType == "REV+HCPCS") {
+    if (codeType == "REVENUE+HCPCS") {
       codeType = "HCPCS";
     }
     return(

@@ -88,6 +88,7 @@ class App extends Component {
       serviceType: newServType,
       secondaryType: "null",
       codeType: null,
+      modifier: null,
       providerType: null,
       serviceCode: "",
       maximumFee: null
@@ -100,6 +101,7 @@ class App extends Component {
     this.setState((state, props) => ({
       secondaryType: newSecType,
       codeType: null,
+      modifier: null,
       providerType: null,
       serviceCode: "",
       maximumFee: null
@@ -112,6 +114,7 @@ class App extends Component {
     var newCodeType = event.target.value;
     this.setState((state, props) => ({
       codeType: newCodeType,
+      modifier: null,
       providerType: null,
       serviceCode: "",
       maximumFee: null
@@ -165,6 +168,11 @@ class App extends Component {
   
   // Use the path created with createSchedulePath, the region, and the code to find results
   querySchedule(pathname, cd, reg) {
+    
+    if(this.state.modifier !== null && this.state.modifier !== 'null') {
+      cd = cd + this.state.modifier;
+    }
+    
     var table = schedules[pathname];
     var maxValue = _.get(table, [cd, reg], "Not Found");
     this.changeMaximumFee(maxValue);
@@ -435,7 +443,8 @@ class LookupForm extends Component {
           <Col md={2}>
               <ModifierInput serviceType={this.props.serviceType} 
                               secondaryType={this.props.secondaryType} 
-                              codeType={this.props.codeType} 
+                              codeType={this.props.codeType}
+                              serviceCode={this.props.serviceCode}
                               changeModifier={this.props.changeModifier} 
                               modifier={this.props.modifier} />
           </Col>
@@ -639,17 +648,16 @@ class ModifierInput extends Component {
       /// Get the array of modifiers attached to the chain
       obj = _.filter(obj[secType].codeType[0][cdType].modifiers);
       
+      if (obj.length === 0) {
+        return(null);
+      }
+      
       modArray.push(<option key="default" value="">Select</option>);
       console.log(obj);
       _.forEach(obj, function(key, opt) {
         // Make the key unique to prevent the choice from sticking on front-end
         modArray.push(<option key={[id]+[secType]+[cdType]+[key]+[opt]} value={obj[opt]}>{obj[opt]}</option>);
       });
-      
-      if(modArray.length === 0) {
-        console.log("no modifier");
-        return(null);
-      }
       
       return(
         <FormGroup>

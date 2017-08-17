@@ -24,8 +24,10 @@ var schedule6 = require('./hospitalInpatientRehabREVENUETypeOneHospital.json');
 var schedule7 = require('./hospitalInpatientRehabREVENUEOtherHospital.json');
 var schedule8 = require('./hospitalOutpatientCPTTypeOneHospital.json');
 var schedule9 = require('./hospitalOutpatientCPTOtherHospital.json');
-var schedule10 = require('./hospitalOutpatientHCPCSTypeOneHospital.json')
+var schedule10 = require('./hospitalOutpatientHCPCSTypeOneHospital.json');
 var schedule11 = require('./hospitalOutpatientHCPCSOtherHospital.json');
+//var schedule12 = require('./hospitalOutpatientREVENUETypeOneHospital.json');
+//var schedule13 = require('./hospitalOutpatientREVENUEOtherHospital.json');
 
 const schedules = {
   './hospitalInpatientRehabCMG.json': schedule1,
@@ -38,7 +40,9 @@ const schedules = {
   './hospitalOutpatientCPTTypeOneHospital.json': schedule8,
   './hospitalOutpatientCPTOtherHospital.json': schedule9,
   './hospitalOutpatientHCPCSTypeOneHospital.json': schedule10,
-  './hospitalOutpatientHCPCSOtherHospital.json': schedule11
+  './hospitalOutpatientHCPCSOtherHospital.json': schedule11,
+//  './hospitalOutpatientREVENUETypeOneHospital.json': schedule12,
+//  './hospitalOutpatientREVENUEOtherHospital.json': schedule13
 };
 
 class App extends Component {
@@ -418,7 +422,7 @@ class LookupForm extends Component {
           
           <Col md={2}>
             <FormGroup>
-              <ControlLabel>Code</ControlLabel>
+              <ServiceCodeLabel codeType={this.props.codeType}/>
               <ServiceCodeInput changeServiceCode={this.props.changeServiceCode}
                                 codeType={this.props.codeType}
                                 serviceCode={this.props.serviceCode}
@@ -429,7 +433,10 @@ class LookupForm extends Component {
           </Col>
           
           <Col md={2}>
-              <ModifierInput changeModifier={this.props.changeModifier} 
+              <ModifierInput serviceType={this.props.serviceType} 
+                              secondaryType={this.props.secondaryType} 
+                              codeType={this.props.codeType} 
+                              changeModifier={this.props.changeModifier} 
                               modifier={this.props.modifier} />
           </Col>
           
@@ -586,6 +593,21 @@ class CodeTypeInput extends Component {
   }
 }
 
+class ServiceCodeLabel extends Component {
+  render() {
+    var codeType = this.props.codeType;
+    if (codeType == "REV+CPT") {
+      codeType = "CPT";
+    }
+    if (codeType == "REV+HCPCS") {
+      codeType = "HCPCS";
+    }
+    return(
+      <ControlLabel>{codeType} Code</ControlLabel>
+      );
+  }
+}
+
 class ServiceCodeInput extends Component {
   render() {
     var codeType = this.props.codeType;
@@ -603,16 +625,37 @@ class ServiceCodeInput extends Component {
 class ModifierInput extends Component {
   render() {
     try {
-      var modifiers = [];
-      if(modifiers.length === 0) {
-        console.log("wtf bruhhhh");
+      var modArray = [];
+
+      var id = this.props.serviceType;
+      var secType = this.props.secondaryType;
+      var cdType = this.props.codeType;
+      
+      /// Get the ID of ServiceType/Schedule we start with
+      var obj = _.find(scheduleConfig.schedules, {'id': id});
+      //// Get the secondary type object based on the chosen type
+      obj = _.find(obj.secondaryType, secType);
+      
+      /// Get the array of modifiers attached to the chain
+      obj = _.filter(obj[secType].codeType[0][cdType].modifiers);
+      
+      modArray.push(<option key="default" value="">Select</option>);
+      console.log(obj);
+      _.forEach(obj, function(key, opt) {
+        // Make the key unique to prevent the choice from sticking on front-end
+        modArray.push(<option key={[id]+[secType]+[cdType]+[key]+[opt]} value={obj[opt]}>{obj[opt]}</option>);
+      });
+      
+      if(modArray.length === 0) {
+        console.log("no modifier");
         return(null);
       }
+      
       return(
         <FormGroup>
           <ControlLabel>Modifier</ControlLabel>
           <FormControl componentClass="select" onChange={this.props.changeModifier}>
-            {modifiers}
+            {modArray}
           </FormControl>
         </FormGroup>
         );
@@ -638,7 +681,9 @@ class ProviderTypeInput extends Component {
       obj = _.find(obj.secondaryType, secType);
       
       /// Get the array of facility types attached to the chain
+      /// If problems arise with this, try _.filter instead of _.find
       obj = _.find(obj[secType].codeType[0][cdType]);
+      console.log(obj);
       
       provTypes.push(<option key="default" value="">Select</option>);
       /// IF THERE'S A BUG FOUND WITH PROVTYPES, IT PROBABLY HAS TO DO WITH THIS BEING AN ARRAY OF OBJECTS

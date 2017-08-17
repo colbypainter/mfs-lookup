@@ -43,9 +43,17 @@
                             "facilityType": ["Type One Hospital", "Other Hospital"]
                         },
                         "CPT": { 
-                            "facilityType": ["Type One Hospital", "Other Hospital"]
+                            "facilityType": ["Type One Hospital", "Other Hospital"],
+                            "modifiers": ["26", "TC"]
                         },
                         "HCPCS": {
+                            "facilityType": ["Type One Hospital", "Other Hospital"],
+                            "modifiers": ["26", "TC"]
+                        },
+                        "REV+CPT": { 
+                            "facilityType": ["Type One Hospital", "Other Hospital"]
+                        },
+                        "REV+HCPCS": { 
                             "facilityType": ["Type One Hospital", "Other Hospital"]
                         }
                     }]

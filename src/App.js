@@ -23,7 +23,9 @@ var schedule5 = require('./hospitalInpatientRehabDRGOtherHospital.json');
 var schedule6 = require('./hospitalInpatientRehabREVENUETypeOneHospital.json');
 var schedule7 = require('./hospitalInpatientRehabREVENUEOtherHospital.json');
 var schedule8 = require('./hospitalOutpatientCPTTypeOneHospital.json');
-var schedule9 = require('./hospitalOutpatientHCPCSOtherHospital.json');
+var schedule9 = require('./hospitalOutpatientCPTOtherHospital.json');
+var schedule10 = require('./hospitalOutpatientHCPCSTypeOneHospital.json')
+var schedule11 = require('./hospitalOutpatientHCPCSOtherHospital.json');
 
 const schedules = {
   './hospitalInpatientRehabCMG.json': schedule1,
@@ -34,7 +36,9 @@ const schedules = {
   './hospitalInpatientRehabREVENUETypeOneHospital.json': schedule6,
   './hospitalInpatientRehabREVENUEOtherHospital.json': schedule7,
   './hospitalOutpatientCPTTypeOneHospital.json': schedule8,
-  './hospitalOutpatientHCPCSOtherHospital.json': schedule9
+  './hospitalOutpatientCPTOtherHospital.json': schedule9,
+  './hospitalOutpatientHCPCSTypeOneHospital.json': schedule10,
+  './hospitalOutpatientHCPCSOtherHospital.json': schedule11
 };
 
 class App extends Component {

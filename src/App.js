@@ -22,7 +22,8 @@ var schedule4 = require('./hospitalInpatientRehabDRGTypeOneHospital.json');
 var schedule5 = require('./hospitalInpatientRehabDRGOtherHospital.json');
 var schedule6 = require('./hospitalInpatientRehabREVENUETypeOneHospital.json');
 var schedule7 = require('./hospitalInpatientRehabREVENUEOtherHospital.json');
-var schedule8 = require('./hospitalOutpatientCPTTypeOneHospital.json');
+//var schedule8 = require('./hospitalOutpatientCPTTypeOneHospital.json');
+var schedule9 = require('./hospitalOutpatientHCPCSOtherHospital.json');
 
 const schedules = {
   './hospitalInpatientRehabCMG.json': schedule1,
@@ -32,7 +33,8 @@ const schedules = {
   './hospitalInpatientRehabDRGOtherHospital.json': schedule5,
   './hospitalInpatientRehabREVENUETypeOneHospital.json': schedule6,
   './hospitalInpatientRehabREVENUEOtherHospital.json': schedule7,
-  './hospitalOutpatientCPTTypeOneHospital.json': schedule8
+//  './hospitalOutpatientCPTTypeOneHospital.json': schedule8,
+  './hospitalOutpatientHCPCSOtherHospital.json': schedule9
 };
 
 class App extends Component {
@@ -140,7 +142,7 @@ class App extends Component {
     var path = schedule.basePath;
     var stateArray = [this.state.secondaryType, this.state.codeType, this.state.providerType];
     for (var i = 0; i < stateArray.length; i++) {
-      if (stateArray[i] !== 'null') {
+      if (stateArray[i] !== 'null' && stateArray[i] !== null) {
         path = path.concat(stateArray[i]);
       }
     }
@@ -156,7 +158,9 @@ class App extends Component {
   // Use the path created with createSchedulePath, the region, and the code to find results
   querySchedule(pathname, cd, reg) {
     var table = schedules[pathname];
-    var maxValue = table[cd][reg];
+    // TODO - Use get method instead
+    var maxValue = _.get(table, [cd, reg], "Not Found");
+    // var maxValue = table[cd][reg];
     this.changeMaximumFee(maxValue);
   }
   

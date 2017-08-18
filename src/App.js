@@ -32,6 +32,9 @@ var schedule14 = require('./hospitalOutpatientREVENUECPTTypeOneHospital.json');
 var schedule15 = require('./hospitalOutpatientREVENUECPTOtherHospital.json');
 var schedule16 = require('./hospitalOutpatientREVENUEHCPCSTypeOneHospital.json');
 var schedule17 = require('./hospitalOutpatientREVENUEHCPCSOtherHospital.json');
+var schedule18 = require('./ascCPT.json');
+var schedule19 = require('./ascREVENUE.json');
+
 
 const schedules = {
   './hospitalInpatientRehabCMG.json': schedule1,
@@ -50,7 +53,9 @@ const schedules = {
   './hospitalOutpatientREVENUECPTTypeOneHospital.json': schedule14,
   './hospitalOutpatientREVENUECPTOtherHospital.json': schedule15,
   './hospitalOutpatientREVENUEHCPCSTypeOneHospital.json': schedule16,
-  './hospitalOutpatientREVENUEHCPCSOtherHospital.json': schedule17
+  './hospitalOutpatientREVENUEHCPCSOtherHospital.json': schedule17,
+  './ascCPT.json': schedule18,
+  './ascREVENUE.json': schedule19
 };
 
 class App extends Component {

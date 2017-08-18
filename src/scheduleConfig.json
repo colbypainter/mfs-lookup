@@ -59,6 +59,25 @@
                     }]
                 } 
             }]
+        },
+        
+        {
+            "id": "3",
+            "type": "Ambulatory Surgical Center",
+            "basePath": "asc",
+            "secondaryType": [{
+                "null": {
+                    "codeType": [{
+                        "REVENUE": {
+                            "facilityType": []
+                        },
+                        "CPT": { 
+                            "facilityType": [],
+                            "modifiers": ["26", "TC"]
+                        }
+                    }]
+                } 
+            }]
         }
         
     

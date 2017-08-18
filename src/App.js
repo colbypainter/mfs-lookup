@@ -192,7 +192,7 @@ class App extends Component {
   // Use the path created with createSchedulePath, the region, and the code to find results
   querySchedule(pathname, cd, reg) {
     
-    if(this.state.modifier !== null && this.state.modifier !== 'null') {
+    if(this.state.modifier !== null && this.state.modifier !== 'null' && !(_.includes(["P1", "P2", "P3", "P4", "P5", "P6"], this.state.modifier))) {
       cd = cd + this.state.modifier;
     }
     

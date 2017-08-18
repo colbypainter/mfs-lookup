@@ -74,6 +74,7 @@ class App extends Component {
       serviceCode: "",
       modifier: null,
       modifierValue: null,
+      baseUnits: null,
       maximumFee: null,
       recentResults: []
     };
@@ -87,6 +88,7 @@ class App extends Component {
     this.createSchedulePath = this.createSchedulePath.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.querySchedule = this.querySchedule.bind(this);
+    this.changeBaseUnits = this.changeBaseUnits.bind(this);
     this.changeMaximumFee = this.changeMaximumFee.bind(this);
     this.updateRecentResults = this.updateRecentResults.bind(this);
   }
@@ -199,6 +201,9 @@ class App extends Component {
     var table = schedules[pathname];
     console.log("Before query, code is: " + cd + " and region is: " + reg);
     var maxValue = _.get(table, [cd, reg], "Not Found");
+    var baseUnits = _.get(table, [cd, "Base Units"], "Not Found");
+    console.log("Testing base units: " + baseUnits);
+    this.changeBaseUnits(baseUnits);
     this.changeMaximumFee(maxValue);
   }
   
@@ -208,6 +213,13 @@ class App extends Component {
       maximumFee: newMaxFee
     }, function(){
       this.updateRecentResults();
+    });
+  }
+  
+  changeBaseUnits(baseUnits) {
+    var newBaseUnits = baseUnits;
+    this.setState({
+      baseUnits: newBaseUnits
     });
   }
   
@@ -226,6 +238,8 @@ class App extends Component {
         codeType: this.state.codeType,
         serviceCode: this.state.serviceCode,
         providerType: this.state.providerType,
+        modifier: this.state.modifier,
+        baseUnits: this.state.baseUnits,
         maximumFee: this.state.maximumFee
       };
       results.unshift(newResult);
@@ -808,6 +822,10 @@ class RecentResults extends Component {
                 <td>{recentResults[i].region}</td>
                 <td>{recentResults[i].serviceType + "-" + recentResults[i].secondaryType + "-" + recentResults[i].providerType}</td>
                 <td>{recentResults[i].maximumFee}</td>
+              </tr>
+              <tr>
+                <td>{recentResults[i].modifier}</td>
+                <td>{recentResults[i].baseUnits}</td>
               </tr>
             </tbody>
           </Table>

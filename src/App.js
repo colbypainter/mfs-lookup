@@ -34,6 +34,7 @@ var schedule16 = require('./hospitalOutpatientREVENUEHCPCSTypeOneHospital.json')
 var schedule17 = require('./hospitalOutpatientREVENUEHCPCSOtherHospital.json');
 var schedule18 = require('./ascCPT.json');
 var schedule19 = require('./ascREVENUE.json');
+var schedule20 = require('./profAnesthesiaCPT.json');
 
 
 const schedules = {
@@ -55,7 +56,8 @@ const schedules = {
   './hospitalOutpatientREVENUEHCPCSTypeOneHospital.json': schedule16,
   './hospitalOutpatientREVENUEHCPCSOtherHospital.json': schedule17,
   './ascCPT.json': schedule18,
-  './ascREVENUE.json': schedule19
+  './ascREVENUE.json': schedule19,
+  './profAnesthesiaCPT.json': schedule20
 };
 
 class App extends Component {
@@ -545,7 +547,8 @@ class SecondaryTypeSelect extends Component {
     try {
       // Get the schedule object with the ID that matches the service type choice
       var id = this.props.serviceType;
-      var obj = _.find(scheduleConfig.schedules, { 'id': id});    // Hide the field if it only has one option, which would be null.
+      var obj = _.find(scheduleConfig.schedules, { 'id': id});
+      console.log(obj);
 
       var secondaryOptions = [];
       secondaryOptions.push(<option key="default" value="">Select</option>);

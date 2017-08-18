@@ -78,6 +78,31 @@
                     }]
                 } 
             }]
+        },
+        
+        {
+            "id": "4",
+            "type": "Professional Services",
+            "basePath": "prof",
+            "secondaryType": [{
+                "Anesthesia": {
+                    "codeType": [{
+                        "CPT": { 
+                            "facilityType": [],
+                            "modifiers": ["P1", "P2", "P3", "P4", "P5", "P6"]
+                        }
+                    }]
+                },
+                "All Other Services": {
+                    "codeType": [{
+                        "CPT": { 
+                            "facilityType": [],
+                            "modifiers": ["26", "TC", "NU", "RR"]
+                        }
+                    }]
+                }
+                
+            }]
         }
         
     

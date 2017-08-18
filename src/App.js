@@ -73,6 +73,7 @@ class App extends Component {
       // Service Code is set to empty string to assist in clearing user input on re-render. 
       serviceCode: "",
       modifier: null,
+      modifierValue: null,
       maximumFee: null,
       recentResults: []
     };
@@ -154,8 +155,13 @@ class App extends Component {
   
   changeModifier(event) {
     var newModifier = event.target.value;
+    if(_.includes(["P1", "P2", "P3", "P4", "P5", "P6"], newModifier)) {
+      var newModifierValue = scheduleConfig.modifierKey[newModifier];
+      console.log("testing modifier value: " + newModifierValue);
+    }
     this.setState((state, props) => ({
-      modifier: newModifier
+      modifier: newModifier,
+      modifierValue: newModifierValue
     }));
   }
   
@@ -663,7 +669,6 @@ class ModifierInput extends Component {
       var obj = _.find(scheduleConfig.schedules, {'id': id});
       //// Get the secondary type object based on the chosen type
       obj = _.find(obj.secondaryType, secType);
-      
       /// Get the array of modifiers attached to the chain
       obj = _.filter(obj[secType].codeType[0][cdType].modifiers);
       

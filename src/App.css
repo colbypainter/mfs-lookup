@@ -13,8 +13,15 @@
   max-width: 900px;
 }
 
+.ZipLookup {
+  text-align: center;
+}
+
 #zip_input {
   width: 120px;
+  margin: auto;
+  text-align: center;
+  margin-bottom:10px;
 }
 
 #zip_submit {

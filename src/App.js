@@ -360,7 +360,7 @@ class ZipLookup extends Component {
       render() {
         return (
           <Panel className="ZipLookup" header="Find Your Region" bsStyle="primary">
-              <Form inline>
+              <Form>
                 <FormGroup>
                     <HelpBlock>Enter the first three digits of the zip code for the location of service.</HelpBlock>
                     <ControlLabel>Zip Code</ControlLabel>
@@ -784,6 +784,9 @@ class SearchButton extends Component {
 class Results extends Component {
   
   render() {
+    if(this.props.maximumFee == null) {
+      return null;
+    }
     return (
       <Panel header="Search Results" className="results-panel" bsStyle="success">
       

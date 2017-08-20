@@ -107,6 +107,8 @@ class App extends Component {
       secondaryType: "null",
       codeType: null,
       modifier: null,
+      modifierValue: null,
+      baseUnits: null,
       providerType: null,
       serviceCode: "",
       maximumFee: null
@@ -120,6 +122,8 @@ class App extends Component {
       secondaryType: newSecType,
       codeType: null,
       modifier: null,
+      modifierValue: null,
+      baseUnits: null,
       providerType: null,
       serviceCode: "",
       maximumFee: null
@@ -133,6 +137,8 @@ class App extends Component {
     this.setState((state, props) => ({
       codeType: newCodeType,
       modifier: null,
+      modifierValue: null,
+      baseUnits: null,
       providerType: null,
       serviceCode: "",
       maximumFee: null

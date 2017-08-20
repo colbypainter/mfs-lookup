@@ -5,7 +5,6 @@
 .App-header {
   height: 150px;
   padding: 20px;
-
 }
 
 .container {
@@ -30,6 +29,10 @@
 
 .FeeLookup form {
   margin-bottom: 50px;
+}
+
+.results-panel {
+  margin-top: 15px;
 }
 
 .mfs-key {

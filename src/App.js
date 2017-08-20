@@ -66,6 +66,7 @@ class App extends Component {
     super(props);
     this.state = {
       region: null,
+      // serviceType is currently the ID of the schedule. Name should be changed to scheduleID
       serviceType: null,
       secondaryType: null,
       codeType: null,
@@ -784,12 +785,12 @@ class Results extends Component {
   
   render() {
     return (
-      <Panel header="Search Results" bsStyle="success">
+      <Panel header="Search Results" className="results-panel" bsStyle="success">
       
         <Table bordered fill>
           <thead>
             <tr>
-              <th>Maximum Payment</th>
+              <th>Maximum Fee</th>
             </tr>
           </thead>
           <tbody>
@@ -812,36 +813,55 @@ class RecentResults extends Component {
     }
     var resultsRows = [];
     for(var i=0; i < (recentResults.length); i++) {
+      
+      // Since state currently only holds the ID, we need to fetch the schedule description for display
+      var id = recentResults[i].serviceType;
+      var schedule = _.find(scheduleConfig.schedules, { 'id': id});
+      
+      var feeSchedule = schedule.type;
+      console.log(feeSchedule);
+      
+      if (recentResults[i].secondaryType !== 'null') { 
+        feeSchedule = feeSchedule + ", " + recentResults[i].secondaryType;
+      }
+      
+      if (recentResults[i].providerType !== null) { 
+        feeSchedule = feeSchedule + ", " + recentResults[i].providerType;
+      }
+      
       resultsRows.push(
-        <Table bordered striped fill>
-            <thead>
+
               <tr>
-                <th>Code {"(" + recentResults[i].codeType + ")"}</th>
-                <th>Region</th>
-                <th>Fee Schedule</th>
-                <th>Maximum Payment</th>
+                <td>
+                <strong>Fee Schedule:</strong> {feeSchedule}<br/>
+                <strong>Region:</strong> {recentResults[i].region}<br/>
+                <strong>Code</strong> {"(" + recentResults[i].codeType + "):"} {" "} {recentResults[i].serviceCode}<br/>
+                <strong>Modifier:</strong> {recentResults[i].modifier}</td>
+                
+                <td>
+                <strong>Base Units:</strong> {recentResults[i].baseUnits}<br/>
+                <strong>Maximum Fee:</strong> {recentResults[i].maximumFee}</td>
               </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{recentResults[i].serviceCode}</td>
-                <td>{recentResults[i].region}</td>
-                <td>{recentResults[i].serviceType + "-" + recentResults[i].secondaryType + "-" + recentResults[i].providerType}</td>
-                <td>{recentResults[i].maximumFee}</td>
-              </tr>
-              <tr>
-                <td>{recentResults[i].modifier}</td>
-                <td>{recentResults[i].baseUnits}</td>
-              </tr>
-            </tbody>
-          </Table>
+
         );
     }
     resultsRows.reverse;
     
     return (
       <Panel header="Recent Searches" bsStyle="info">
-        {resultsRows}
+        <Table bordered striped fill>
+          <thead>
+            <tr>
+              <th className="col-sm-8">Search Terms</th>
+              
+              <th className="col-sm-4">Results</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {resultsRows}
+          </tbody>
+         </Table>
       </Panel>
       );
   }

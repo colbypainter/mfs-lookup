@@ -360,9 +360,9 @@ class ZipLookup extends Component {
       render() {
         return (
           <Panel className="ZipLookup" header="Find Your Region" bsStyle="primary">
-              <Form>
+              <Form inline>
                 <FormGroup>
-                    <HelpBlock>Enter the first three digits of the zip code for the location of service.</HelpBlock>
+                    <h5>Enter the <strong>first three digits</strong> of the zip code for the location of service.</h5>
                     <ControlLabel>Zip Code</ControlLabel>
                     {"   "}
                     <ZipInput zip={this.state.zip} changeZip={this.changeZip} />
@@ -400,14 +400,14 @@ class ZipMessage extends Component {
       return(null); 
     } else if(this.props.region === undefined && this.props.message === true) {
       return (
-      <Alert bsStyle="danger">
-        Sorry, we could not find a region for zip codes beginning with {this.props.zip}. Please refer to the Ground Rules document.
+      <Alert className="zip-alert" bsStyle="danger">
+        Region not found.
       </Alert>
       );
     } else {
       return (
-      <Alert bsStyle="success">
-        Zip codes beginning with {this.props.zip} are classified as: <strong>{this.props.region}</strong>
+      <Alert className="zip-alert" bsStyle="success">
+        Zip {this.props.zip}xxx is : <strong>{this.props.region}</strong>
       </Alert>
       );
     }

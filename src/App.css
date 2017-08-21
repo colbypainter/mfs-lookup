@@ -21,12 +21,12 @@
   width: 120px;
   margin: auto;
   text-align: center;
-  
 }
 
 #zip_submit {
   width: 120px;
 }
+
 
 .zip-alert {
   max-width: 250px;
@@ -40,6 +40,8 @@
 
 .results-panel {
   margin-top: 15px;
+  max-width: 350px;
+  margin: auto;
 }
 
 .mfs-key {

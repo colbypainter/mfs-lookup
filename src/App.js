@@ -302,6 +302,10 @@ class App extends Component {
                       updateRecentResults={this.updateRecentResults}  />
           </div>
           
+          <div>
+            <MfsKey />
+          </div>
+          
         </div>
       </div>
     );
@@ -875,10 +879,10 @@ class MfsKey extends Component {
   render() {
     return (
         <div className="mfs-key">
-          <h3>Key</h3>
+          <h3>Terms and Information</h3>
           <ListGroup>
-            <ListGroupItem header="Thing 1">This is the first one to show.</ListGroupItem>
-            <ListGroupItem header="Thing 2">This is the second item to show.</ListGroupItem>
+            <ListGroupItem header="Type One Teaching Hospital">This is a good place to define terms or concepts.</ListGroupItem>
+            <ListGroupItem header="Modifier 26">This is too.</ListGroupItem>
           </ListGroup>
         </div>
       );

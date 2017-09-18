@@ -261,7 +261,10 @@ class App extends Component {
         <div id="App-header">
           <Header />
         </div>
-        <div className="container">
+        <div className="container app-content">
+          <div>
+            <WelcomeContent />
+          </div>
           <div>
             <ZipLookup findRegion={this.findRegion} />
           </div>
@@ -319,13 +322,28 @@ class Header extends Component {
         <Grid>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="/">Medical Fee Schedule Lookup</a>
+              <a href="http://www.workcomp.virginia.gov/">VWC Website</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
         </Grid>
       </Navbar>
     );
+  }
+}
+
+class WelcomeContent extends Component {
+  render() {
+    return (
+        <Jumbotron>
+          <h1>Medical Fee Schedule <small>Maximum Fee Lookup Tool</small></h1>
+          <p>This application is a product of the Virginia Workers' Compensation Commission.</p>
+          <p>Use the options below to find out your regional classification or determine your maximum rate of payment.</p>
+          <p>To learn more about VWC's Medical Fee Schedule, see our Ground Rules documentation and the Fee Schedule on which this 
+          application is based.</p>
+          <p><Button bsStyle="primary">Learn more</Button></p>
+        </Jumbotron>
+      );
   }
 }
 
@@ -363,7 +381,7 @@ class ZipLookup extends Component {
       
       render() {
         return (
-          <Panel className="ZipLookup" header="Find Your Region" bsStyle="primary">
+          <Panel className="MfsPanels ZipLookup" header="Find Your Region">
               <Form inline>
                 <FormGroup>
                     <h5>Enter the <strong>first three digits</strong> of the zip code for the location of service.</h5>
@@ -422,7 +440,7 @@ class LookupForm extends Component {
   
   render() {
     return (
-      <Panel className="FeeLookup" header="Medical Fee Schedule Lookup" bsStyle="primary">
+      <Panel className="MfsPanels FeeLookup" header="Maximum Rate Search">
         <Form>
           <Col md={2}>
             <FormGroup>
@@ -518,10 +536,12 @@ class LookupForm extends Component {
                                                         changeMaximumFee={this.props.changeMaximumFee} 
                                                         recentResults={this.props.recentResults} 
                                                         updateRecentResults={this.props.updateRecentResults} />
+          <hr />
           </Col>
           
         </Form>
-          <Col md={12}>
+          
+          <Col md={6} mdOffset={6} >
             <Results region={this.props.region} 
                       serviceType={this.props.serviceType}
                       secondaryType={this.props.secondaryType}
@@ -792,16 +812,18 @@ class Results extends Component {
       return null;
     }
     return (
-      <Panel header="Search Results" className="results-panel" bsStyle="success">
+      <Panel className="results-panel MfsPanels" >
       
         <Table bordered fill>
           <thead>
             <tr>
-              <th>Maximum Fee</th>
+              <th>Search Results</th>
+              <th><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <th>Maximum Fee</th>
               <td>{this.props.maximumFee}</td>
             </tr>
           </tbody>
@@ -840,14 +862,20 @@ class RecentResults extends Component {
 
               <tr>
                 <td>
-                <strong>Fee Schedule:</strong> {feeSchedule}<br/>
-                <strong>Region:</strong> {recentResults[i].region}<br/>
-                <strong>Code</strong> {"(" + recentResults[i].codeType + "):"} {" "} {recentResults[i].serviceCode}<br/>
-                <strong>Modifier:</strong> {recentResults[i].modifier}</td>
+                <strong>Fee Schedule:</strong><br/>
+                 {feeSchedule}<br/>
+                <strong>Region:</strong><br/>
+                 {recentResults[i].region}<br/>
+                <strong>Code:</strong><br/>
+                {"(" + recentResults[i].codeType + "):"} {" "} {recentResults[i].serviceCode}<br/>
+                <strong>Modifier:</strong><br/>
+                 {recentResults[i].modifier}</td>
                 
                 <td>
-                <strong>Base Units:</strong> {recentResults[i].baseUnits}<br/>
-                <strong>Maximum Fee:</strong> {recentResults[i].maximumFee}</td>
+                <strong>Base Units:</strong><br/>
+                 {recentResults[i].baseUnits}<br/>
+                <strong>Maximum Fee:</strong><br/>
+                 {recentResults[i].maximumFee}</td>
               </tr>
 
         );
@@ -855,7 +883,7 @@ class RecentResults extends Component {
     resultsRows.reverse;
     
     return (
-      <Panel header="Recent Searches" bsStyle="info">
+      <Panel header="Recent Searches" className="MfsPanels" bsStyle="info">
         <Table bordered striped fill>
           <thead>
             <tr>

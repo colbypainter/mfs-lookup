@@ -2,6 +2,7 @@
 
 Primary blue color is: #182a72
 Primary yellow color is: #ebc244
+Secondary (light) blue is: #eae8f1
 
 **/
 
@@ -35,14 +36,44 @@ Primary yellow color is: #ebc244
   max-width: 900px;
 }
 
-.ZipLookup {
-  text-align: center;
+/**
+.btn-primary {
+  background-color: #436691;
+  background-image: none;
 }
+**/
+
+.app-content {
+    -webkit-box-shadow: 2px 2px 2px 2px #888888;
+    box-shadow: 2px 2px 2px 2px #888888;
+    border-radius: 0em;
+    background-color: #eee;
+    
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.MfsPanels {
+  -webkit-box-shadow: 1px 1px 1px 1px #888888;
+  box-shadow: 1px 1px 1px 1px #888888;
+  border-radius: 0em;
+}
+
+.MfsPanels .panel-heading {
+  background-image: none;
+  border-radius: 0em;
+  background-color: #182a72;
+  color: white;
+}
+
+
 
 #zip_input {
   width: 120px;
-  margin: auto;
-  text-align: center;
+  margin-bottom: 5px;
+  
 }
 
 #zip_submit {
@@ -62,8 +93,17 @@ Primary yellow color is: #ebc244
 
 .results-panel {
   margin-top: 15px;
-  max-width: 350px;
+  max-width: 450px;
   margin: auto;
+}
+
+.results-panel .panel-heading {
+  background-color: #eee;
+  color: black;
+}
+
+.glyphicon-ok {
+  color: green;
 }
 
 .mfs-key {

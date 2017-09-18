@@ -258,7 +258,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="header">
+        <div id="App-header">
           <Header />
         </div>
         <div className="container">
@@ -315,16 +315,16 @@ class App extends Component {
 class Header extends Component {
   render() {
     return (
-        <Navbar staticTop>
-          <Grid>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <a href="/">Medical Fee Schedule Lookup</a>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-          </Grid>
-        </Navbar>
+      <Navbar staticTop >
+        <Grid>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="/">Medical Fee Schedule Lookup</a>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+          </Navbar.Header>
+        </Grid>
+      </Navbar>
     );
   }
 }

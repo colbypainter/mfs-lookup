@@ -39,4 +39,18 @@ Scenarios to account for:
 33. S Codes (Per Unit) - HCPCS Codes
 
 Still TODO:
-Remove the extra CPT codes in the Physician-All table
+Remove the extra CPT codes in the Physician-All table (May be done but double-check, was struggling to get it to save the files)
+Accomodate Anesthesia input/output
+Add adjustment columns to output
+Add message/helper tesk functionality
+Set consistent form validation
+Add the yellow tabs (if drema approves)
+See about differentiating the injectable codes for prof services
+Double-back and handle the HCPCS+REV better (with a separate checkbox)
+Check on that crazy outlier thing Drema mentioned
+Add a disclaimer (maybe?)
+Get prof services codes working
+
+
+NICE TO HAVE:
+Rewrite the code for Modifiers so I'm not storing the code + modifier in the JSON file. That's bad.

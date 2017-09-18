@@ -96,7 +96,11 @@
                 "All Other Services": {
                     "codeType": [{
                         "CPT": { 
-                            "facilityType": [],
+                            "facilityType": ["Surgeon", "Non-Surgeon"],
+                            "modifiers": ["26", "TC", "NU", "RR"]
+                        },
+                        "HCPCS": { 
+                            "facilityType": ["Surgeon", "Non-Surgeon"],
                             "modifiers": ["26", "TC", "NU", "RR"]
                         }
                     }]

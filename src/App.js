@@ -310,6 +310,9 @@ class App extends Component {
           </div>
           
         </div>
+        <div>
+          <Footer />
+        </div>
       </div>
     );
   }
@@ -335,13 +338,11 @@ class Header extends Component {
 class WelcomeContent extends Component {
   render() {
     return (
-        <Jumbotron>
-          <h1>Medical Fee Schedule <small>Maximum Fee Lookup Tool</small></h1>
-          <p>This application is a product of the Virginia Workers' Compensation Commission.</p>
-          <p>Use the options below to find out your regional classification or determine your maximum rate of payment.</p>
-          <p>To learn more about VWC's Medical Fee Schedule, see our Ground Rules documentation and the Fee Schedule on which this 
-          application is based.</p>
-          <p><Button bsStyle="primary">Learn more</Button></p>
+        <Jumbotron className="MfsPanels">
+          <h2>Medical Fee Schedule</h2>
+          <p>Effective for all dates of service on or after January 1, 2018, rates will be subject to VWC's Medical Fee Schedule.</p>
+          <p>Use the tools below to find out your regional classification or determine your maximum rate of payment.</p>
+          <p>Want to know more about the Fee Schedule? Please refer to our <a href="">Ground Rules</a> documentation or view the <a href="">Fee Schedule</a> itself.</p>
         </Jumbotron>
       );
   }
@@ -382,16 +383,23 @@ class ZipLookup extends Component {
       render() {
         return (
           <Panel className="MfsPanels ZipLookup" header="Find Your Region">
+            <Col>
+             <h5>Enter the <strong>first three digits</strong> of the zip code for the location of service.</h5>
+            </Col>
+            <Col>
+              Your region is: <ZipMessage region={this.state.region} message={this.state.message} zip={this.state.zip}/>
+            </Col>
+            <hr/>
               <Form inline>
-                <FormGroup>
-                    <h5>Enter the <strong>first three digits</strong> of the zip code for the location of service.</h5>
-                    <ControlLabel>Zip Code</ControlLabel>
-                    {"   "}
-                    <ZipInput zip={this.state.zip} changeZip={this.changeZip} />
-                    {"   "}
-                    <ZipSubmitButton zip={this.state.zip} findRegion={this.findRegion} />
-                </FormGroup>
-                <ZipMessage region={this.state.region} message={this.state.message} zip={this.state.zip}/>
+                <Col xs={12} mdOffset={3} md={9}>
+                  <FormGroup>
+                      <ControlLabel>Zip Code</ControlLabel>
+                      {"   "}
+                      <ZipInput zip={this.state.zip} changeZip={this.changeZip} />
+                  </FormGroup>
+                  {"   "}
+                      <ZipSubmitButton zip={this.state.zip} findRegion={this.findRegion} />
+                </Col>
               </Form>
           </Panel>
         );
@@ -422,15 +430,11 @@ class ZipMessage extends Component {
       return(null); 
     } else if(this.props.region === undefined && this.props.message === true) {
       return (
-      <Alert className="zip-alert" bsStyle="danger">
-        Region not found.
-      </Alert>
+        <span className="danger">Not found.</span>
       );
     } else {
       return (
-      <Alert className="zip-alert" bsStyle="success">
-        Zip {this.props.zip}xxx is : <strong>{this.props.region}</strong>
-      </Alert>
+        <strong>{this.props.region}</strong>
       );
     }
   }
@@ -578,7 +582,6 @@ class RegionSelect extends Component {
 class ServiceTypeSelect extends Component {
   render() {
     var servOptions = [];
-    // Refactor using .map when possible
     for(var i=0; i<scheduleConfig.schedules.length; i++) {
       servOptions.push(<option key={scheduleConfig.schedules[i].id} value={scheduleConfig.schedules[i].id}>{scheduleConfig.schedules[i].type}</option>);
      }
@@ -913,6 +916,19 @@ class MfsKey extends Component {
             <ListGroupItem header="Modifier 26">This is too.</ListGroupItem>
           </ListGroup>
         </div>
+      );
+  }
+}
+
+class Footer extends Component {
+  render() {
+    return(
+      <Grid>
+        <hr />
+        <footer>
+          <a href="#">VWC Public Website</a>
+        </footer>
+      </Grid>
       );
   }
 }

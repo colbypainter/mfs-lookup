@@ -35,6 +35,10 @@ var schedule17 = require('./hospitalOutpatientREVENUEHCPCSOtherHospital.json');
 var schedule18 = require('./ascCPT.json');
 var schedule19 = require('./ascREVENUE.json');
 var schedule20 = require('./profAnesthesiaCPT.json');
+var schedule21 = require('./profAllOtherServicesCPTSurgeon.json');
+var schedule22 = require('./profAllOtherServicesCPTNon-Surgeon.json');
+var schedule23 = require('./profAllOtherServicesHCPCSSurgeon.json');
+var schedule24 = require('./profAllOtherServicesHCPCSNon-Surgeon.json');
 
 
 const schedules = {
@@ -57,7 +61,11 @@ const schedules = {
   './hospitalOutpatientREVENUEHCPCSOtherHospital.json': schedule17,
   './ascCPT.json': schedule18,
   './ascREVENUE.json': schedule19,
-  './profAnesthesiaCPT.json': schedule20
+  './profAnesthesiaCPT.json': schedule20,
+  './profAllOtherServicesCPTSurgeon.json': schedule21,
+  './profAllOtherServicesCPTNon-Surgeon.json': schedule22,
+  './profAllOtherServicesHCPCSSurgeon.json': schedule23,
+  './profAllOtherServicesHCPCSNon-Surgeon.json': schedule24
 };
 
 class App extends Component {

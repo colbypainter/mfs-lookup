@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
-import { Grid, Row, Col, Navbar, Jumbotron, ListGroup, ListGroupItem, 
+import { Grid, Row, Col, Nav, NavItem, NavDropdown, MenuItem, Navbar, Jumbotron, ListGroup, ListGroupItem, 
         Button, Form, FormControl, FormGroup, ControlLabel, HelpBlock, 
         Alert, Table, Panel } from 'react-bootstrap';
 
@@ -329,6 +329,12 @@ class Header extends Component {
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav pullRight>
+              <NavItem eventKey={1} href="#">Ground Rules</NavItem>
+              <NavItem eventKey={2} href="#">Fee Schedule</NavItem>
+            </Nav>
+          </Navbar.Collapse>
         </Grid>
       </Navbar>
     );
@@ -338,12 +344,12 @@ class Header extends Component {
 class WelcomeContent extends Component {
   render() {
     return (
-        <Jumbotron className="MfsPanels">
+        <Panel className="MfsPanels welcome-panel">
           <h2>Medical Fee Schedule</h2>
-          <p>Effective for all dates of service on or after January 1, 2018, rates will be subject to VWC's Medical Fee Schedule.</p>
+          <p>Effective for all dates of service on or after January 1, 2018, medical fees will be subject to VWC's Medical Fee Schedule.</p>
           <p>Use the tools below to find out your regional classification or determine your maximum rate of payment.</p>
           <p>Want to know more about the Fee Schedule? Please refer to our <a href="">Ground Rules</a> documentation or view the <a href="">Fee Schedule</a> itself.</p>
-        </Jumbotron>
+        </Panel>
       );
   }
 }
@@ -386,9 +392,6 @@ class ZipLookup extends Component {
             <Col>
              <h5>Enter the <strong>first three digits</strong> of the zip code for the location of service.</h5>
             </Col>
-            <Col>
-              Your region is: <ZipMessage region={this.state.region} message={this.state.message} zip={this.state.zip}/>
-            </Col>
             <hr/>
               <Form inline>
                 <Col xs={12} mdOffset={3} md={9}>
@@ -401,6 +404,10 @@ class ZipLookup extends Component {
                       <ZipSubmitButton zip={this.state.zip} findRegion={this.findRegion} />
                 </Col>
               </Form>
+            <hr/>
+            <Col md={6} mdOffset={6} className="zip-result">
+              <ZipMessage region={this.state.region} message={this.state.message} zip={this.state.zip}/>
+            </Col>
           </Panel>
         );
       }
@@ -429,14 +436,48 @@ class ZipMessage extends Component {
     if(this.props.message == null) { 
       return(null); 
     } else if(this.props.region === undefined && this.props.message === true) {
-      return (
-        <span className="danger">Not found.</span>
-      );
+      return(
+        <Panel className="results-panel MfsPanels" >
+        
+          <Table bordered fill>
+            <thead>
+              <tr>
+                <th>Search Results</th>
+                <th><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Region</th>
+                <td>Not Found</td>
+              </tr>
+            </tbody>
+          </Table>
+        
+        </Panel>
+        );
     } else {
-      return (
-        <strong>{this.props.region}</strong>
+    return (
+      <Panel className="results-panel MfsPanels" >
+      
+        <Table bordered fill>
+          <thead>
+            <tr>
+              <th>Search Results</th>
+              <th><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Region</th>
+              <td>{this.props.region}</td>
+            </tr>
+          </tbody>
+        </Table>
+      
+      </Panel>
       );
-    }
+    } 
   }
 }
 
@@ -814,6 +855,28 @@ class Results extends Component {
     if(this.props.maximumFee == null) {
       return null;
     }
+    if(this.props.maximumFee === "Not Found") {
+      return (
+        <Panel className="results-panel MfsPanels" >
+        
+          <Table bordered fill>
+            <thead>
+              <tr>
+                <th>Search Results</th>
+                <th><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Maximum Fee</th>
+                <td>Not Found</td>
+              </tr>
+            </tbody>
+          </Table>
+        
+        </Panel>
+        );
+    }
     return (
       <Panel className="results-panel MfsPanels" >
       
@@ -886,7 +949,7 @@ class RecentResults extends Component {
     resultsRows.reverse;
     
     return (
-      <Panel header="Recent Searches" className="MfsPanels" bsStyle="info">
+      <Panel header="Recent Searches" className="MfsPanels">
         <Table bordered striped fill>
           <thead>
             <tr>

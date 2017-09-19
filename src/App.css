@@ -26,6 +26,9 @@ Secondary (light) blue is: #eae8f1
     background-color: #ebc244;
 }
 
+.navbar-default .navbar-nav > li > a {
+    color: white;
+}
 
 
 /** End Main Nav Styling **/
@@ -68,7 +71,7 @@ Secondary (light) blue is: #eae8f1
   color: white;
 }
 
-.MfsPanels.jumbotron {
+.MfsPanels.welcome-panel {
   background-color: white;
   border-radius: 0em;
   padding-left: 24px;
@@ -88,7 +91,7 @@ Secondary (light) blue is: #eae8f1
 
 
 .zip-result {
-  text-align: center;
+  margin-top: 20px;
 }
 
 .FeeLookup form {
@@ -108,6 +111,10 @@ Secondary (light) blue is: #eae8f1
 
 .glyphicon-ok {
   color: green;
+}
+
+.glyphicon-remove {
+  color: red;
 }
 
 .mfs-key {

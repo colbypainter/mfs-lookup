@@ -166,7 +166,8 @@ class App extends Component {
   changeServiceCode(event) {
     var newServiceCode = event.target.value;
     this.setState((state, props) => ({
-      serviceCode: newServiceCode
+      serviceCode: newServiceCode,
+      maximumFee: null
     }));
   }
   
@@ -174,11 +175,11 @@ class App extends Component {
     var newModifier = event.target.value;
     if(_.includes(["P1", "P2", "P3", "P4", "P5", "P6"], newModifier)) {
       var newModifierValue = scheduleConfig.modifierKey[newModifier];
-      console.log("testing modifier value: " + newModifierValue);
     }
     this.setState((state, props) => ({
       modifier: newModifier,
-      modifierValue: newModifierValue
+      modifierValue: newModifierValue,
+      maximumFee: null
     }));
   }
   
@@ -284,6 +285,8 @@ class App extends Component {
                         codeType={this.state.codeType}
                         serviceCode={this.state.serviceCode}
                         modifier={this.state.modifier}
+                        modifierValue={this.state.modifierValue}
+                        baseUnits={this.state.baseUnits}
                         providerType={this.state.providerType}
                         maximumFee={this.state.maximumFee}
                         changeServiceType={this.changeServiceType}
@@ -497,14 +500,14 @@ class LookupForm extends Component {
         <Form>
           <Col md={2}>
             <FormGroup>
-              <ControlLabel>Region</ControlLabel>
+              <ControlLabel>Region*</ControlLabel>
               <RegionSelect changeRegion={this.props.changeRegion}/>
             </FormGroup>
           </Col>
           
           <Col md={6}>
             <FormGroup>
-              <ControlLabel>Fee Schedule - Service Type</ControlLabel>
+              <ControlLabel>Fee Schedule - Service Type*</ControlLabel>
               <ServiceTypeSelect region={this.props.region} 
                                   serviceType={this.props.serviceType}
                                   secondaryType={this.props.secondaryType}
@@ -534,7 +537,7 @@ class LookupForm extends Component {
           
           <Col md={2}>
             <FormGroup>
-              <ControlLabel>Code Type</ControlLabel>
+              <ControlLabel>Code Type*</ControlLabel>
               <CodeTypeInput region={this.props.region} 
                   serviceType={this.props.serviceType}
                   secondaryType={this.props.secondaryType}
@@ -567,6 +570,7 @@ class LookupForm extends Component {
                               serviceCode={this.props.serviceCode}
                               changeModifier={this.props.changeModifier} 
                               modifier={this.props.modifier} />
+                              
           </Col>
           
           <Col md={6}>
@@ -601,6 +605,8 @@ class LookupForm extends Component {
                       codeType={this.props.codeType}
                       serviceCode={this.props.serviceCode}
                       modifier={this.props.modifier}
+                      modifierValue={this.props.modifierValue}
+                      baseUnits={this.props.baseUnits}
                       providerType={this.props.providerType}
                       maximumFee={this.props.maximumFee}
                       recentResults={this.props.recentResults} 
@@ -670,7 +676,7 @@ class SecondaryTypeSelect extends Component {
         // If the array has contents, it is valid to display
         return(
           <FormGroup>
-            <ControlLabel>Secondary Service Type</ControlLabel>
+            <ControlLabel>Secondary Service Type*</ControlLabel>
             <FormControl componentClass="select" onChange={this.props.changeSecondaryType}>
               {secondaryOptions}
             </FormControl>
@@ -733,8 +739,11 @@ class ServiceCodeLabel extends Component {
     if (codeType == "REVENUE+HCPCS") {
       codeType = "HCPCS";
     }
+    if (codeType == "REVENUE") {
+      codeType = "Revenue";
+    }
     return(
-      <ControlLabel>{codeType} Code</ControlLabel>
+      <ControlLabel>{codeType} Code*</ControlLabel>
       );
   }
 }
@@ -771,23 +780,23 @@ class ModifierInput extends Component {
       
       if (obj.length === 0) {
         return(null);
+      } else {
+        modArray.push(<option key="default" value="">Select</option>);
+        console.log(obj);
+        _.forEach(obj, function(key, opt) {
+          // Make the key unique to prevent the choice from sticking on front-end
+          modArray.push(<option key={[id]+[secType]+[cdType]+[key]+[opt]} value={obj[opt]}>{obj[opt]}</option>);
+        });
+        
+        return(
+          <FormGroup>
+            <ControlLabel>Modifier</ControlLabel>
+            <FormControl componentClass="select" onChange={this.props.changeModifier}>
+              {modArray}
+            </FormControl>
+          </FormGroup>
+          );
       }
-      
-      modArray.push(<option key="default" value="">Select</option>);
-      console.log(obj);
-      _.forEach(obj, function(key, opt) {
-        // Make the key unique to prevent the choice from sticking on front-end
-        modArray.push(<option key={[id]+[secType]+[cdType]+[key]+[opt]} value={obj[opt]}>{obj[opt]}</option>);
-      });
-      
-      return(
-        <FormGroup>
-          <ControlLabel>Modifier</ControlLabel>
-          <FormControl componentClass="select" onChange={this.props.changeModifier}>
-            {modArray}
-          </FormControl>
-        </FormGroup>
-        );
     }
     catch(err) {
       console.log(err);
@@ -830,7 +839,7 @@ class ProviderTypeInput extends Component {
         // If the array has contents, it is valid to display
         return(
           <FormGroup>
-            <ControlLabel>Provider Type</ControlLabel>
+            <ControlLabel>Provider Type*</ControlLabel>
               <FormControl componentClass="select" onChange={this.props.changeProviderType}>
                 {provTypes}
               </FormControl>
@@ -863,43 +872,46 @@ class Results extends Component {
     if(this.props.maximumFee == null) {
       return null;
     }
+    var resultsIndicator = null;
     if(this.props.maximumFee === "Not Found") {
-      return (
-        <Panel className="results-panel MfsPanels" >
-        
-          <Table bordered fill>
-            <thead>
-              <tr>
-                <th>Search Results</th>
-                <th><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Maximum Fee</th>
-                <td>Not Found</td>
-              </tr>
-            </tbody>
-          </Table>
-        
-        </Panel>
-        );
+      resultsIndicator = 
+      <th><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></th>;
+    } else {
+      resultsIndicator = <th><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></th>;
     }
-    return (
+    
+    
+    var maxFeeRow = null;
+    var baseUnitsRow = null;
+    var conversionRateRow = null;
+    var PSUModifierRow = null;
+    console.log("secondary service type is: " + this.props.secondaryType);
+    
+    if(this.props.secondaryType === "Anesthesia") {
+      baseUnitsRow = <tr><td>Base Units</td><td>{this.props.baseUnits}</td></tr>;
+      conversionRateRow = <tr><td>Conversion Rate</td><td>{this.props.maximumFee}</td></tr>;
+      PSUModifierRow = <tr><td>Physical Status Units</td><td>{this.props.modifier}{" "}{this.props.modifierValue}</td></tr>;
+      maxFeeRow = <tr><td>Maximum Fee</td><td>= {this.props.maximumFee} x {this.props.baseUnits} x {this.props.modifierValue} x TIME UNITS</td></tr>;
+      
+    } else {
+      maxFeeRow = <tr><td>Maximum Fee</td><td>{this.props.maximumFee}</td></tr>;
+    }
+    
+    return(
       <Panel className="results-panel MfsPanels" >
       
         <Table bordered fill>
           <thead>
             <tr>
               <th>Search Results</th>
-              <th><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
+              {resultsIndicator}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>Maximum Fee</th>
-              <td>{this.props.maximumFee}</td>
-            </tr>
+              {conversionRateRow}
+              {baseUnitsRow}
+              {PSUModifierRow}
+              {maxFeeRow}
           </tbody>
         </Table>
       

@@ -49,8 +49,7 @@ See about differentiating the injectable codes for prof services
 Double-back and handle the HCPCS+REV better (with a separate checkbox)
 Check on that crazy outlier thing Drema mentioned
 Add a disclaimer (maybe?)
-Get prof services codes working
-
+Fix phantom modifier rendering
 
 NICE TO HAVE:
 Rewrite the code for Modifiers so I'm not storing the code + modifier in the JSON file. That's bad.

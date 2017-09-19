@@ -887,7 +887,7 @@ class Results extends Component {
     var PSUModifierRow = null;
     console.log("secondary service type is: " + this.props.secondaryType);
     
-    if(this.props.secondaryType === "Anesthesia") {
+    if(this.props.secondaryType === "Anesthesia" && this.props.maximumFee !== "Not Found") {
       baseUnitsRow = <tr><td>Base Units</td><td>{this.props.baseUnits}</td></tr>;
       conversionRateRow = <tr><td>Conversion Rate</td><td>{this.props.maximumFee}</td></tr>;
       PSUModifierRow = <tr><td>Physical Status Units</td><td>{this.props.modifier}{" "}{this.props.modifierValue}</td></tr>;

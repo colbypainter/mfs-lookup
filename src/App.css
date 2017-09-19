@@ -90,8 +90,8 @@ Secondary (light) blue is: #eae8f1
 }
 
 
-.zip-result {
-  margin-top: 20px;
+.ZipLookup form {
+  margin-bottom: 50px;
 }
 
 .FeeLookup form {
@@ -109,6 +109,9 @@ Secondary (light) blue is: #eae8f1
   color: black;
 }
 
+.zip-result {
+  margin-top: 25px;
+}
 .glyphicon-ok {
   color: green;
 }

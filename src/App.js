@@ -404,8 +404,8 @@ class ZipLookup extends Component {
                       <ZipSubmitButton zip={this.state.zip} findRegion={this.findRegion} />
                 </Col>
               </Form>
-            <hr/>
-            <Col md={6} mdOffset={6} className="zip-result">
+            <Col xs={12} md={6} mdOffset={6} className="zip-result">
+              
               <ZipMessage region={this.state.region} message={this.state.message} zip={this.state.zip}/>
             </Col>
           </Panel>

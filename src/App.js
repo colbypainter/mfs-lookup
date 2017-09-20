@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import logo from './logo.svg';
+import logo from './logo100x100.png';
 import './App.css';
 import { Grid, Row, Col, Nav, NavItem, NavDropdown, MenuItem, Navbar, Jumbotron, ListGroup, ListGroupItem, 
         Button, Form, FormControl, FormGroup, ControlLabel, HelpBlock, 
@@ -397,6 +397,7 @@ class WelcomeContent extends Component {
     return (
       <div>
         <Panel className="app-title">
+          <img src={logo} alt="Smiley face" />
           <h2>Medical Fee Schedule</h2>
           <h4>Reference Tools</h4>
         </Panel>
@@ -938,8 +939,8 @@ class Results extends Component {
     var PSUModifierRow = null;
     console.log("secondary service type is: " + this.props.secondaryType);
     // TODO consider whether to display these if they do not apply to that schedule
-    var multiSurgRow = <tr><td>Multi-Surgery Discount Applies</td><td>{this.props.multiSurgApplies}</td></tr>;
-    var bilatSurgRow = <tr><td>Bilateral Surgery Discount Applies</td><td>{this.props.bilatSurgApplies}</td></tr>;
+    var multiSurgRow = <tr><td>Multi-Surgery Reduction Applies</td><td>{this.props.multiSurgApplies}</td></tr>;
+    var bilatSurgRow = <tr><td>Bilateral Surgery Reduction Applies</td><td>{this.props.bilatSurgApplies}</td></tr>;
     
     if(this.props.secondaryType === "Anesthesia" && this.props.maximumFee !== "Not Found") {
       baseUnitsRow = <tr><td>Base Units</td><td>{this.props.baseUnits}</td></tr>;

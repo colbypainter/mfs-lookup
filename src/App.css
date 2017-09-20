@@ -80,6 +80,13 @@ Secondary (light) blue is: #eae8f1
   padding-bottom: 18px;
 }
 
+.app-title {
+  text-align: center;
+  background-color: #182a72;
+  color: white;
+  border-radius: 0em;
+  width: 100%;
+}
 
 #zip_input {
   width: 125px;

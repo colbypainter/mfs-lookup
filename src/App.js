@@ -85,6 +85,8 @@ class App extends Component {
       modifierValue: null,
       baseUnits: null,
       maximumFee: null,
+      multiSurgApplies: null,
+      bilatSurgApplies: null,
       recentResults: []
     };
     this.changeRegion = this.changeRegion.bind(this);
@@ -98,6 +100,8 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.querySchedule = this.querySchedule.bind(this);
     this.changeBaseUnits = this.changeBaseUnits.bind(this);
+    this.changeMultiSurgApplies = this.changeMultiSurgApplies.bind(this);
+    this.changeBilatSurgApplies = this.changeBilatSurgApplies.bind(this);
     this.changeMaximumFee = this.changeMaximumFee.bind(this);
     this.updateRecentResults = this.updateRecentResults.bind(this);
   }
@@ -105,7 +109,8 @@ class App extends Component {
   changeRegion(event) { 
     var newRegion = event.target.value;
     this.setState((state, props) => ({
-      region: newRegion
+      region: newRegion,
+      maximumFee: null
     }));
   }
   
@@ -120,6 +125,8 @@ class App extends Component {
       baseUnits: null,
       providerType: null,
       serviceCode: "",
+      multiSurgApplies: null,
+      bilatSurgApplies: null,
       maximumFee: null
     }));
   }
@@ -135,6 +142,8 @@ class App extends Component {
       baseUnits: null,
       providerType: null,
       serviceCode: "",
+      multiSurgApplies: null,
+      bilatSurgApplies: null,
       maximumFee: null
     }));
   }
@@ -150,6 +159,8 @@ class App extends Component {
       baseUnits: null,
       providerType: null,
       serviceCode: "",
+      multiSurgApplies: null,
+      bilatSurgApplies: null,
       maximumFee: null
     }));
   }
@@ -158,6 +169,8 @@ class App extends Component {
     var newProvType = event.target.value;
     this.setState((state, props) => ({
       providerType: newProvType,
+      multiSurgApplies: null,
+      bilatSurgApplies: null,
       maximumFee: null
     }));
 
@@ -167,6 +180,8 @@ class App extends Component {
     var newServiceCode = event.target.value;
     this.setState((state, props) => ({
       serviceCode: newServiceCode,
+      multiSurgApplies: null,
+      bilatSurgApplies: null,
       maximumFee: null
     }));
   }
@@ -179,6 +194,8 @@ class App extends Component {
     this.setState((state, props) => ({
       modifier: newModifier,
       modifierValue: newModifierValue,
+      multiSurgApplies: null,
+      bilatSurgApplies: null,
       maximumFee: null
     }));
   }
@@ -215,12 +232,14 @@ class App extends Component {
     }
     
     var table = schedules[pathname];
-    console.log("Before query, code is: " + cd + " and region is: " + reg);
     var maxValue = _.get(table, [cd, reg], "Not Found");
     var baseUnits = _.get(table, [cd, "Base Units"], "Not Found");
-    console.log("Testing base units: " + baseUnits);
+    var multiSurg = _.get(table, [cd, "Mult Surg Adjustment Applies"], "N/A");
+    var bilatSurg = _.get(table, [cd, "Bilat Surg Adjustment Applies"], "N/A");
     this.changeBaseUnits(baseUnits);
     this.changeMaximumFee(maxValue);
+    this.changeMultiSurgApplies(multiSurg);
+    this.changeBilatSurgApplies(bilatSurg);
   }
   
   changeMaximumFee(fee) {
@@ -236,6 +255,20 @@ class App extends Component {
     var newBaseUnits = baseUnits;
     this.setState({
       baseUnits: newBaseUnits
+    });
+  }
+  
+  changeMultiSurgApplies(applies) {
+    var newMultiSurgApplies = applies;
+    this.setState({
+      multiSurgApplies: newMultiSurgApplies
+    });
+  }
+  
+  changeBilatSurgApplies(applies) {
+    var newBilatSurgApplies = applies;
+    this.setState({
+      bilatSurgApplies: newBilatSurgApplies
     });
   }
   
@@ -289,6 +322,9 @@ class App extends Component {
                         baseUnits={this.state.baseUnits}
                         providerType={this.state.providerType}
                         maximumFee={this.state.maximumFee}
+                        multiSurgApplies={this.state.multiSurgApplies}
+                        bilatSurgApplies={this.state.bilatSurgApplies}
+
                         changeServiceType={this.changeServiceType}
                         changeRegion={this.changeRegion}
                         changeCodeType={this.changeCodeType} 
@@ -297,7 +333,9 @@ class App extends Component {
                         changeModifier={this.changeModifier}
                         changeProviderType={this.changeProviderType} 
                         handleSubmit={this.handleSubmit}
-                        changeMaximumFee={this.changeMaximumFee} 
+                        changeMaximumFee={this.changeMaximumFee}
+                        changeMultiSurgApplies={this.changeMultiSurgApplies}
+                        changeBilatSurgApplies={this.changeBilatSurgApplies}
                         recentResults={this.state.recentResults} 
                         updateRecentResults={this.updateRecentResults} />
           </div>
@@ -311,7 +349,9 @@ class App extends Component {
                       serviceCode={this.state.serviceCode}
                       modifier={this.state.modifier}
                       providerType={this.state.providerType}
-                      maximumFee={this.state.maximumFee} 
+                      maximumFee={this.state.maximumFee}
+                      multiSurgApplies={this.state.multiSurgApplies}
+                      bilatSurgApplies={this.state.bilatSurgApplies}
                       recentResults={this.state.recentResults} 
                       updateRecentResults={this.updateRecentResults}  />
           </div>
@@ -355,12 +395,17 @@ class Header extends Component {
 class WelcomeContent extends Component {
   render() {
     return (
-        <Panel className="MfsPanels welcome-panel">
+      <div>
+        <Panel className="app-title">
           <h2>Medical Fee Schedule</h2>
+          <h4>Reference Tools</h4>
+        </Panel>
+        <Panel className="MfsPanels welcome-panel">
           <p>Effective for all dates of service on or after January 1, 2018, medical fees will be subject to VWC's Medical Fee Schedule.</p>
           <p>Use the tools below to find out your regional classification or determine your maximum rate of payment.</p>
           <p>Want to know more about the Fee Schedule? Please refer to our <a href="">Ground Rules</a> documentation or view the <a href="">Fee Schedule</a> itself.</p>
         </Panel>
+      </div>
       );
   }
 }
@@ -590,7 +635,11 @@ class LookupForm extends Component {
           
           <Col md={12}>
               <SearchButton handleSubmit={this.props.handleSubmit} maximumFee={this.props.maximumFee}
+                                                        multiSurgApplies={this.props.multiSurgApplies}
+                                                        bilatSurgApplies={this.props.bilatSurgApplies}
                                                         changeMaximumFee={this.props.changeMaximumFee} 
+                                                        changeMultiSurgApplies={this.props.changeMultiSurgApplies}
+                                                        changeBilatSurgApplies={this.props.changeBilatSurgApplies}
                                                         recentResults={this.props.recentResults} 
                                                         updateRecentResults={this.props.updateRecentResults} />
           <hr />
@@ -608,6 +657,8 @@ class LookupForm extends Component {
                       modifierValue={this.props.modifierValue}
                       baseUnits={this.props.baseUnits}
                       providerType={this.props.providerType}
+                      multiSurgApplies={this.props.multiSurgApplies}
+                      bilatSurgApplies={this.props.bilatSurgApplies}
                       maximumFee={this.props.maximumFee}
                       recentResults={this.props.recentResults} 
                       updateRecentResults={this.updateRecentResults} 
@@ -886,11 +937,14 @@ class Results extends Component {
     var conversionRateRow = null;
     var PSUModifierRow = null;
     console.log("secondary service type is: " + this.props.secondaryType);
+    // TODO consider whether to display these if they do not apply to that schedule
+    var multiSurgRow = <tr><td>Multi-Surgery Discount Applies</td><td>{this.props.multiSurgApplies}</td></tr>;
+    var bilatSurgRow = <tr><td>Bilateral Surgery Discount Applies</td><td>{this.props.bilatSurgApplies}</td></tr>;
     
     if(this.props.secondaryType === "Anesthesia" && this.props.maximumFee !== "Not Found") {
       baseUnitsRow = <tr><td>Base Units</td><td>{this.props.baseUnits}</td></tr>;
       conversionRateRow = <tr><td>Conversion Rate</td><td>{this.props.maximumFee}</td></tr>;
-      PSUModifierRow = <tr><td>Physical Status Units</td><td>{this.props.modifier}{" "}{this.props.modifierValue}</td></tr>;
+      PSUModifierRow = <tr><td>Physical Status Units</td><td>{this.props.modifierValue}</td></tr>;
       maxFeeRow = <tr><td>Maximum Fee</td><td>= {this.props.maximumFee} x {this.props.baseUnits} x {this.props.modifierValue} x TIME UNITS</td></tr>;
       
     } else {
@@ -912,6 +966,8 @@ class Results extends Component {
               {baseUnitsRow}
               {PSUModifierRow}
               {maxFeeRow}
+              {multiSurgRow}
+              {bilatSurgRow}
           </tbody>
         </Table>
       

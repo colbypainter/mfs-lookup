@@ -100,6 +100,10 @@ Secondary (light) blue is: #eae8f1
   margin-bottom: 50px;
 }
 
+.ZipLookup .panel-body h4 {
+  text-align: center;
+}
+
 .FeeLookup form {
   margin-bottom: 50px;
 }

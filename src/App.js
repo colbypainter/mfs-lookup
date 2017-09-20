@@ -447,7 +447,7 @@ class ZipLookup extends Component {
         return (
           <Panel className="MfsPanels ZipLookup" header="Find Your Region">
             <Col>
-             <h5>Enter the <strong>first three digits</strong> of the zip code for the location of service.</h5>
+             <h4>Enter the <strong>first three digits</strong> of the zip code for the location of service.</h4>
             </Col>
             <hr/>
               <Form inline>
@@ -1049,7 +1049,7 @@ class RecentResults extends Component {
 class MfsKey extends Component {
   render() {
     return (
-        <div className="mfs-key">
+        <div className="mfs-key" >
           <h3>Terms and Information</h3>
           <ListGroup>
             <ListGroupItem header="Type One Teaching Hospital">This is a good place to define terms or concepts.</ListGroupItem>

@@ -460,7 +460,7 @@ class ZipLookup extends Component {
                       <ZipSubmitButton zip={this.state.zip} findRegion={this.findRegion} />
                 </Col>
               </Form>
-            <Col xs={12} md={6} mdOffset={6} className="zip-result">
+            <Col xs={8} xsOffset={2} className="zip-result">
               
               <ZipMessage region={this.state.region} message={this.state.message} zip={this.state.zip}/>
             </Col>
@@ -647,7 +647,7 @@ class LookupForm extends Component {
           
         </Form>
           
-          <Col md={6} mdOffset={6} >
+          <Col xs={10} xsOffset={1} >
             <Results region={this.props.region} 
                       serviceType={this.props.serviceType}
                       secondaryType={this.props.secondaryType}
@@ -945,7 +945,7 @@ class Results extends Component {
       baseUnitsRow = <tr><td>Base Units</td><td>{this.props.baseUnits}</td></tr>;
       conversionRateRow = <tr><td>Conversion Rate</td><td>{this.props.maximumFee}</td></tr>;
       PSUModifierRow = <tr><td>Physical Status Units</td><td>{this.props.modifierValue}</td></tr>;
-      maxFeeRow = <tr><td>Maximum Fee</td><td>= {this.props.maximumFee} x {this.props.baseUnits} x {this.props.modifierValue} x TIME UNITS</td></tr>;
+      maxFeeRow = <tr><td>Maximum Fee</td><td>= {this.props.maximumFee} x ({this.props.baseUnits} + {this.props.modifierValue} + TIME UNITS)</td></tr>;
       
     } else {
       maxFeeRow = <tr><td>Maximum Fee</td><td>{this.props.maximumFee}</td></tr>;

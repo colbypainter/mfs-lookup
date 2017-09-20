@@ -93,6 +93,18 @@
                         }
                     }]
                 },
+                "Injectable Drugs": {
+                    "codeType": [{
+                        "CPT": { 
+                            "facilityType": [],
+                            "modifiers": []
+                        },
+                        "HCPCS": { 
+                            "facilityType": [],
+                            "modifiers": []
+                        }
+                    }]
+                },
                 "All Other Services": {
                     "codeType": [{
                         "CPT": { 

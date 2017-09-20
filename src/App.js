@@ -39,6 +39,8 @@ var schedule21 = require('./profAllOtherServicesCPTSurgeon.json');
 var schedule22 = require('./profAllOtherServicesCPTNon-Surgeon.json');
 var schedule23 = require('./profAllOtherServicesHCPCSSurgeon.json');
 var schedule24 = require('./profAllOtherServicesHCPCSNon-Surgeon.json');
+var schedule25 = require('./profInjectableDrugsCPT.json');
+var schedule26 = require('./profInjectableDrugsHCPCS.json');
 
 
 const schedules = {
@@ -65,7 +67,9 @@ const schedules = {
   './profAllOtherServicesCPTSurgeon.json': schedule21,
   './profAllOtherServicesCPTNon-Surgeon.json': schedule22,
   './profAllOtherServicesHCPCSSurgeon.json': schedule23,
-  './profAllOtherServicesHCPCSNon-Surgeon.json': schedule24
+  './profAllOtherServicesHCPCSNon-Surgeon.json': schedule24,
+  './profInjectableDrugsCPT.json': schedule25,
+  './profInjectableDrugsHCPCS.json': schedule26
 };
 
 class App extends Component {

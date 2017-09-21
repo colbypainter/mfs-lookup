@@ -47,6 +47,7 @@ Add the yellow tabs (if drema approves)
 See about differentiating the injectable codes for prof services
 Check on that crazy outlier thing Drema mentioned
 Hitting enter breaks it. 
+Dental probably won't work because of the brackets in the data structure
 
 Fix phantom modifier rendering
 

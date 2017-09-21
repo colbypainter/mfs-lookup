@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import logo from './logo100x100.png';
 import './App.css';
 import { Grid, Row, Col, Nav, NavItem, NavDropdown, MenuItem, Navbar, Jumbotron, ListGroup, ListGroupItem, 
-        Button, Form, FormControl, FormGroup, ControlLabel, HelpBlock, 
-        Alert, Table, Panel } from 'react-bootstrap';
+        Button, Checkbox, Form, FormControl, FormGroup, ControlLabel, HelpBlock, 
+        Alert, Table, Panel } from 'react-bootstrap/lib';
+
 
 var _ = require('lodash');
 
@@ -785,6 +786,7 @@ class CodeTypeInput extends Component {
     }
   }
 }
+
 
 class ServiceCodeLabel extends Component {
   render() {

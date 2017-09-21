@@ -43,11 +43,9 @@ Remove the extra CPT codes in the Physician-All table (May be done but double-ch
 Accomodate Anesthesia output to recent results and validate that it looks appropriate in Results
 Add message/helper tesk functionality
 Set consistent form validation
-Add the yellow tabs (if drema approves)
 See about differentiating the injectable codes for prof services
 Check on that crazy outlier thing Drema mentioned
 Hitting enter breaks it. 
-Dental probably won't work because of the brackets in the data structure
 
 Fix phantom modifier rendering
 

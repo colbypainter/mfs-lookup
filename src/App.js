@@ -105,6 +105,7 @@ class App extends Component {
       maximumFee: null,
       multiSurgApplies: null,
       bilatSurgApplies: null,
+      per: null,
       recentResults: []
     };
     this.changeRegion = this.changeRegion.bind(this);
@@ -120,6 +121,7 @@ class App extends Component {
     this.changeBaseUnits = this.changeBaseUnits.bind(this);
     this.changeMultiSurgApplies = this.changeMultiSurgApplies.bind(this);
     this.changeBilatSurgApplies = this.changeBilatSurgApplies.bind(this);
+    this.changePer = this.changePer.bind(this);
     this.changeMaximumFee = this.changeMaximumFee.bind(this);
     this.updateRecentResults = this.updateRecentResults.bind(this);
   }
@@ -128,6 +130,7 @@ class App extends Component {
     var newRegion = event.target.value;
     this.setState((state, props) => ({
       region: newRegion,
+      per: null,
       maximumFee: null
     }));
   }
@@ -145,6 +148,7 @@ class App extends Component {
       serviceCode: "",
       multiSurgApplies: null,
       bilatSurgApplies: null,
+      per: null,
       maximumFee: null
     }));
   }
@@ -162,6 +166,7 @@ class App extends Component {
       serviceCode: "",
       multiSurgApplies: null,
       bilatSurgApplies: null,
+      per: null,
       maximumFee: null
     }));
   }
@@ -179,6 +184,7 @@ class App extends Component {
       serviceCode: "",
       multiSurgApplies: null,
       bilatSurgApplies: null,
+      per: null,
       maximumFee: null
     }));
   }
@@ -189,6 +195,7 @@ class App extends Component {
       providerType: newProvType,
       multiSurgApplies: null,
       bilatSurgApplies: null,
+      per: null,
       maximumFee: null
     }));
 
@@ -200,6 +207,7 @@ class App extends Component {
       serviceCode: newServiceCode,
       multiSurgApplies: null,
       bilatSurgApplies: null,
+      per: null,
       maximumFee: null
     }));
   }
@@ -214,6 +222,7 @@ class App extends Component {
       modifierValue: newModifierValue,
       multiSurgApplies: null,
       bilatSurgApplies: null,
+      per: null,
       maximumFee: null
     }));
   }
@@ -254,10 +263,12 @@ class App extends Component {
     var baseUnits = _.get(table, [cd, "Base Units"], "Not Found");
     var multiSurg = _.get(table, [cd, "Mult Surg Adjustment Applies"], "N/A");
     var bilatSurg = _.get(table, [cd, "Bilat Surg Adjustment Applies"], "N/A");
+    var per = _.get(table, [cd, "Per"], "");
     this.changeBaseUnits(baseUnits);
     this.changeMaximumFee(maxValue);
     this.changeMultiSurgApplies(multiSurg);
     this.changeBilatSurgApplies(bilatSurg);
+    this.changePer(per);
   }
   
   changeMaximumFee(fee) {
@@ -290,6 +301,12 @@ class App extends Component {
     });
   }
   
+  changePer(perValue) { 
+    var newPer = perValue;
+    this.setState({
+      per: newPer
+    });
+  }
   
   handleSubmit(event) {
     this.createSchedulePath();
@@ -342,6 +359,7 @@ class App extends Component {
                         maximumFee={this.state.maximumFee}
                         multiSurgApplies={this.state.multiSurgApplies}
                         bilatSurgApplies={this.state.bilatSurgApplies}
+                        per={this.state.per}
 
                         changeServiceType={this.changeServiceType}
                         changeRegion={this.changeRegion}
@@ -354,6 +372,7 @@ class App extends Component {
                         changeMaximumFee={this.changeMaximumFee}
                         changeMultiSurgApplies={this.changeMultiSurgApplies}
                         changeBilatSurgApplies={this.changeBilatSurgApplies}
+                        changePer={this.changePer}
                         recentResults={this.state.recentResults} 
                         updateRecentResults={this.updateRecentResults} />
           </div>
@@ -370,6 +389,7 @@ class App extends Component {
                       maximumFee={this.state.maximumFee}
                       multiSurgApplies={this.state.multiSurgApplies}
                       bilatSurgApplies={this.state.bilatSurgApplies}
+                      per={this.state.per}
                       recentResults={this.state.recentResults} 
                       updateRecentResults={this.updateRecentResults}  />
           </div>
@@ -656,9 +676,11 @@ class LookupForm extends Component {
               <SearchButton handleSubmit={this.props.handleSubmit} maximumFee={this.props.maximumFee}
                                                         multiSurgApplies={this.props.multiSurgApplies}
                                                         bilatSurgApplies={this.props.bilatSurgApplies}
+                                                        per={this.props.per}
                                                         changeMaximumFee={this.props.changeMaximumFee} 
                                                         changeMultiSurgApplies={this.props.changeMultiSurgApplies}
                                                         changeBilatSurgApplies={this.props.changeBilatSurgApplies}
+                                                        changePer={this.props.changePer}
                                                         recentResults={this.props.recentResults} 
                                                         updateRecentResults={this.props.updateRecentResults} />
           <hr />
@@ -678,6 +700,7 @@ class LookupForm extends Component {
                       providerType={this.props.providerType}
                       multiSurgApplies={this.props.multiSurgApplies}
                       bilatSurgApplies={this.props.bilatSurgApplies}
+                      per={this.props.per}
                       maximumFee={this.props.maximumFee}
                       recentResults={this.props.recentResults} 
                       updateRecentResults={this.updateRecentResults} 
@@ -968,7 +991,7 @@ class Results extends Component {
       maxFeeRow = <tr><td>Maximum Fee</td><td>= {this.props.maximumFee} x ({this.props.baseUnits} + {this.props.modifierValue} + TIME UNITS)</td></tr>;
       
     } else {
-      maxFeeRow = <tr><td>Maximum Fee</td><td>{this.props.maximumFee}</td></tr>;
+      maxFeeRow = <tr><td>Maximum Fee</td><td>{this.props.maximumFee}{" / " + this.props.per}</td></tr>;
     }
     
     return(

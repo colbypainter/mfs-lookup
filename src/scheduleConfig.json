@@ -190,7 +190,7 @@
         
         {
             "id": "9",
-            "type": "Ground Ambulance",
+            "type": "Ambulance",
             "basePath": "ambulance",
             "secondaryType": [{
                 "null": {

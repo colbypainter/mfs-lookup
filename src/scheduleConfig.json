@@ -55,6 +55,10 @@
                         },
                         "REVENUE+HCPCS": { 
                             "facilityType": ["Type One Hospital", "Other Hospital"]
+                        },
+                        "HCPCS J-Code": { 
+                            "facilityType": ["Type One Hospital", "Other Hospital"],
+                            "modifiers": []
                         }
                     }]
                 } 
@@ -100,6 +104,10 @@
                             "modifiers": []
                         },
                         "HCPCS": { 
+                            "facilityType": [],
+                            "modifiers": []
+                        },
+                        "HCPCS J-Code": { 
                             "facilityType": [],
                             "modifiers": []
                         }

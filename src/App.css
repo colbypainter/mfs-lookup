@@ -118,6 +118,10 @@ Secondary (light) blue is: #eae8f1
   color: black;
 }
 
+.recent-results-row {
+  border-top: 5px solid #eee;
+}
+
 .zip-result {
   margin-top: 25px;
 }

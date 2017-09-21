@@ -49,6 +49,9 @@ var schedule30 = require('./acupunctureCPT.json');
 var schedule31 = require('./dentalHCPCS.json');
 var schedule32 = require('./ambulanceHCPCS.json');
 var schedule33 = require('./scodesHCPCS.json');
+var schedule34 = require('./profInjectableDrugsHCPCSJ-Code.json');
+var schedule35 = require('./hospitalOutpatientHCPCSJ-CodeTypeOneHospital.json');
+var schedule36 = require('./hospitalOutpatientHCPCSJ-CodeOtherHospital.json');
 
 const schedules = {
   './hospitalInpatientRehabCMG.json': schedule1,
@@ -83,7 +86,10 @@ const schedules = {
   './acupunctureCPT.json': schedule30,
   './dentalHCPCS.json': schedule31,
   './ambulanceHCPCS.json': schedule32,
-  './scodesHCPCS.json': schedule33
+  './scodesHCPCS.json': schedule33,
+  './profInjectableDrugsHCPCSJ-Code.json': schedule34,
+  './hospitalOutpatientHCPCSJ-CodeTypeOneHospital.json': schedule35,
+  './hospitalOutpatientHCPCSJ-CodeOtherHospital.json': schedule36
 };
 
 class App extends Component {
@@ -175,13 +181,18 @@ class App extends Component {
   
   changeCodeType(event) {
     var newCodeType = event.target.value;
+    var newServiceCode = "";
+    if (newCodeType === "HCPCS J-Code") {
+      newServiceCode = "JCODE";
+      console.log("testing jcode in changeCodeType");
+    }
     this.setState((state, props) => ({
       codeType: newCodeType,
       modifier: null,
       modifierValue: null,
       baseUnits: null,
       providerType: null,
-      serviceCode: "",
+      serviceCode: newServiceCode,
       multiSurgApplies: null,
       bilatSurgApplies: null,
       per: null,
@@ -322,8 +333,11 @@ class App extends Component {
         codeType: this.state.codeType,
         serviceCode: this.state.serviceCode,
         providerType: this.state.providerType,
+        modifierValue: this.state.modifierValue,
         modifier: this.state.modifier,
         baseUnits: this.state.baseUnits,
+        multiSurgApplies: this.state.multiSurgApplies,
+        bilatSurgApplies: this.state.bilatSurgApplies,
         maximumFee: this.state.maximumFee
       };
       results.unshift(newResult);
@@ -392,10 +406,6 @@ class App extends Component {
                       per={this.state.per}
                       recentResults={this.state.recentResults} 
                       updateRecentResults={this.updateRecentResults}  />
-          </div>
-          
-          <div>
-            <MfsKey />
           </div>
           
         </div>
@@ -836,6 +846,11 @@ class ServiceCodeLabel extends Component {
     if (codeType == "REVENUE") {
       codeType = "Revenue";
     }
+    if (codeType == "HCPCS J-Code") {
+      codeType = "";
+      console.log("testing jcode");
+    }
+    
     return(
       <ControlLabel>{codeType} Code*</ControlLabel>
       );
@@ -848,6 +863,10 @@ class ServiceCodeInput extends Component {
     if (codeType === null) {
       return(
         <FormControl type="text" disabled/>
+        );
+    } else if(codeType == "HCPCS J-Code") {
+      return(
+        <FormControl type="text" value="JCODE" readOnly/>
         );
     }
     return(
@@ -991,7 +1010,7 @@ class Results extends Component {
       maxFeeRow = <tr><td>Maximum Fee</td><td>= {this.props.maximumFee} x ({this.props.baseUnits} + {this.props.modifierValue} + TIME UNITS)</td></tr>;
       
     } else {
-      maxFeeRow = <tr><td>Maximum Fee</td><td>{this.props.maximumFee}{" / " + this.props.per}</td></tr>;
+      maxFeeRow = <tr><td>Maximum Fee</td><td>{this.props.maximumFee}{" " + this.props.per}</td></tr>;
     }
     
     return(
@@ -1042,25 +1061,40 @@ class RecentResults extends Component {
       if (recentResults[i].providerType !== null) { 
         feeSchedule = feeSchedule + ", " + recentResults[i].providerType;
       }
+
+      // Replace the max fee value with the equation for Anesthesia results
+      var maxFee = null;
+      if(recentResults[i].secondaryType === "Anesthesia" && recentResults[i].maximumFee !== "Not Found") {
+        maxFee = <span>= {recentResults[i].maximumFee} x ({recentResults[i].baseUnits} + {recentResults[i].modifierValue} + TIME UNITS)</span>;
+        
+      } else {
+        maxFee = <span>{recentResults[i].maximumFee}</span>;
+      }
       
       resultsRows.push(
 
-              <tr>
+              <tr className="recent-results-row">
                 <td>
-                <strong>Fee Schedule:</strong><br/>
-                 {feeSchedule}<br/>
-                <strong>Region:</strong><br/>
-                 {recentResults[i].region}<br/>
-                <strong>Code:</strong><br/>
-                {"(" + recentResults[i].codeType + "):"} {" "} {recentResults[i].serviceCode}<br/>
-                <strong>Modifier:</strong><br/>
-                 {recentResults[i].modifier}</td>
+                  <strong>Fee Schedule:</strong><br/>
+                   {feeSchedule}<br/>
+                  <strong>Region:</strong><br/>
+                   {recentResults[i].region}<br/>
+                  <strong>Code:</strong><br/>
+                  {"(" + recentResults[i].codeType + "):"} {" "} {recentResults[i].serviceCode}<br/>
+                  <strong>Modifier:</strong><br/>
+                   {recentResults[i].modifier}
+                </td>
                 
                 <td>
-                <strong>Base Units:</strong><br/>
-                 {recentResults[i].baseUnits}<br/>
-                <strong>Maximum Fee:</strong><br/>
-                 {recentResults[i].maximumFee}</td>
+                  <strong>Maximum Fee:</strong><br/>
+                   {maxFee}<br/>
+                  <strong>Base Units:</strong><br/>
+                   {recentResults[i].baseUnits}<br/>
+                  <strong>Multi-Surgery Reduction Applies:</strong><br/>
+                    {recentResults[i].multiSurgApplies}<br/>
+                  <strong>Bilateral Surgery Reduction Applies:</strong><br/>
+                    {recentResults[i].bilatSurgApplies}<br/>
+                </td>
               </tr>
 
         );

@@ -46,12 +46,14 @@ Set consistent form validation
 See about differentiating the injectable codes for prof services
 Check on that crazy outlier thing Drema mentioned
 Hitting enter breaks it. 
+Fix anesthesia results to hide plus sign when there is no P modifier
 
 Fix phantom modifier rendering
 
 NICE TO HAVE:
 Rewrite the code for Modifiers so I'm not storing the code + modifier in the JSON file. That's bad.
 Double-back and handle the HCPCS+REV better (with a separate checkbox)
+Refactor the zip results to eliminate repetitive code in the rendeR
 
 DONE
 Add a disclaimer (maybe?) - NOT NEEDED, Per Drema we can link to the tool on the public site where the disclaimer already exists

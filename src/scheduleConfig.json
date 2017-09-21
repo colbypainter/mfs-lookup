@@ -119,8 +119,106 @@
                 }
                 
             }]
-        }
+        },
         
+        {
+            "id": "5",
+            "type": "Physical Medicine and Rehabilitation Services",
+            "basePath": "physMedRehabServices",
+            "secondaryType": [{
+                "null": {
+                    "codeType": [{
+                        "HCPCS": {
+                            "facilityType": []
+                        },
+                        "CPT": { 
+                            "facilityType": [],
+                            "modifiers": []
+                        }
+                    }]
+                } 
+            }]
+        },
+
+        {
+            "id": "6",
+            "type": "Osteopathic and Chiropractic Manipulative Treatment",
+            "basePath": "osteoChiro",
+            "secondaryType": [{
+                "null": {
+                    "codeType": [{
+                        "CPT": { 
+                            "facilityType": [],
+                            "modifiers": []
+                        }
+                    }]
+                } 
+            }]
+        },
+        
+        {
+            "id": "7",
+            "type": "Acupuncture",
+            "basePath": "acupuncture",
+            "secondaryType": [{
+                "null": {
+                    "codeType": [{
+                        "CPT": { 
+                            "facilityType": [],
+                            "modifiers": []
+                        }
+                    }]
+                } 
+            }]
+        },
+        
+        {
+            "id": "8",
+            "type": "Dental",
+            "basePath": "dental",
+            "secondaryType": [{
+                "null": {
+                    "codeType": [{
+                        "HCPCS": { 
+                            "facilityType": [],
+                            "modifiers": []
+                        }
+                    }]
+                } 
+            }]
+        },
+        
+        {
+            "id": "9",
+            "type": "Ground Ambulance",
+            "basePath": "ambulance",
+            "secondaryType": [{
+                "null": {
+                    "codeType": [{
+                        "HCPCS": { 
+                            "facilityType": [],
+                            "modifiers": []
+                        }
+                    }]
+                } 
+            }]
+        },
+        
+        {
+            "id": "10",
+            "type": "S Codes",
+            "basePath": "scodes",
+            "secondaryType": [{
+                "null": {
+                    "codeType": [{
+                        "HCPCS": { 
+                            "facilityType": [],
+                            "modifiers": []
+                        }
+                    }]
+                } 
+            }]
+        }
     
         
     ],

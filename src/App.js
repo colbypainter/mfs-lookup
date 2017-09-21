@@ -42,7 +42,13 @@ var schedule23 = require('./profAllOtherServicesHCPCSSurgeon.json');
 var schedule24 = require('./profAllOtherServicesHCPCSNon-Surgeon.json');
 var schedule25 = require('./profInjectableDrugsCPT.json');
 var schedule26 = require('./profInjectableDrugsHCPCS.json');
-
+var schedule27 = require('./physMedRehabServicesCPT.json');
+var schedule28 = require('./physMedRehabServicesHCPCS.json');
+var schedule29 = require('./osteoChiroCPT.json');
+var schedule30 = require('./acupunctureCPT.json');
+var schedule31 = require('./dentalHCPCS.json');
+var schedule32 = require('./ambulanceHCPCS.json');
+var schedule33 = require('./scodesHCPCS.json');
 
 const schedules = {
   './hospitalInpatientRehabCMG.json': schedule1,
@@ -70,7 +76,14 @@ const schedules = {
   './profAllOtherServicesHCPCSSurgeon.json': schedule23,
   './profAllOtherServicesHCPCSNon-Surgeon.json': schedule24,
   './profInjectableDrugsCPT.json': schedule25,
-  './profInjectableDrugsHCPCS.json': schedule26
+  './profInjectableDrugsHCPCS.json': schedule26,
+  './physMedRehabServicesCPT.json': schedule27,
+  './physMedRehabServicesHCPCS.json': schedule28,
+  './osteoChiroCPT.json': schedule29,
+  './acupunctureCPT.json': schedule30,
+  './dentalHCPCS.json': schedule31,
+  './ambulanceHCPCS.json': schedule32,
+  './scodesHCPCS.json': schedule33
 };
 
 class App extends Component {

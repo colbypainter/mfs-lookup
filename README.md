@@ -5,8 +5,8 @@ information in any way whatsoever. For official information, see <a href="http:/
 <p>Made with React and Bootstrap.</p>
 
 <h2>Enter your zip code to determine regional classification</h2>
-![ScreenShot](./public/ZipLookupDemo.gif)
+![ScreenShot](./src/ZipLookupDemo.gif)
 
 
 <h2>Enter the service type, code, facility type, etc do determine the maximum appropriate rate.</h2>
-![ScreenShot](./public/FeeLookupDemo.gif)
+![ScreenShot](./src/FeeLookupDemo.gif)

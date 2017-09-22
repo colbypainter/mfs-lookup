@@ -629,7 +629,7 @@ class LookupForm extends Component {
 
           </Col>
           
-          <Col md={2}>
+          <Col md={3}>
             <FormGroup>
               <ControlLabel>Code Type*</ControlLabel>
               <CodeTypeInput region={this.props.region} 
@@ -667,7 +667,7 @@ class LookupForm extends Component {
                               
           </Col>
           
-          <Col md={6}>
+          <Col md={5}>
             <ProviderTypeInput region={this.props.region} 
                                 serviceType={this.props.serviceType}
                                 secondaryType={this.props.secondaryType}

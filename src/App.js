@@ -445,7 +445,7 @@ class WelcomeContent extends Component {
     return (
       <div>
         <Panel className="app-title">
-          <img src={logo} alt="Smiley face" />
+          <img src={logo} alt="VWC Logo" />
           <h2>Medical Fee Schedule</h2>
           <h4>Reference Tools</h4>
         </Panel>
@@ -656,6 +656,21 @@ class LookupForm extends Component {
                                   updateRecentResults={this.props.updateRecentResults} />
             </FormGroup>
           </Col>
+
+          
+          <ProviderTypeInput region={this.props.region} 
+                              serviceType={this.props.serviceType}
+                              secondaryType={this.props.secondaryType}
+                              codeType={this.props.codeType}
+                              providerType={this.props.providerType}
+                              serviceCode={this.props.serviceCode}
+                              maximumFee={this.props.maximumFee}
+                              changeCodeType={this.props.changeCodeType} 
+                              changeProviderType={this.props.changeProviderType} 
+                              recentResults={this.props.recentResults} 
+                              updateRecentResults={this.props.updateRecentResults} />
+                          
+          
           
           <Col md={2}>
               <ModifierInput serviceType={this.props.serviceType} 
@@ -667,20 +682,7 @@ class LookupForm extends Component {
                               
           </Col>
           
-          <Col md={5}>
-            <ProviderTypeInput region={this.props.region} 
-                                serviceType={this.props.serviceType}
-                                secondaryType={this.props.secondaryType}
-                                codeType={this.props.codeType}
-                                providerType={this.props.providerType}
-                                serviceCode={this.props.serviceCode}
-                                maximumFee={this.props.maximumFee}
-                                changeCodeType={this.props.changeCodeType} 
-                                changeProviderType={this.props.changeProviderType} 
-                                recentResults={this.props.recentResults} 
-                                updateRecentResults={this.props.updateRecentResults} />
-                          
-          </Col>
+
           
           <Col md={12}>
               <SearchButton handleSubmit={this.props.handleSubmit} maximumFee={this.props.maximumFee}
@@ -774,6 +776,7 @@ class SecondaryTypeSelect extends Component {
       
       // If the only content of the array is the default option AND the null key, don't display
       if (secondaryOptions.length === 2) {
+        console.log("testing secondary type non-render");
         return(null);
       } else {
         // If the array has contents, it is valid to display
@@ -892,6 +895,7 @@ class ModifierInput extends Component {
       obj = _.filter(obj[secType].codeType[0][cdType].modifiers);
       
       if (obj.length === 0) {
+        console.log("testing modifier non-render");
         return(null);
       } else {
         modArray.push(<option key="default" value="">Select</option>);
@@ -951,12 +955,14 @@ class ProviderTypeInput extends Component {
       } else {
         // If the array has contents, it is valid to display
         return(
-          <FormGroup>
-            <ControlLabel>Provider Type*</ControlLabel>
-              <FormControl componentClass="select" onChange={this.props.changeProviderType}>
-                {provTypes}
-              </FormControl>
-          </FormGroup>
+          <Col md={5}>
+            <FormGroup>
+              <ControlLabel>Provider Type*</ControlLabel>
+                <FormControl componentClass="select" onChange={this.props.changeProviderType}>
+                  {provTypes}
+                </FormControl>
+            </FormGroup>
+          </Col>
           );
         }
       }

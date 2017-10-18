@@ -89,6 +89,7 @@ Secondary (light) blue is: #eae8f1
 
 #zip_input {
   width: 125px;
+  margin: auto;
 }
 
 #zip_submit {
@@ -98,6 +99,7 @@ Secondary (light) blue is: #eae8f1
 
 .ZipLookup form {
   margin-bottom: 50px;
+  text-align: center;
 }
 
 .ZipLookup .panel-body h4 {

@@ -98,7 +98,7 @@ class App extends Component {
     super(props);
     this.state = {
       region: null,
-      // serviceType is currently the ID of the schedule. Name should be changed to scheduleID
+      // Note: serviceType ultimately gets set to the ID of the schedule, not the Name
       serviceType: null,
       secondaryType: null,
       codeType: null,
@@ -499,7 +499,7 @@ class ZipLookup extends Component {
             </Col>
             <hr/>
               <Form inline>
-                <Col xs={12} mdOffset={3} md={9}>
+                <Col xs={12} >
                   <FormGroup>
                       <ControlLabel>Zip Code</ControlLabel>
                       {"   "}

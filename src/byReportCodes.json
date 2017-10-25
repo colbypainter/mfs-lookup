@@ -1,0 +1,58 @@
+{
+    "hospitalOutpatientTypeOneHospital": {
+        "Region 1": "N/A",
+        "Region 2": "80%",
+        "Region 3": "83%",
+        "Region 4": "N/A",
+        "Region 5": "N/A",
+        "Region 6": "N/A"
+    }, 
+    "hospitalOutpatientOtherHospital": {
+        "Region 1": "78%",
+        "Region 2": "82%",
+        "Region 3": "75%",
+        "Region 4": "80%",
+        "Region 5": "79%",
+        "Region 6": "83%"
+    }, 
+    "asc": {
+        "Region 1": "75%",
+        "Region 2": "60%",
+        "Region 3": "65%",
+        "Region 4": "77%",
+        "Region 5": "70%",
+        "Region 6": "70%"
+    }, 
+    "prof": {
+        "Region 1": "78%",
+        "Region 2": "79%",
+        "Region 3": "85%",
+        "Region 4": "79%",
+        "Region 5": "86%",
+        "Region 6": "77%"
+    },
+    "physMedRehabServices": {
+        "Region 1": "78%",
+        "Region 2": "79%",
+        "Region 3": "85%",
+        "Region 4": "79%",
+        "Region 5": "86%",
+        "Region 6": "77%"
+    },
+    "dental": {
+        "Region 1": "78%",
+        "Region 2": "79%",
+        "Region 3": "85%",
+        "Region 4": "79%",
+        "Region 5": "86%",
+        "Region 6": "77%"
+    },
+    "scodes": {
+        "Region 1": "78%",
+        "Region 2": "79%",
+        "Region 3": "85%",
+        "Region 4": "79%",
+        "Region 5": "86%",
+        "Region 6": "77%"
+    }
+}

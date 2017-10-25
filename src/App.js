@@ -8,12 +8,12 @@ import { Grid, Row, Col, Nav, NavItem, NavDropdown, MenuItem, Navbar, Jumbotron,
 
 
 var _ = require('lodash');
-
+// Load the zipcode-region mapping file
 var zipMap = require('./zipMap.json');
-console.log(zipMap);
-        
+// Load the By Report Codes for all BR results
+var byReportCodes = require('./byReportCodes.json');
+// Load the configuration file that determines what options present for each schedule
 var scheduleConfig = require('./scheduleConfig.json');
-console.log(scheduleConfig.schedules[0].type);
 
 // Cannot dynamically create a require(), so must load them then match with the query builder
 var schedule1 = require('./hospitalInpatientRehabCMG.json');
@@ -98,7 +98,7 @@ class App extends Component {
     super(props);
     this.state = {
       region: null,
-      // Note: serviceType ultimately gets set to the ID of the schedule, not the Name
+      // Note: serviceType currently gets set to the ID of the schedule, not the Name
       serviceType: null,
       secondaryType: null,
       codeType: null,
@@ -122,7 +122,7 @@ class App extends Component {
     this.changeServiceCode = this.changeServiceCode.bind(this);
     this.changeModifier = this.changeModifier.bind(this);
     this.createSchedulePath = this.createSchedulePath.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.querySchedule = this.querySchedule.bind(this);
     this.changeBaseUnits = this.changeBaseUnits.bind(this);
     this.changeMultiSurgApplies = this.changeMultiSurgApplies.bind(this);
@@ -271,6 +271,24 @@ class App extends Component {
     
     var table = schedules[pathname];
     var maxValue = _.get(table, [cd, reg], "Not Found");
+    
+    // If the code is BR, it must refer back to the percentage assigned to that schedule. 
+    // There is redundancy in the code here and createSchedulePath, because the base path isn't stored in state. Could improve
+   if(maxValue == 'BR') {
+     let id = this.state.serviceType;
+     let schedule = _.find(scheduleConfig.schedules, { 'id': id});
+     let basePath = schedule.basePath;
+     // Hospital Outpatient BR codes are dependent on the provider type, so we have to append that to the base path
+     if(basePath == 'hospitalOutpatient') { 
+      basePath = basePath + this.state.providerType;
+      // Strip out the spaces
+      basePath = basePath.replace(/ /g, '');
+     }
+     let brCode = _.get(byReportCodes, [basePath, reg], "Not Found");
+     maxValue = "By Report - " + brCode;
+   }
+
+     
     var baseUnits = _.get(table, [cd, "Base Units"], "Not Found");
     var multiSurg = _.get(table, [cd, "Mult Surg Adjustment Applies"], "N/A");
     var bilatSurg = _.get(table, [cd, "Bilat Surg Adjustment Applies"], "N/A");
@@ -319,7 +337,7 @@ class App extends Component {
     });
   }
   
-  handleSubmit(event) {
+  handleSearch(event) {
     this.createSchedulePath();
     event.preventDefault();
   }
@@ -382,7 +400,7 @@ class App extends Component {
                         changeServiceCode={this.changeServiceCode}
                         changeModifier={this.changeModifier}
                         changeProviderType={this.changeProviderType} 
-                        handleSubmit={this.handleSubmit}
+                        handleSearch={this.handleSearch}
                         changeMaximumFee={this.changeMaximumFee}
                         changeMultiSurgApplies={this.changeMultiSurgApplies}
                         changeBilatSurgApplies={this.changeBilatSurgApplies}
@@ -506,7 +524,7 @@ class ZipLookup extends Component {
                       <ZipInput zip={this.state.zip} changeZip={this.changeZip} />
                   </FormGroup>
                   {"   "}
-                      <ZipSubmitButton zip={this.state.zip} findRegion={this.findRegion} />
+                      <ZipSearchButton zip={this.state.zip} findRegion={this.findRegion} />
                 </Col>
               </Form>
             <Col xs={8} xsOffset={2} className="zip-result">
@@ -527,7 +545,7 @@ class ZipInput extends Component {
 }
 
 
-class ZipSubmitButton extends Component {
+class ZipSearchButton extends Component {
   render() {
     return (
       <Button bsStyle="primary" type="button" onClick={this.props.findRegion} zip={this.props.zip}  >
@@ -685,7 +703,7 @@ class LookupForm extends Component {
 
           
           <Col md={12}>
-              <SearchButton handleSubmit={this.props.handleSubmit} maximumFee={this.props.maximumFee}
+              <SearchButton handleSearch={this.props.handleSearch} maximumFee={this.props.maximumFee}
                                                         multiSurgApplies={this.props.multiSurgApplies}
                                                         bilatSurgApplies={this.props.bilatSurgApplies}
                                                         per={this.props.per}
@@ -776,7 +794,6 @@ class SecondaryTypeSelect extends Component {
       
       // If the only content of the array is the default option AND the null key, don't display
       if (secondaryOptions.length === 2) {
-        console.log("testing secondary type non-render");
         return(null);
       } else {
         // If the array has contents, it is valid to display
@@ -891,11 +908,10 @@ class ModifierInput extends Component {
       var obj = _.find(scheduleConfig.schedules, {'id': id});
       //// Get the secondary type object based on the chosen type
       obj = _.find(obj.secondaryType, secType);
-      /// Get the array of modifiers attached to the chain
+      /// Get the array of modifiers
       obj = _.filter(obj[secType].codeType[0][cdType].modifiers);
       
       if (obj.length === 0) {
-        console.log("testing modifier non-render");
         return(null);
       } else {
         modArray.push(<option key="default" value="">Select</option>);
@@ -935,13 +951,11 @@ class ProviderTypeInput extends Component {
       //// Get the secondary type object based on the chosen type
       obj = _.find(obj.secondaryType, secType);
       
-      /// Get the array of facility types attached to the chain
-      /// If problems arise with this, try _.filter instead of _.find
+      /// Get the array of facility types 
       obj = _.find(obj[secType].codeType[0][cdType]);
       console.log(obj);
       
       provTypes.push(<option key="default" value="">Select</option>);
-      /// IF THERE'S A BUG FOUND WITH PROVTYPES, IT PROBABLY HAS TO DO WITH THIS BEING AN ARRAY OF OBJECTS
       _.forEach(obj, function(key, opt) {
         // Make the key unique to prevent the choice from sticking on front-end
         provTypes.push(<option key={[id]+[secType]+[cdType]+[key]+[opt]} value={obj[opt]}>{obj[opt]}</option>);
@@ -979,7 +993,7 @@ class ProviderTypeInput extends Component {
 class SearchButton extends Component {
   render() {
     return (
-      <Button bsStyle="primary" type="button" onClick={this.props.handleSubmit}  >
+      <Button bsStyle="primary" type="button" onClick={this.props.handleSearch}  >
                                                         Search</Button>
       );
   }
@@ -1082,7 +1096,7 @@ class RecentResults extends Component {
               <tr className="recent-results-row">
                 <td>
                   <strong>Fee Schedule:</strong><br/>
-                   {feeSchedule}<br/>
+                   {"    "}{feeSchedule}<br/>
                   <strong>Region:</strong><br/>
                    {recentResults[i].region}<br/>
                   <strong>Code:</strong><br/>
@@ -1127,15 +1141,15 @@ class RecentResults extends Component {
   }
 }
 
-// Accept array of terms from results table and query MfsTerms.json
+// To be used for displaying helpful terms and definitions
 class MfsKey extends Component {
   render() {
     return (
         <div className="mfs-key" >
           <h3>Terms and Information</h3>
           <ListGroup>
-            <ListGroupItem header="Type One Teaching Hospital">This is a good place to define terms or concepts.</ListGroupItem>
-            <ListGroupItem header="Modifier 26">This is too.</ListGroupItem>
+            <ListGroupItem header="Put the term here">Definition goes here.</ListGroupItem>
+            <ListGroupItem header="Put the term here">Definition goes here.</ListGroupItem>
           </ListGroup>
         </div>
       );

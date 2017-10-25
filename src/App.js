@@ -1112,24 +1112,24 @@ class RecentResults extends Component {
               <tr className="recent-results-row">
                 <td>
                   <strong>Fee Schedule:</strong><br/>
-                   {"    "}{feeSchedule}<br/>
+                   <div className="recent-results-data">{feeSchedule}</div>
                   <strong>Region:</strong><br/>
-                   {recentResults[i].region}<br/>
+                   <div className="recent-results-data">{recentResults[i].region}</div>
                   <strong>Code:</strong><br/>
-                  {"(" + recentResults[i].codeType + "):"} {" "} {recentResults[i].serviceCode}<br/>
+                   <div className="recent-results-data">{"(" + recentResults[i].codeType + "):"} {" "} {recentResults[i].serviceCode}</div>
                   <strong>Modifier:</strong><br/>
-                   {recentResults[i].modifier}
+                   <div className="recent-results-data">{recentResults[i].modifier}</div>
                 </td>
                 
                 <td>
                   <strong>Maximum Fee:</strong><br/>
-                   {maxFee}<br/>
+                   <div className="recent-results-data">{maxFee}</div>
                   <strong>Base Units:</strong><br/>
-                   {recentResults[i].baseUnits}<br/>
+                   <div className="recent-results-data">{recentResults[i].baseUnits}</div>
                   <strong>Multi-Surgery Reduction Applies:</strong><br/>
-                    {recentResults[i].multiSurgApplies}<br/>
+                    <div className="recent-results-data">{recentResults[i].multiSurgApplies}</div>
                   <strong>Bilateral Surgery Reduction Applies:</strong><br/>
-                    {recentResults[i].bilatSurgApplies}<br/>
+                    <div className="recent-results-data">{recentResults[i].bilatSurgApplies}</div>
                 </td>
               </tr>
 

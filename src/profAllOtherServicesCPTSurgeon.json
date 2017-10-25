@@ -80639,16 +80639,6 @@
       "Mult Surg Adjustment Applies": "No",
       "Bilat Surg Adjustment Applies": "No"
    },
-   "97039": {
-      "Region 1": "BR",
-      "Region 2": "BR",
-      "Region 3": "BR",
-      "Region 4": "BR",
-      "Region 5": "BR",
-      "Region 6": "BR",
-      "Mult Surg Adjustment Applies": "No",
-      "Bilat Surg Adjustment Applies": "No"
-   },
    "97139": {
       "Region 1": "BR",
       "Region 2": "BR",
@@ -80726,16 +80716,6 @@
       "Region 4": "$303.51",
       "Region 5": "$240.16",
       "Region 6": "$173.02",
-      "Mult Surg Adjustment Applies": "No",
-      "Bilat Surg Adjustment Applies": "No"
-   },
-   "97799": {
-      "Region 1": "BR",
-      "Region 2": "BR",
-      "Region 3": "BR",
-      "Region 4": "BR",
-      "Region 5": "BR",
-      "Region 6": "BR",
       "Mult Surg Adjustment Applies": "No",
       "Bilat Surg Adjustment Applies": "No"
    },

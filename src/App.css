@@ -124,6 +124,10 @@ Secondary (light) blue is: #eae8f1
   border-top: 5px solid #eee;
 }
 
+.recent-results-data {
+  padding-left: 10px;
+}
+
 .zip-result {
   margin-top: 25px;
 }

@@ -1031,10 +1031,14 @@ class Results extends Component {
     }
     
     if(this.props.secondaryType === "Anesthesia" && this.props.maximumFee !== "Not Found" && isQualifyingCircumstance == false) {
+      let modifierSegment = null;
+      if(this.props.modifierValue) {
+        modifierSegment = " + " + this.props.modifierValue;
+      }
       baseUnitsRow = <tr><td>Base Units</td><td>{this.props.baseUnits}</td></tr>;
       conversionRateRow = <tr><td>Conversion Rate</td><td>{this.props.maximumFee}</td></tr>;
       PSUModifierRow = <tr><td>Physical Status Units</td><td>{this.props.modifierValue}</td></tr>;
-      maxFeeRow = <tr><td>Maximum Fee</td><td>= {this.props.maximumFee} x ({this.props.baseUnits} + {this.props.modifierValue} + TIME UNITS)</td></tr>;
+      maxFeeRow = <tr><td>Maximum Fee</td><td>= {this.props.maximumFee} x ({this.props.baseUnits} {modifierSegment} + TIME UNITS)</td></tr>;
       
     } else {
       maxFeeRow = <tr><td>Maximum Fee</td><td>{this.props.maximumFee}{" " + this.props.per}</td></tr>;
@@ -1093,7 +1097,11 @@ class RecentResults extends Component {
       // Replace the max fee value with the equation for Anesthesia results
       var maxFee = null;
       if(recentResults[i].secondaryType === "Anesthesia" && !_.includes(["99100", "99116", "99135", "99140"], recentResults[i].serviceCode)) {
-        maxFee = <span>= {recentResults[i].maximumFee} x ({recentResults[i].baseUnits} + {recentResults[i].modifierValue} + TIME UNITS)</span>;
+        let modifierSegment = null;
+        if(recentResults[i].modifierValue) {
+          modifierSegment = " + " + recentResults[i].modifierValue;
+        }
+        maxFee = <span>= {recentResults[i].maximumFee} x ({recentResults[i].baseUnits} {modifierSegment} + TIME UNITS)</span>;
         
       } else {
         maxFee = <span>{recentResults[i].maximumFee}</span>;

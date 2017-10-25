@@ -272,8 +272,8 @@ class App extends Component {
     var table = schedules[pathname];
     var maxValue = _.get(table, [cd, reg], "Not Found");
     
-    // If the code is BR, it must refer back to the percentage assigned to that schedule. 
-    // There is redundancy in the code here and createSchedulePath, because the base path isn't stored in state. Could improve
+    // If the code is BR, it must refer back to the percentage assigned to that schedule, as defined in byReportCodes.json 
+    // FUTURE REFACTOR: There is redundancy in the code here and createSchedulePath, because the base path isn't stored in state. 
    if(maxValue == 'BR') {
      let id = this.state.serviceType;
      let schedule = _.find(scheduleConfig.schedules, { 'id': id});
@@ -300,6 +300,7 @@ class App extends Component {
     this.changePer(per);
   }
   
+  // updateRecentResults must be executed after maximum fee has updated in state, so here it's a callback in setState
   changeMaximumFee(fee) {
     var newMaxFee = fee;
     this.setState({
@@ -1013,7 +1014,7 @@ class Results extends Component {
       resultsIndicator = <th><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></th>;
     }
     
-    
+    var messageRow = null;
     var maxFeeRow = null;
     var baseUnitsRow = null;
     var conversionRateRow = null;
@@ -1023,7 +1024,13 @@ class Results extends Component {
     var multiSurgRow = <tr><td>Multi-Surgery Reduction Applies</td><td>{this.props.multiSurgApplies}</td></tr>;
     var bilatSurgRow = <tr><td>Bilateral Surgery Reduction Applies</td><td>{this.props.bilatSurgApplies}</td></tr>;
     
-    if(this.props.secondaryType === "Anesthesia" && this.props.maximumFee !== "Not Found") {
+    var isQualifyingCircumstance = false;
+    if(this.props.secondaryType === "Anesthesia" && _.includes(["99100", "99116", "99135", "99140"], this.props.serviceCode)) {
+      messageRow = <tr><td><strong>Please Note: </strong>This code is a Qualifying Circumstance, and must be reported in addition to the primary anesthesia procedure code.</td></tr>;
+      isQualifyingCircumstance = true;
+    }
+    
+    if(this.props.secondaryType === "Anesthesia" && this.props.maximumFee !== "Not Found" && isQualifyingCircumstance == false) {
       baseUnitsRow = <tr><td>Base Units</td><td>{this.props.baseUnits}</td></tr>;
       conversionRateRow = <tr><td>Conversion Rate</td><td>{this.props.maximumFee}</td></tr>;
       PSUModifierRow = <tr><td>Physical Status Units</td><td>{this.props.modifierValue}</td></tr>;
@@ -1050,6 +1057,7 @@ class Results extends Component {
               {maxFeeRow}
               {multiSurgRow}
               {bilatSurgRow}
+              {messageRow}
           </tbody>
         </Table>
       
@@ -1084,7 +1092,7 @@ class RecentResults extends Component {
 
       // Replace the max fee value with the equation for Anesthesia results
       var maxFee = null;
-      if(recentResults[i].secondaryType === "Anesthesia" && recentResults[i].maximumFee !== "Not Found") {
+      if(recentResults[i].secondaryType === "Anesthesia" && !_.includes(["99100", "99116", "99135", "99140"], recentResults[i].serviceCode)) {
         maxFee = <span>= {recentResults[i].maximumFee} x ({recentResults[i].baseUnits} + {recentResults[i].modifierValue} + TIME UNITS)</span>;
         
       } else {

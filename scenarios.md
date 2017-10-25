@@ -39,13 +39,9 @@ Scenarios to account for:
 33. S Codes (Per Unit) - HCPCS Codes
 
 Still TODO:
-Remove the extra CPT codes in the Physician-All table (May be done but double-check, was struggling to get it to save the files)
-Accomodate Anesthesia output to recent results and validate that it looks appropriate in Results
-Add message/helper tesk functionality
 Set consistent form validation
-Check on that crazy outlier thing Drema mentioned
+Check on the outlier thing Drema mentioned
 Hitting enter breaks it. 
-Fix anesthesia results to hide plus sign when there is no P modifier
 
 NICE TO HAVE:
 Rewrite the code for Modifiers so I'm not storing the code + modifier in the JSON file. That's bad.

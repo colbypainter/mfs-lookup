@@ -53,6 +53,7 @@ var schedule34 = require('./profInjectableDrugsHCPCSJ-Code.json');
 var schedule35 = require('./hospitalOutpatientHCPCSJ-CodeTypeOneHospital.json');
 var schedule36 = require('./hospitalOutpatientHCPCSJ-CodeOtherHospital.json');
 
+// Make the schedule accessible via the url that will be built based on user input
 const schedules = {
   './hospitalInpatientRehabCMG.json': schedule1,
   './hospitalInpatientAcuteDRGTypeOneHospital.json': schedule2,
@@ -159,7 +160,6 @@ class App extends Component {
     }));
   }
   
-  // For when users choose a type
   changeSecondaryType(event) {
     var newSecType = event.target.value;
     this.setState((state, props) => ({
@@ -182,9 +182,9 @@ class App extends Component {
   changeCodeType(event) {
     var newCodeType = event.target.value;
     var newServiceCode = "";
+    // All JCodes map to the same value, so populate the service code and lock down the input
     if (newCodeType === "HCPCS J-Code") {
       newServiceCode = "JCODE";
-      console.log("testing jcode in changeCodeType");
     }
     this.setState((state, props) => ({
       codeType: newCodeType,
@@ -225,6 +225,7 @@ class App extends Component {
   
   changeModifier(event) {
     var newModifier = event.target.value;
+    // P modifiers map to a specific value to be used in the anesthesia equation
     if(_.includes(["P1", "P2", "P3", "P4", "P5", "P6"], newModifier)) {
       var newModifierValue = scheduleConfig.modifierKey[newModifier];
     }
@@ -265,6 +266,7 @@ class App extends Component {
   // Use the path created with createSchedulePath, the region, and the code to find results
   querySchedule(pathname, cd, reg) {
     
+    // If there's a modifier that ISN'T a P modifier, add it to the service code
     if(this.state.modifier !== null && this.state.modifier !== 'null' && !(_.includes(["P1", "P2", "P3", "P4", "P5", "P6"], this.state.modifier))) {
       cd = cd + this.state.modifier;
     }
@@ -449,8 +451,8 @@ class Header extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
-              <NavItem eventKey={1} href="#">Ground Rules</NavItem>
-              <NavItem eventKey={2} href="#">Fee Schedule</NavItem>
+              <NavItem eventKey={1} href="http://www.workcomp.virginia.gov/content/virginia-medical-fee-schedules-ground-rules">Ground Rules</NavItem>
+              <NavItem eventKey={2} href="http://www.workcomp.virginia.gov/content/virginia-medical-fee-schedules">Fee Schedule</NavItem>
             </Nav>
           </Navbar.Collapse>
         </Grid>
@@ -477,6 +479,8 @@ class WelcomeContent extends Component {
       );
   }
 }
+
+//// The Zip code - Region lookup form /////////////////////////////////////////////////////////////
 
 class ZipLookup extends Component {
 
@@ -604,6 +608,8 @@ class ZipMessage extends Component {
     } 
   }
 }
+
+///////////// The Max Fee Lookup Form ///////////////////////////////////////
 
 class LookupForm extends Component {
   
@@ -758,6 +764,9 @@ class RegionSelect extends Component {
   }
 }
 
+
+
+
 class ServiceTypeSelect extends Component {
   render() {
     var servOptions = [];
@@ -773,6 +782,9 @@ class ServiceTypeSelect extends Component {
     );
   }
 }
+
+
+
 
 class SecondaryTypeSelect extends Component {
   
@@ -815,6 +827,9 @@ class SecondaryTypeSelect extends Component {
   }
 }
 
+
+
+
 class CodeTypeInput extends Component {
   render() {
     try {
@@ -855,9 +870,12 @@ class CodeTypeInput extends Component {
 }
 
 
+
+
 class ServiceCodeLabel extends Component {
   render() {
     var codeType = this.props.codeType;
+    // Change label for code input depending on which type of code it is
     if (codeType == "REVENUE+CPT") {
       codeType = "CPT";
     }
@@ -878,6 +896,9 @@ class ServiceCodeLabel extends Component {
   }
 }
 
+
+
+
 class ServiceCodeInput extends Component {
   render() {
     var codeType = this.props.codeType;
@@ -895,6 +916,9 @@ class ServiceCodeInput extends Component {
       );
   }
 }
+
+
+
 
 class ModifierInput extends Component {
   render() {
@@ -938,6 +962,9 @@ class ModifierInput extends Component {
     }
   }
 }
+
+
+
 
 class ProviderTypeInput extends Component {
   render() {
@@ -983,13 +1010,15 @@ class ProviderTypeInput extends Component {
       }
     catch(err) {
       console.log(err);
-      // This catches, among other things, when the upstream inputs are still null also
       return(
           null
         );
     }
   }
 }
+
+
+
 
 class SearchButton extends Component {
   render() {
@@ -999,6 +1028,9 @@ class SearchButton extends Component {
       );
   }
 }
+
+
+
 
 class Results extends Component {
   
@@ -1069,6 +1101,9 @@ class Results extends Component {
     );
   }
 }
+
+
+
 
 class RecentResults extends Component {
   render() {
@@ -1157,7 +1192,10 @@ class RecentResults extends Component {
   }
 }
 
-// To be used for displaying helpful terms and definitions
+
+
+
+// To be used for displaying helpful terms and definitions. 
 class MfsKey extends Component {
   render() {
     return (
@@ -1172,13 +1210,16 @@ class MfsKey extends Component {
   }
 }
 
+
+
+
 class Footer extends Component {
   render() {
     return(
       <Grid>
         <hr />
         <footer>
-          <a href="#">VWC Public Website</a>
+          <a href="http://www.workcomp.virginia.gov/">VWC Public Website</a>
         </footer>
       </Grid>
       );

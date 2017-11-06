@@ -1,0 +1,572 @@
+{
+   "92507": {
+      "Region 1": "$157.51",
+      "Region 2": "$97.79",
+      "Region 3": "$94.08",
+      "Region 4": "$163.84",
+      "Region 5": "$70.46",
+      "Region 6": "$99.04",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "92508": {
+      "Region 1": "$45.29",
+      "Region 2": "$28.91",
+      "Region 3": "$27.82",
+      "Region 4": "$48.44",
+      "Region 5": "$20.83",
+      "Region 6": "$29.28",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "92523": {
+      "Region 1": "$329.32",
+      "Region 2": "$246.20",
+      "Region 3": "$305.68",
+      "Region 4": "$287.93",
+      "Region 5": "$312.87",
+      "Region 6": "$249.35",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "92524": {
+      "Region 1": "$120.58",
+      "Region 2": "$95.56",
+      "Region 3": "$118.64",
+      "Region 4": "$111.75",
+      "Region 5": "$110.71",
+      "Region 6": "$96.78",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97010": {
+      "Region 1": "$21.31",
+      "Region 2": "$18.22",
+      "Region 3": "$20.13",
+      "Region 4": "$21.96",
+      "Region 5": "$26.01",
+      "Region 6": "$20.81",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97012": {
+      "Region 1": "$37.32",
+      "Region 2": "$25.42",
+      "Region 3": "$31.42",
+      "Region 4": "$30.40",
+      "Region 5": "$30.15",
+      "Region 6": "$47.10",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97014": {
+      "Region 1": "$32.07",
+      "Region 2": "$25.42",
+      "Region 3": "$31.42",
+      "Region 4": "$30.23",
+      "Region 5": "$30.15",
+      "Region 6": "$27.61",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97016": {
+      "Region 1": "$37.32",
+      "Region 2": "$30.94",
+      "Region 3": "$38.11",
+      "Region 4": "$31.54",
+      "Region 5": "$42.02",
+      "Region 6": "$47.10",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97018": {
+      "Region 1": "$21.31",
+      "Region 2": "$18.22",
+      "Region 3": "$31.42",
+      "Region 4": "$30.23",
+      "Region 5": "$30.03",
+      "Region 6": "$27.61",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97022": {
+      "Region 1": "$51.34",
+      "Region 2": "$38.89",
+      "Region 3": "$53.84",
+      "Region 4": "$31.54",
+      "Region 5": "$44.34",
+      "Region 6": "$56.15",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97024": {
+      "Region 1": "$23.71",
+      "Region 2": "$19.83",
+      "Region 3": "$29.63",
+      "Region 4": "$20.88",
+      "Region 5": "$20.84",
+      "Region 6": "$26.71",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97026": {
+      "Region 1": "$26.00",
+      "Region 2": "$19.88",
+      "Region 3": "$29.63",
+      "Region 4": "$20.88",
+      "Region 5": "$20.84",
+      "Region 6": "$25.22",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97028": {
+      "Region 1": "$31.37",
+      "Region 2": "$28.48",
+      "Region 3": "$34.64",
+      "Region 4": "$24.41",
+      "Region 5": "$27.66",
+      "Region 6": "$31.23",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97032": {
+      "Region 1": "$31.54",
+      "Region 2": "$29.57",
+      "Region 3": "$39.99",
+      "Region 4": "$33.88",
+      "Region 5": "$27.65",
+      "Region 6": "$31.93",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97033": {
+      "Region 1": "$51.13",
+      "Region 2": "$46.18",
+      "Region 3": "$43.24",
+      "Region 4": "$45.11",
+      "Region 5": "$42.57",
+      "Region 6": "$53.20",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97034": {
+      "Region 1": "$43.97",
+      "Region 2": "$34.95",
+      "Region 3": "$37.48",
+      "Region 4": "$43.08",
+      "Region 5": "$37.13",
+      "Region 6": "$30.13",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97035": {
+      "Region 1": "$31.19",
+      "Region 2": "$24.61",
+      "Region 3": "$37.48",
+      "Region 4": "$33.88",
+      "Region 5": "$27.65",
+      "Region 6": "$31.93",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97036": {
+      "Region 1": "$77.86",
+      "Region 2": "$64.26",
+      "Region 3": "$68.92",
+      "Region 4": "$73.85",
+      "Region 5": "$62.15",
+      "Region 6": "$55.40",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97039": {
+      "Region 1": "BR",
+      "Region 2": "BR",
+      "Region 3": "BR",
+      "Region 4": "BR",
+      "Region 5": "BR",
+      "Region 6": "BR",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97110": {
+      "Region 1": "$57.68",
+      "Region 2": "$42.40",
+      "Region 3": "$56.42",
+      "Region 4": "$54.40",
+      "Region 5": "$50.06",
+      "Region 6": "$44.95",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97112": {
+      "Region 1": "$48.10",
+      "Region 2": "$42.95",
+      "Region 3": "$48.63",
+      "Region 4": "$52.98",
+      "Region 5": "$50.25",
+      "Region 6": "$43.34",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97113": {
+      "Region 1": "$82.39",
+      "Region 2": "$50.11",
+      "Region 3": "$57.85",
+      "Region 4": "$50.52",
+      "Region 5": "$46.12",
+      "Region 6": "$75.63",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97116": {
+      "Region 1": "$56.45",
+      "Region 2": "$44.95",
+      "Region 3": "$42.92",
+      "Region 4": "$44.93",
+      "Region 5": "$46.25",
+      "Region 6": "$45.98",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97118": {
+      "Region 1": "$83.46",
+      "Region 2": "$66.14",
+      "Region 3": "$83.82",
+      "Region 4": "$77.36",
+      "Region 5": "$76.64",
+      "Region 6": "$66.99",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97121": {
+      "Region 1": "$94.19",
+      "Region 2": "$73.77",
+      "Region 3": "$92.68",
+      "Region 4": "$87.30",
+      "Region 5": "$86.48",
+      "Region 6": "$75.60",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97122": {
+      "Region 1": "$36.11",
+      "Region 2": "$28.61",
+      "Region 3": "$35.53",
+      "Region 4": "$33.46",
+      "Region 5": "$33.15",
+      "Region 6": "$30.87",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97124": {
+      "Region 1": "$42.08",
+      "Region 2": "$36.25",
+      "Region 3": "$43.64",
+      "Region 4": "$29.24",
+      "Region 5": "$24.50",
+      "Region 6": "$26.94",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97140": {
+      "Region 1": "$45.24",
+      "Region 2": "$39.66",
+      "Region 3": "$49.46",
+      "Region 4": "$43.76",
+      "Region 5": "$45.00",
+      "Region 6": "$17.19",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97150": {
+      "Region 1": "$34.69",
+      "Region 2": "$33.85",
+      "Region 3": "$52.75",
+      "Region 4": "$39.84",
+      "Region 5": "$25.57",
+      "Region 6": "$32.86",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97161": {
+      "Region 1": "$168.73",
+      "Region 2": "$121.93",
+      "Region 3": "$141.78",
+      "Region 4": "$135.95",
+      "Region 5": "$141.49",
+      "Region 6": "$133.11",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97162": {
+      "Region 1": "$168.73",
+      "Region 2": "$121.93",
+      "Region 3": "$141.78",
+      "Region 4": "$135.95",
+      "Region 5": "$141.49",
+      "Region 6": "$133.11",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97163": {
+      "Region 1": "$168.73",
+      "Region 2": "$121.93",
+      "Region 3": "$141.78",
+      "Region 4": "$135.95",
+      "Region 5": "$141.49",
+      "Region 6": "$133.11",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97164": {
+      "Region 1": "$74.44",
+      "Region 2": "$65.43",
+      "Region 3": "$75.28",
+      "Region 4": "$69.87",
+      "Region 5": "$65.57",
+      "Region 6": "$80.61",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97165": {
+      "Region 1": "$169.82",
+      "Region 2": "$132.82",
+      "Region 3": "$141.78",
+      "Region 4": "$145.56",
+      "Region 5": "$147.51",
+      "Region 6": "$156.12",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97166": {
+      "Region 1": "$169.82",
+      "Region 2": "$132.82",
+      "Region 3": "$141.78",
+      "Region 4": "$145.56",
+      "Region 5": "$147.51",
+      "Region 6": "$156.12",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97167": {
+      "Region 1": "$169.82",
+      "Region 2": "$132.82",
+      "Region 3": "$141.78",
+      "Region 4": "$145.56",
+      "Region 5": "$147.51",
+      "Region 6": "$156.12",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97168": {
+      "Region 1": "$74.44",
+      "Region 2": "$70.85",
+      "Region 3": "$98.85",
+      "Region 4": "$72.91",
+      "Region 5": "$85.99",
+      "Region 6": "$80.61",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97504": {
+      "Region 1": "$51.25",
+      "Region 2": "$40.61",
+      "Region 3": "$50.43",
+      "Region 4": "$47.35",
+      "Region 5": "$47.06",
+      "Region 6": "$41.13",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97520": {
+      "Region 1": "$81.56",
+      "Region 2": "$64.64",
+      "Region 3": "$80.25",
+      "Region 4": "$77.42",
+      "Region 5": "$74.89",
+      "Region 6": "$65.46",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97530": {
+      "Region 1": "$48.87",
+      "Region 2": "$43.95",
+      "Region 3": "$45.88",
+      "Region 4": "$44.56",
+      "Region 5": "$54.13",
+      "Region 6": "$41.17",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97532": {
+      "Region 1": "$61.17",
+      "Region 2": "$11.65",
+      "Region 3": "$46.69",
+      "Region 4": "$20.55",
+      "Region 5": "$33.63",
+      "Region 6": "$10.04",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97533": {
+      "Region 1": "$44.12",
+      "Region 2": "$33.79",
+      "Region 3": "$40.13",
+      "Region 4": "$42.24",
+      "Region 5": "$42.41",
+      "Region 6": "$39.32",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97535": {
+      "Region 1": "$37.72",
+      "Region 2": "$39.32",
+      "Region 3": "$56.91",
+      "Region 4": "$40.99",
+      "Region 5": "$50.82",
+      "Region 6": "$46.30",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97537": {
+      "Region 1": "$55.53",
+      "Region 2": "$48.95",
+      "Region 3": "$53.77",
+      "Region 4": "$56.97",
+      "Region 5": "$41.93",
+      "Region 6": "$49.58",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97540": {
+      "Region 1": "$26.55",
+      "Region 2": "$21.04",
+      "Region 3": "$26.13",
+      "Region 4": "$24.61",
+      "Region 5": "$24.10",
+      "Region 6": "$21.31",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97542": {
+      "Region 1": "$47.74",
+      "Region 2": "$38.02",
+      "Region 3": "$44.73",
+      "Region 4": "$44.24",
+      "Region 5": "$43.83",
+      "Region 6": "$38.31",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97545": {
+      "Region 1": "$199.69",
+      "Region 2": "$141.11",
+      "Region 3": "$160.14",
+      "Region 4": "$148.68",
+      "Region 5": "$208.37",
+      "Region 6": "$183.17",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97546": {
+      "Region 1": "$89.69",
+      "Region 2": "$64.60",
+      "Region 3": "$65.36",
+      "Region 4": "$40.51",
+      "Region 5": "$90.79",
+      "Region 6": "$73.28",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97750": {
+      "Region 1": "$78.47",
+      "Region 2": "$56.14",
+      "Region 3": "$68.12",
+      "Region 4": "$58.00",
+      "Region 5": "$51.04",
+      "Region 6": "$76.40",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97755": {
+      "Region 1": "$85.44",
+      "Region 2": "$61.13",
+      "Region 3": "$73.77",
+      "Region 4": "$63.15",
+      "Region 5": "$56.22",
+      "Region 6": "$83.18",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97760": {
+      "Region 1": "$73.36",
+      "Region 2": "$61.87",
+      "Region 3": "$69.02",
+      "Region 4": "$48.73",
+      "Region 5": "$54.18",
+      "Region 6": "$55.03",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97761": {
+      "Region 1": "$50.68",
+      "Region 2": "$42.74",
+      "Region 3": "$45.11",
+      "Region 4": "$49.78",
+      "Region 5": "$40.48",
+      "Region 6": "$47.86",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97762": {
+      "Region 1": "$73.36",
+      "Region 2": "$61.87",
+      "Region 3": "$73.20",
+      "Region 4": "$72.05",
+      "Region 5": "$58.59",
+      "Region 6": "$69.48",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97799": {
+      "Region 1": "BR",
+      "Region 2": "BR",
+      "Region 3": "BR",
+      "Region 4": "BR",
+      "Region 5": "BR",
+      "Region 6": "BR",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97802": {
+      "Region 1": "$70.01",
+      "Region 2": "$55.48",
+      "Region 3": "$68.89",
+      "Region 4": "$64.89",
+      "Region 5": "$64.28",
+      "Region 6": "$56.19",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97803": {
+      "Region 1": "$60.09",
+      "Region 2": "$47.62",
+      "Region 3": "$59.12",
+      "Region 4": "$55.69",
+      "Region 5": "$55.17",
+      "Region 6": "$48.23",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   },
+   "97804": {
+      "Region 1": "$32.15",
+      "Region 2": "$25.48",
+      "Region 3": "$31.63",
+      "Region 4": "$29.79",
+      "Region 5": "$29.52",
+      "Region 6": "$25.80",
+      "Mult Surg Adjustment Applies": "No",
+      "Bilat Surg Adjustment Applies": "No"
+   }
+}

@@ -9,88 +9,50 @@ import { Grid, Row, Col, Nav, NavItem, NavDropdown, MenuItem, Navbar, Jumbotron,
 
 var _ = require('lodash');
 // Load the zipcode-region mapping file
-var zipMap = require('./zipMap.json');
+var zipMap = require('./model/zipMap.json');
 // Load the By Report Codes for all BR results
-var byReportCodes = require('./byReportCodes.json');
+var byReportCodes = require('./model/byReportCodes.json');
 // Load the configuration file that determines what options present for each schedule
-var scheduleConfig = require('./scheduleConfig.json');
-
-// Cannot dynamically create a require(), so must load them then match with the query builder
-var schedule1 = require('./hospitalInpatientRehabCMG.json');
-var schedule2 = require('./hospitalInpatientAcuteDRGTypeOneHospital.json');
-var schedule3 = require('./hospitalInpatientAcuteDRGOtherHospital.json');
-var schedule4 = require('./hospitalInpatientRehabDRGTypeOneHospital.json');
-var schedule5 = require('./hospitalInpatientRehabDRGOtherHospital.json');
-var schedule6 = require('./hospitalInpatientRehabREVENUETypeOneHospital.json');
-var schedule7 = require('./hospitalInpatientRehabREVENUEOtherHospital.json');
-var schedule8 = require('./hospitalOutpatientCPTTypeOneHospital.json');
-var schedule9 = require('./hospitalOutpatientCPTOtherHospital.json');
-var schedule10 = require('./hospitalOutpatientHCPCSTypeOneHospital.json');
-var schedule11 = require('./hospitalOutpatientHCPCSOtherHospital.json');
-var schedule12 = require('./hospitalOutpatientREVENUETypeOneHospital.json');
-var schedule13 = require('./hospitalOutpatientREVENUEOtherHospital.json');
-var schedule14 = require('./hospitalOutpatientREVENUECPTTypeOneHospital.json');
-var schedule15 = require('./hospitalOutpatientREVENUECPTOtherHospital.json');
-var schedule16 = require('./hospitalOutpatientREVENUEHCPCSTypeOneHospital.json');
-var schedule17 = require('./hospitalOutpatientREVENUEHCPCSOtherHospital.json');
-var schedule18 = require('./ascCPT.json');
-var schedule19 = require('./ascREVENUE.json');
-var schedule20 = require('./profAnesthesiaCPT.json');
-var schedule21 = require('./profAllOtherServicesCPTSurgeon.json');
-var schedule22 = require('./profAllOtherServicesCPTNon-Surgeon.json');
-var schedule23 = require('./profAllOtherServicesHCPCSSurgeon.json');
-var schedule24 = require('./profAllOtherServicesHCPCSNon-Surgeon.json');
-var schedule25 = require('./profInjectableDrugsCPT.json');
-var schedule26 = require('./profInjectableDrugsHCPCS.json');
-var schedule27 = require('./physMedRehabServicesCPT.json');
-var schedule28 = require('./physMedRehabServicesHCPCS.json');
-var schedule29 = require('./osteoChiroCPT.json');
-var schedule30 = require('./acupunctureCPT.json');
-var schedule31 = require('./dentalHCPCS.json');
-var schedule32 = require('./ambulanceHCPCS.json');
-var schedule33 = require('./scodesHCPCS.json');
-var schedule34 = require('./profInjectableDrugsHCPCSJ-Code.json');
-var schedule35 = require('./hospitalOutpatientHCPCSJ-CodeTypeOneHospital.json');
-var schedule36 = require('./hospitalOutpatientHCPCSJ-CodeOtherHospital.json');
+var scheduleConfig = require('./model/scheduleConfig.json');
 
 // Make the schedule accessible via the url that will be built based on user input
 const schedules = {
-  './hospitalInpatientRehabCMG.json': schedule1,
-  './hospitalInpatientAcuteDRGTypeOneHospital.json': schedule2,
-  './hospitalInpatientAcuteDRGOtherHospital.json': schedule3,
-  './hospitalInpatientRehabDRGTypeOneHospital.json': schedule4,
-  './hospitalInpatientRehabDRGOtherHospital.json': schedule5,
-  './hospitalInpatientRehabREVENUETypeOneHospital.json': schedule6,
-  './hospitalInpatientRehabREVENUEOtherHospital.json': schedule7,
-  './hospitalOutpatientCPTTypeOneHospital.json': schedule8,
-  './hospitalOutpatientCPTOtherHospital.json': schedule9,
-  './hospitalOutpatientHCPCSTypeOneHospital.json': schedule10,
-  './hospitalOutpatientHCPCSOtherHospital.json': schedule11,
-  './hospitalOutpatientREVENUETypeOneHospital.json': schedule12,
-  './hospitalOutpatientREVENUEOtherHospital.json': schedule13,
-  './hospitalOutpatientREVENUECPTTypeOneHospital.json': schedule14,
-  './hospitalOutpatientREVENUECPTOtherHospital.json': schedule15,
-  './hospitalOutpatientREVENUEHCPCSTypeOneHospital.json': schedule16,
-  './hospitalOutpatientREVENUEHCPCSOtherHospital.json': schedule17,
-  './ascCPT.json': schedule18,
-  './ascREVENUE.json': schedule19,
-  './profAnesthesiaCPT.json': schedule20,
-  './profAllOtherServicesCPTSurgeon.json': schedule21,
-  './profAllOtherServicesCPTNon-Surgeon.json': schedule22,
-  './profAllOtherServicesHCPCSSurgeon.json': schedule23,
-  './profAllOtherServicesHCPCSNon-Surgeon.json': schedule24,
-  './profInjectableDrugsCPT.json': schedule25,
-  './profInjectableDrugsHCPCS.json': schedule26,
-  './physMedRehabServicesCPT.json': schedule27,
-  './physMedRehabServicesHCPCS.json': schedule28,
-  './osteoChiroCPT.json': schedule29,
-  './acupunctureCPT.json': schedule30,
-  './dentalHCPCS.json': schedule31,
-  './ambulanceHCPCS.json': schedule32,
-  './scodesHCPCS.json': schedule33,
-  './profInjectableDrugsHCPCSJ-Code.json': schedule34,
-  './hospitalOutpatientHCPCSJ-CodeTypeOneHospital.json': schedule35,
-  './hospitalOutpatientHCPCSJ-CodeOtherHospital.json': schedule36
+  './model/hospitalInpatientRehabCMG.json': require('./model/hospitalInpatientRehabCMG.json'),
+  './model/hospitalInpatientAcuteDRGTypeOneHospital.json': require('./model/hospitalInpatientAcuteDRGTypeOneHospital.json'),
+  './model/hospitalInpatientAcuteDRGOtherHospital.json': require('./model/hospitalInpatientAcuteDRGOtherHospital.json'),
+  './model/hospitalInpatientRehabDRGTypeOneHospital.json': require('./model/hospitalInpatientRehabDRGTypeOneHospital.json'),
+  './model/hospitalInpatientRehabDRGOtherHospital.json': require('./model/hospitalInpatientRehabDRGOtherHospital.json'),
+  './model/hospitalInpatientRehabREVENUETypeOneHospital.json': require('./model/hospitalInpatientRehabREVENUETypeOneHospital.json'),
+  './model/hospitalInpatientRehabREVENUEOtherHospital.json': require('./model/hospitalInpatientRehabREVENUEOtherHospital.json'),
+  './model/hospitalOutpatientCPTTypeOneHospital.json': require('./model/hospitalOutpatientCPTTypeOneHospital.json'),
+  './model/hospitalOutpatientCPTOtherHospital.json': require('./model/hospitalOutpatientCPTOtherHospital.json'),
+  './model/hospitalOutpatientHCPCSTypeOneHospital.json': require('./model/hospitalOutpatientHCPCSTypeOneHospital.json'),
+  './model/hospitalOutpatientHCPCSOtherHospital.json': require('./model/hospitalOutpatientHCPCSOtherHospital.json'),
+  './model/hospitalOutpatientREVENUETypeOneHospital.json': require('./model/hospitalOutpatientREVENUETypeOneHospital.json'),
+  './model/hospitalOutpatientREVENUEOtherHospital.json': require('./model/hospitalOutpatientREVENUEOtherHospital.json'),
+  './model/hospitalOutpatientREVENUECPTTypeOneHospital.json': require('./model/hospitalOutpatientREVENUECPTTypeOneHospital.json'),
+  './model/hospitalOutpatientREVENUECPTOtherHospital.json': require('./model/hospitalOutpatientREVENUECPTOtherHospital.json'),
+  './model/hospitalOutpatientREVENUEHCPCSTypeOneHospital.json': require('./model/hospitalOutpatientREVENUEHCPCSTypeOneHospital.json'),
+  './model/hospitalOutpatientREVENUEHCPCSOtherHospital.json': require('./model/hospitalOutpatientREVENUEHCPCSOtherHospital.json'),
+  './model/ascCPT.json': require('./model/ascCPT.json'),
+  './model/ascREVENUE.json': require('./model/ascREVENUE.json'),
+  './model/profAnesthesiaCPT.json': require('./model/profAnesthesiaCPT.json'),
+  './model/profAllOtherServicesCPTSurgeon.json': require('./model/profAllOtherServicesCPTSurgeon.json'),
+  './model/profAllOtherServicesCPTNon-Surgeon.json': require('./model/profAllOtherServicesCPTNon-Surgeon.json'),
+  './model/profAllOtherServicesHCPCSSurgeon.json': require('./model/profAllOtherServicesHCPCSSurgeon.json'),
+  './model/profAllOtherServicesHCPCSNon-Surgeon.json': require('./model/profAllOtherServicesHCPCSNon-Surgeon.json'),
+  './model/profInjectableDrugsCPT.json': require('./model/profInjectableDrugsCPT.json'),
+  './model/profInjectableDrugsHCPCS.json': require('./model/profInjectableDrugsHCPCS.json'),
+  './model/physMedRehabServicesCPT.json': require('./model/physMedRehabServicesCPT.json'),
+  './model/physMedRehabServicesHCPCS.json': require('./model/physMedRehabServicesHCPCS.json'),
+  './model/osteoChiroCPT.json': require('./model/osteoChiroCPT.json'),
+  './model/acupunctureCPT.json': require('./model/acupunctureCPT.json'),
+  './model/dentalHCPCS.json': require('./model/dentalHCPCS.json'),
+  './model/ambulanceHCPCS.json': require('./model/ambulanceHCPCS.json'),
+  './model/scodesHCPCS.json': require('./model/scodesHCPCS.json'),
+  './model/profInjectableDrugsHCPCSJ-Code.json': require('./model/profInjectableDrugsHCPCSJ-Code.json'),
+  './model/hospitalOutpatientHCPCSJ-CodeTypeOneHospital.json': require('./model/hospitalOutpatientHCPCSJ-CodeTypeOneHospital.json'),
+  './model/hospitalOutpatientHCPCSJ-CodeOtherHospital.json': require('./model/hospitalOutpatientHCPCSJ-CodeOtherHospital.json')
 };
 
 class App extends Component {
@@ -113,27 +75,26 @@ class App extends Component {
       multiSurgApplies: null,
       bilatSurgApplies: null,
       per: null,
-      recentResults: []
+      recentResults: [],
+      isFormValid: false
     };
-    this.changeRegion = this.changeRegion.bind(this);
-    this.changeServiceType = this.changeServiceType.bind(this);
-    this.changeSecondaryType = this.changeSecondaryType.bind(this);
-    this.changeCodeType = this.changeCodeType.bind(this);
-    this.changeProviderType = this.changeProviderType.bind(this);
-    this.changeServiceCode = this.changeServiceCode.bind(this);
-    this.changeModifier = this.changeModifier.bind(this);
-    this.createSchedulePath = this.createSchedulePath.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.querySchedule = this.querySchedule.bind(this);
-    this.changeBaseUnits = this.changeBaseUnits.bind(this);
-    this.changeMultiSurgApplies = this.changeMultiSurgApplies.bind(this);
-    this.changeBilatSurgApplies = this.changeBilatSurgApplies.bind(this);
-    this.changePer = this.changePer.bind(this);
-    this.changeMaximumFee = this.changeMaximumFee.bind(this);
-    this.updateRecentResults = this.updateRecentResults.bind(this);
+  }
+  componentWillUpdate(nextProps, nextState) {
+    let isFormValid = true,
+        lf = this.refs.testLookupForm;
+    if(lf){
+      console.log(lf);
+      for(var key in lf.refs){
+        if(!nextState[key]){
+          isFormValid = false;
+        }             
+      }
+    }
+
+     nextState.isFormValid = isFormValid;
   }
   
-  changeRegion(event) { 
+  changeRegion = (event) =>  { 
     var newRegion = event.target.value;
     this.setState((state, props) => ({
       region: newRegion,
@@ -142,7 +103,7 @@ class App extends Component {
     }));
   }
   
-  changeServiceType(event) {
+  changeServiceType = (event) => {
     var newServType = event.target.value;
     this.setState((state, props) => ({
       serviceType: newServType,
@@ -160,7 +121,7 @@ class App extends Component {
     }));
   }
   
-  changeSecondaryType(event) {
+  changeSecondaryType = (event) => {
     var newSecType = event.target.value;
     this.setState((state, props) => ({
       secondaryType: newSecType,
@@ -175,11 +136,12 @@ class App extends Component {
       per: null,
       maximumFee: null
     }));
+
   }
   
 
   
-  changeCodeType(event) {
+  changeCodeType = (event) => {
     var newCodeType = event.target.value;
     var newServiceCode = "";
     // All JCodes map to the same value, so populate the service code and lock down the input
@@ -198,9 +160,10 @@ class App extends Component {
       per: null,
       maximumFee: null
     }));
+
   }
   
-  changeProviderType(event) {
+  changeProviderType = (event) => {
     var newProvType = event.target.value;
     this.setState((state, props) => ({
       providerType: newProvType,
@@ -212,7 +175,7 @@ class App extends Component {
 
   }
   
-  changeServiceCode(event) {
+  changeServiceCode = (event) => {
     var newServiceCode = event.target.value;
     this.setState((state, props) => ({
       serviceCode: newServiceCode,
@@ -221,9 +184,10 @@ class App extends Component {
       per: null,
       maximumFee: null
     }));
+
   }
   
-  changeModifier(event) {
+  changeModifier = (event) => {
     var newModifier = event.target.value;
     // P modifiers map to a specific value to be used in the anesthesia equation
     if(_.includes(["P1", "P2", "P3", "P4", "P5", "P6"], newModifier)) {
@@ -239,13 +203,13 @@ class App extends Component {
     }));
   }
   
-  createSchedulePath() {
+  createSchedulePath = () => {
     // Get the base schedule ID
     var id = this.state.serviceType;
     var schedule = _.find(scheduleConfig.schedules, { 'id': id});
     
     // Start the path using the basePath of that schedule
-    var path = schedule.basePath;
+    var path = `model/${schedule.basePath}`;
     var stateArray = [this.state.secondaryType, this.state.codeType, this.state.providerType];
     for (var i = 0; i < stateArray.length; i++) {
       if (stateArray[i] !== 'null' && stateArray[i] !== null) {
@@ -264,7 +228,7 @@ class App extends Component {
   }
   
   // Use the path created with createSchedulePath, the region, and the code to find results
-  querySchedule(pathname, cd, reg) {
+  querySchedule = (pathname, cd, reg) => {
     
     // If there's a modifier that ISN'T a P modifier, add it to the service code
     if(this.state.modifier !== null && this.state.modifier !== 'null' && !(_.includes(["P1", "P2", "P3", "P4", "P5", "P6"], this.state.modifier))) {
@@ -303,7 +267,7 @@ class App extends Component {
   }
   
   // updateRecentResults must be executed after maximum fee has updated in state, so here it's a callback in setState
-  changeMaximumFee(fee) {
+  changeMaximumFee = (fee) => {
     var newMaxFee = fee;
     this.setState({
       maximumFee: newMaxFee
@@ -312,40 +276,42 @@ class App extends Component {
     });
   }
   
-  changeBaseUnits(baseUnits) {
+  changeBaseUnits = (baseUnits) => {
     var newBaseUnits = baseUnits;
     this.setState({
       baseUnits: newBaseUnits
     });
   }
   
-  changeMultiSurgApplies(applies) {
+  changeMultiSurgApplies = (applies) => {
     var newMultiSurgApplies = applies;
     this.setState({
       multiSurgApplies: newMultiSurgApplies
     });
   }
   
-  changeBilatSurgApplies(applies) {
+  changeBilatSurgApplies = (applies) => {
     var newBilatSurgApplies = applies;
     this.setState({
       bilatSurgApplies: newBilatSurgApplies
     });
   }
   
-  changePer(perValue) { 
+  changePer = (perValue) => { 
     var newPer = perValue;
     this.setState({
       per: newPer
     });
   }
   
-  handleSearch(event) {
-    this.createSchedulePath();
+  handleSearch = (event) => {
     event.preventDefault();
+    this.createSchedulePath();
   }
+
+
   
-  updateRecentResults() {
+  updateRecentResults = () => {
       var results = this.state.recentResults;
       var newResult = {
         region: this.state.region,
@@ -382,7 +348,7 @@ class App extends Component {
           </div>
           <hr />
           <div>
-            <LookupForm region={this.state.region} 
+            <LookupForm ref="testLookupForm" region={this.state.region} 
                         serviceType={this.state.serviceType}
                         secondaryType={this.state.secondaryType}
                         codeType={this.state.codeType}
@@ -409,7 +375,10 @@ class App extends Component {
                         changeBilatSurgApplies={this.changeBilatSurgApplies}
                         changePer={this.changePer}
                         recentResults={this.state.recentResults} 
-                        updateRecentResults={this.updateRecentResults} />
+                        updateRecentResults={this.updateRecentResults}
+                        isFormValid={this.state.isFormValid}
+
+                         />
           </div>
 
           <hr />
@@ -473,7 +442,7 @@ class WelcomeContent extends Component {
         <Panel className="MfsPanels welcome-panel">
           <p>Effective for all dates of service on or after January 1, 2018, medical fees will be subject to VWC's Medical Fee Schedule.</p>
           <p>Use the tools below to find out your regional classification or determine your maximum rate of payment.</p>
-          <p>Want to know more about the Fee Schedule? Please refer to our <a href="">Ground Rules</a> documentation or view the <a href="">Fee Schedule</a> itself.</p>
+          <p>Want to know more about the Fee Schedule? Please refer to our <a href="http://www.workcomp.virginia.gov/content/virginia-medical-fee-schedules-ground-rules">Ground Rules</a> documentation or view the <a href="http://www.workcomp.virginia.gov/content/virginia-medical-fee-schedules">Fee Schedule</a> itself.</p>
         </Panel>
       </div>
       );
@@ -491,11 +460,9 @@ class ZipLookup extends Component {
           region: null,
           message: null
         };
-        this.changeZip = this.changeZip.bind(this);
-        this.findRegion = this.findRegion.bind(this);
       }
       
-      changeZip(event) {
+      changeZip = (event) => {
         var zipInput = event.target.value;
         zipInput = zipInput.substring(0, 3);
         console.log(zipInput);
@@ -505,13 +472,20 @@ class ZipLookup extends Component {
         }));
       }
       
-      findRegion(event) { 
+      findRegion = (event) => { 
         var newRegion = _.get(zipMap, this.state.zip);
         console.log(newRegion);
         this.setState((state, props) => ({
           region: newRegion,
           message: true
         }));
+      }
+
+      get isValid() {
+        if(this.state.zip && this.state.zip.length === 3){
+          return true;
+        }
+        return false;
       }
       
       render() {
@@ -521,16 +495,12 @@ class ZipLookup extends Component {
              <h4>Enter the <strong>first three digits</strong> of the zip code for the location of service.</h4>
             </Col>
             <hr/>
-              <Form inline>
-                <Col xs={12} >
-                  <FormGroup>
-                      <ControlLabel>Zip Code</ControlLabel>
-                      {"   "}
-                      <ZipInput zip={this.state.zip} changeZip={this.changeZip} />
-                  </FormGroup>
-                  {"   "}
-                      <ZipSearchButton zip={this.state.zip} findRegion={this.findRegion} />
-                </Col>
+              <Form inline onSubmit={(e) => e.preventDefault()}>
+                <FormGroup role="form">
+                    <ControlLabel>Zip Code&nbsp;</ControlLabel>
+                    <FormControl type="text" pattern="[0-9]*" id="zip_input" placeholder="###" onChange={this.changeZip} maxLength="3" />
+                </FormGroup>
+                <Button className="ZipSearchButton" disabled={!this.isValid} bsStyle="primary" type="submit" onClick={this.findRegion}>Search</Button>
               </Form>
             <Col xs={8} xsOffset={2} className="zip-result">
               
@@ -540,30 +510,13 @@ class ZipLookup extends Component {
         );
       }
   }
-  
-class ZipInput extends Component {
-  render() {
-    return (
-      <FormControl type="text" id="zip_input" placeholder="###" onChange={this.props.changeZip} />
-    );
-  }
-}
-
-
-class ZipSearchButton extends Component {
-  render() {
-    return (
-      <Button bsStyle="primary" type="button" onClick={this.props.findRegion} zip={this.props.zip}  >
-                                                        Search</Button>
-      );
-  }
-}
 
 class ZipMessage extends Component {
   render() {
     if(this.props.message == null) { 
       return(null); 
-    } else if(this.props.region === undefined && this.props.message === true) {
+    }
+    else{
       return(
         <Panel className="results-panel MfsPanels" >
         
@@ -571,155 +524,222 @@ class ZipMessage extends Component {
             <thead>
               <tr>
                 <th>Search Results</th>
-                <th><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
+                <th><span className={this.props.region === undefined ? 'glyphicon glyphicon-remove' : 'glyphicon glyphicon-ok'} aria-hidden="true"></span></th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th>Region</th>
-                <td>Not Found</td>
+                <td>{this.props.region === undefined ? 'No Region' : this.props.region}</td>
               </tr>
             </tbody>
           </Table>
         
         </Panel>
         );
-    } else {
-    return (
-      <Panel className="results-panel MfsPanels" >
-      
-        <Table bordered fill>
-          <thead>
-            <tr>
-              <th>Search Results</th>
-              <th><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>Region</th>
-              <td>{this.props.region}</td>
-            </tr>
-          </tbody>
-        </Table>
-      
-      </Panel>
-      );
-    } 
+    }
   }
 }
 
 ///////////// The Max Fee Lookup Form ///////////////////////////////////////
 
 class LookupForm extends Component {
-  
+
+  getServiceCodeLabel(codeType){
+    let serviceCodeLabel = "";
+    switch(codeType){
+      case "REVENUE+CPT": serviceCodeLabel ="CPT";break;
+      case "REVENUE+HCPCS": serviceCodeLabel = "HCPCS";break;
+      case "REVENUE": serviceCodeLabel = "Revenue"; break;
+      default: serviceCodeLabel = codeType;
+    }
+    return (<ControlLabel>{serviceCodeLabel} Code*</ControlLabel>);
+  }
+
+  getServiceCodeInput(codeType){
+    let serviceCodeInputEl = null;
+    if (codeType == null) {
+      serviceCodeInputEl = <FormControl ref="serviceCode" type="text" disabled/>;
+    } else if(codeType === "HCPCS J-Code") {
+      serviceCodeInputEl = <FormControl ref="serviceCode" type="text" value="JCODE" readOnly/>;
+    }
+    else{
+      serviceCodeInputEl = <FormControl ref="serviceCode" type="text" value={this.props.serviceCode} onChange={this.props.changeServiceCode}/>;
+    }
+
+    return serviceCodeInputEl;
+  }
+
+  getCodeTypeInput(secondaryType, serviceTypeId, secType){
+    let codeTypes = secondaryType ? _.keys(secondaryType.codeType[0]) : [];
+    return(
+      <FormControl ref="codeType" componentClass="select" onChange={this.props.changeCodeType} disabled={!codeTypes.length}>
+        <option key="default" value="">Select</option>
+        {codeTypes.map((opt,key) => <option key={[serviceTypeId]+[secType]+[key]+[opt]} value={opt}>{opt}</option>)}
+      </FormControl>
+    );
+  }
+
+  getSecondaryTypeSelect(secondaryTypes, secType, serviceTypeId){
+      if(secondaryTypes && !_.some(secondaryTypes, (secondaryType) => _.has(secondaryType, "null")) ){
+     // Secondary Type Select
+        // TODO: the following operation shows the current complexity of the scheduleConfig object. should be refactored. EIS
+        let secondaryOptions = _.flatMap(secondaryTypes,(opt, key) => _.map(opt, (o,k) => <option key={[serviceTypeId]+[k]} value={k}>{k}</option>) );
+        
+        if(secondaryOptions.length){
+
+          
+
+          return(
+              <FormGroup>
+                <ControlLabel>Secondary Service Type*</ControlLabel>
+                <FormControl ref="secondaryType" componentClass="select" onChange={this.props.changeSecondaryType}>
+                  <option key="default" value="">Select</option>
+                  {secondaryOptions}
+                </FormControl>
+              </FormGroup>
+            );
+        }
+      }
+
+      
+      return null;
+  }
+
+  getModifierInput(secondaryType, codeType, secType, serviceTypeId){
+      if(!secondaryType ||  !codeType){
+        
+        return null;
+      }
+
+      let modifiers = _.filter(secondaryType.codeType[0][codeType].modifiers);
+      
+      if (!modifiers.length) {
+        
+        return(null);
+      } else {
+        return (
+          <FormGroup>
+            <ControlLabel>Modifier</ControlLabel>
+            <FormControl componentClass="select" onChange={this.props.changeModifier}>
+              <option key="default" value="">Select</option>
+              {modifiers.map((modifier) => <option key={[serviceTypeId]+[secType]+[codeType]+[modifier]} value={modifier}>{modifier}</option>)}
+            </FormControl>
+          </FormGroup>
+         )
+      }    
+  }
+
+  getProviderInput(secondaryType, serviceTypeId, codeType, secType){
+      if(!secondaryType){
+        
+        return null;
+      }
+
+      /// Get the array of facility types 
+      let facilityTypes = secondaryType.codeType[0][codeType] ? _.find(secondaryType.codeType[0][codeType]) : [];
+
+      if(facilityTypes.length){
+        return(
+          <Col md={5}>
+            <FormGroup>
+              <ControlLabel>Provider Type*</ControlLabel>
+                <FormControl ref="providerType" componentClass="select" onChange={this.props.changeProviderType}>
+                  <option key="default" value="">Select</option>
+                  {facilityTypes.map((opt, key) => <option key={[serviceTypeId]+[secType]+[codeType]+[key]+[opt]} value={opt}>{opt}</option>)}
+                </FormControl>
+            </FormGroup>
+          </Col>
+        );
+      }
+
+      
+      return null;
+  }
+
   render() {
+
+    let codeType = this.props.codeType,
+      serviceTypeId = this.props.serviceType,
+      secType = this.props.secondaryType,
+      schedule = serviceTypeId != null ? _.find(scheduleConfig.schedules, {'id': serviceTypeId}) : null, /// Get the ServiceType/Schedule we start with
+      secondaryTypes = !schedule ? null : schedule.secondaryType,
+      selectedSecondaryType = secType !== null && secondaryTypes && _.some(secondaryTypes, (o) => _.has(o, secType)) ? _.find(secondaryTypes, secType)[secType] : null;
+
+
+    // ServiceCode
+    let serviceCodeLabelEl = this.getServiceCodeLabel(codeType);
+    let serviceCodeInputEl = this.getServiceCodeInput(codeType);
+    
+    // CodeType
+    let codeTypeInputEl = this.getCodeTypeInput(selectedSecondaryType,serviceTypeId, secType);
+
+    // Secondary Type Select
+    let secondaryTypeSelectEl = this.getSecondaryTypeSelect(secondaryTypes, secType, serviceTypeId);
+
+    // Provider Input
+    let providerInputEl = this.getProviderInput(selectedSecondaryType, serviceTypeId, codeType, secType);
+    let modifierInputEl = this.getModifierInput(selectedSecondaryType, codeType, secType, serviceTypeId);
+       
     return (
       <Panel className="MfsPanels FeeLookup" header="Maximum Rate Search">
-        <Form>
+        <Form onSubmit={this.props.handleSearch}>
           <Col md={2}>
             <FormGroup>
               <ControlLabel>Region*</ControlLabel>
-              <RegionSelect changeRegion={this.props.changeRegion}/>
+              <FormControl ref="region" componentClass="select" onChange={this.props.changeRegion}>
+                <option value="">Select</option>
+                <option value="Region 1">Region 1</option>
+                <option value="Region 2">Region 2</option>
+                <option value="Region 3">Region 3</option>
+                <option value="Region 4">Region 4</option>
+                <option value="Region 5">Region 5</option>
+                <option value="Region 6">Region 6</option>
+              </FormControl>
             </FormGroup>
           </Col>
           
           <Col md={6}>
             <FormGroup>
               <ControlLabel>Fee Schedule - Service Type*</ControlLabel>
-              <ServiceTypeSelect region={this.props.region} 
-                                  serviceType={this.props.serviceType}
-                                  secondaryType={this.props.secondaryType}
-                                  codeType={this.props.codeType}
-                                  providerType={this.props.providerType}
-                                  serviceCode={this.props.serviceCode}
-                                  maximumFee={this.props.maximumFee}
-                                  changeServiceType={this.props.changeServiceType} 
-                                  recentResults={this.props.recentResults} 
-                                  updateRecentResults={this.props.updateRecentResults} />
+              <FormControl ref="serviceType" componentClass="select" onChange={this.props.changeServiceType}>
+                  <option value="">Select</option>
+                  {scheduleConfig.schedules.map((schedule) =>
+                    <option key={schedule.id} value={schedule.id}>{schedule.type}</option>
+                  )}
+              </FormControl> 
             </FormGroup>
           </Col>
           
           <Col md={4}>
-            <SecondaryTypeSelect region={this.props.region} 
-                                 serviceType={this.props.serviceType}
-                                 secondaryType={this.props.secondaryType}
-                                 codeType={this.props.codeType}
-                                 providerType={this.props.providerType}
-                                 serviceCode={this.props.serviceCode} 
-                                 maximumFee={this.props.maximumFee}
-                                 changeSecondaryType={this.props.changeSecondaryType} 
-                                  recentResults={this.props.recentResults} 
-                                  updateRecentResults={this.props.updateRecentResults} />
-
+            {secondaryTypeSelectEl}
           </Col>
           
           <Col md={3}>
             <FormGroup>
               <ControlLabel>Code Type*</ControlLabel>
-              <CodeTypeInput region={this.props.region} 
-                  serviceType={this.props.serviceType}
-                  secondaryType={this.props.secondaryType}
-                  codeType={this.props.codeType}
-                  providerType={this.props.providerType}
-                  serviceCode={this.props.serviceCode}
-                  maximumFee={this.props.maximumFee}
-                  changeCodeType={this.props.changeCodeType} 
-                  recentResults={this.props.recentResults} 
-                  updateRecentResults={this.props.updateRecentResults} />
+              {codeTypeInputEl}
             </FormGroup>
           </Col>
           
           <Col md={2}>
             <FormGroup>
-              <ServiceCodeLabel codeType={this.props.codeType}/>
-              <ServiceCodeInput changeServiceCode={this.props.changeServiceCode}
-                                codeType={this.props.codeType}
-                                serviceCode={this.props.serviceCode}
-                                maximumFee={this.props.maximumFee} 
-                                  recentResults={this.props.recentResults} 
-                                  updateRecentResults={this.props.updateRecentResults} />
+              {serviceCodeLabelEl}
+              {serviceCodeInputEl}
             </FormGroup>
           </Col>
 
-          
-          <ProviderTypeInput region={this.props.region} 
-                              serviceType={this.props.serviceType}
-                              secondaryType={this.props.secondaryType}
-                              codeType={this.props.codeType}
-                              providerType={this.props.providerType}
-                              serviceCode={this.props.serviceCode}
-                              maximumFee={this.props.maximumFee}
-                              changeCodeType={this.props.changeCodeType} 
-                              changeProviderType={this.props.changeProviderType} 
-                              recentResults={this.props.recentResults} 
-                              updateRecentResults={this.props.updateRecentResults} />
-                          
+          {providerInputEl}
           
           
           <Col md={2}>
-              <ModifierInput serviceType={this.props.serviceType} 
-                              secondaryType={this.props.secondaryType} 
-                              codeType={this.props.codeType}
-                              serviceCode={this.props.serviceCode}
-                              changeModifier={this.props.changeModifier} 
-                              modifier={this.props.modifier} />
-                              
+              {modifierInputEl}                
           </Col>
           
 
           
           <Col md={12}>
-              <SearchButton handleSearch={this.props.handleSearch} maximumFee={this.props.maximumFee}
-                                                        multiSurgApplies={this.props.multiSurgApplies}
-                                                        bilatSurgApplies={this.props.bilatSurgApplies}
-                                                        per={this.props.per}
-                                                        changeMaximumFee={this.props.changeMaximumFee} 
-                                                        changeMultiSurgApplies={this.props.changeMultiSurgApplies}
-                                                        changeBilatSurgApplies={this.props.changeBilatSurgApplies}
-                                                        changePer={this.props.changePer}
-                                                        recentResults={this.props.recentResults} 
-                                                        updateRecentResults={this.props.updateRecentResults} />
+              <Button bsStyle="primary" type="submit" disabled={!this.props.isFormValid}>Search</Button>
           <hr />
           </Col>
           
@@ -747,290 +767,6 @@ class LookupForm extends Component {
     );
   }
 }
-
-class RegionSelect extends Component {
-  render() {
-    return(
-      <FormControl componentClass="select" onChange={this.props.changeRegion}>
-        <option value="">Select</option>
-        <option value="Region 1">Region 1</option>
-        <option value="Region 2">Region 2</option>
-        <option value="Region 3">Region 3</option>
-        <option value="Region 4">Region 4</option>
-        <option value="Region 5">Region 5</option>
-        <option value="Region 6">Region 6</option>
-      </FormControl>
-    );
-  }
-}
-
-
-
-
-class ServiceTypeSelect extends Component {
-  render() {
-    var servOptions = [];
-    for(var i=0; i<scheduleConfig.schedules.length; i++) {
-      servOptions.push(<option key={scheduleConfig.schedules[i].id} value={scheduleConfig.schedules[i].id}>{scheduleConfig.schedules[i].type}</option>);
-     }
-     
-    return(
-        <FormControl componentClass="select" onChange={this.props.changeServiceType}>
-          <option value="">Select</option>
-          {servOptions}
-        </FormControl>
-    );
-  }
-}
-
-
-
-
-class SecondaryTypeSelect extends Component {
-  
-  render() {
-    try {
-      // Get the schedule object with the ID that matches the service type choice
-      var id = this.props.serviceType;
-      var obj = _.find(scheduleConfig.schedules, { 'id': id});
-      console.log(obj);
-
-      var secondaryOptions = [];
-      secondaryOptions.push(<option key="default" value="">Select</option>);
-      for(var i=0; i<obj.secondaryType.length; i++) {
-        // Iterate through and add to array. Note that for this component desired results are both a key AND value
-        _.forEach(obj.secondaryType[i], function(key, opt) {
-          // Add a distinct key for each item depending on the chosen options
-          secondaryOptions.push(<option key={[id]+[opt]} value={opt}>{opt}</option>);
-        });
-       }
-      
-      // If the only content of the array is the default option AND the null key, don't display
-      if (secondaryOptions.length === 2) {
-        return(null);
-      } else {
-        // If the array has contents, it is valid to display
-        return(
-          <FormGroup>
-            <ControlLabel>Secondary Service Type*</ControlLabel>
-            <FormControl componentClass="select" onChange={this.props.changeSecondaryType}>
-              {secondaryOptions}
-            </FormControl>
-          </FormGroup>
-        );
-      }
-    }
-    catch(err) {
-      console.log(err);
-      return(null);
-    }
-  }
-}
-
-
-
-
-class CodeTypeInput extends Component {
-  render() {
-    try {
-      var codeTypes = [];
-      var id = this.props.serviceType;
-      var secType = this.props.secondaryType;
-      
-      /// Get the ServiceType/Schedule we start with
-      var obj = _.find(scheduleConfig.schedules, {'id': id});
-      //// Get the secondary type object based on the chosen type
-      obj = _.find(obj.secondaryType, secType);
-  
-      //// Get the codeType as a single key in an array 
-      obj = _.keys(obj[secType].codeType[0]);
-      
-      
-      codeTypes.push(<option key="default" value="">Select</option>);
-      _.forEach(obj, function(key, opt) {
-          // Make the key unique to prevent the choice from sticking on front-end
-          codeTypes.push(<option key={[id]+[secType]+[key]+[opt]} value={key}>{key}</option>);
-        });
-      
-      return(
-        <FormControl componentClass="select" onChange={this.props.changeCodeType}>
-          {codeTypes}
-        </FormControl>
-      );
-    }
-    catch(err) {
-      console.log(err);
-      return(
-        <FormControl componentClass="select" disabled>
-          <option value="">Select</option>
-        </FormControl>
-        );
-    }
-  }
-}
-
-
-
-
-class ServiceCodeLabel extends Component {
-  render() {
-    var codeType = this.props.codeType;
-    // Change label for code input depending on which type of code it is
-    if (codeType == "REVENUE+CPT") {
-      codeType = "CPT";
-    }
-    if (codeType == "REVENUE+HCPCS") {
-      codeType = "HCPCS";
-    }
-    if (codeType == "REVENUE") {
-      codeType = "Revenue";
-    }
-    if (codeType == "HCPCS J-Code") {
-      codeType = "";
-      console.log("testing jcode");
-    }
-    
-    return(
-      <ControlLabel>{codeType} Code*</ControlLabel>
-      );
-  }
-}
-
-
-
-
-class ServiceCodeInput extends Component {
-  render() {
-    var codeType = this.props.codeType;
-    if (codeType === null) {
-      return(
-        <FormControl type="text" disabled/>
-        );
-    } else if(codeType == "HCPCS J-Code") {
-      return(
-        <FormControl type="text" value="JCODE" readOnly/>
-        );
-    }
-    return(
-      <FormControl type="text" value={this.props.serviceCode} onChange={this.props.changeServiceCode}/>
-      );
-  }
-}
-
-
-
-
-class ModifierInput extends Component {
-  render() {
-    try {
-      var modArray = [];
-
-      var id = this.props.serviceType;
-      var secType = this.props.secondaryType;
-      var cdType = this.props.codeType;
-      
-      /// Get the ID of ServiceType/Schedule we start with
-      var obj = _.find(scheduleConfig.schedules, {'id': id});
-      //// Get the secondary type object based on the chosen type
-      obj = _.find(obj.secondaryType, secType);
-      /// Get the array of modifiers
-      obj = _.filter(obj[secType].codeType[0][cdType].modifiers);
-      
-      if (obj.length === 0) {
-        return(null);
-      } else {
-        modArray.push(<option key="default" value="">Select</option>);
-        console.log(obj);
-        _.forEach(obj, function(key, opt) {
-          // Make the key unique to prevent the choice from sticking on front-end
-          modArray.push(<option key={[id]+[secType]+[cdType]+[key]+[opt]} value={obj[opt]}>{obj[opt]}</option>);
-        });
-        
-        return(
-          <FormGroup>
-            <ControlLabel>Modifier</ControlLabel>
-            <FormControl componentClass="select" onChange={this.props.changeModifier}>
-              {modArray}
-            </FormControl>
-          </FormGroup>
-          );
-      }
-    }
-    catch(err) {
-      console.log(err);
-      return(null);
-    }
-  }
-}
-
-
-
-
-class ProviderTypeInput extends Component {
-  render() {
-    try {
-      var provTypes = [];
-      var id = this.props.serviceType;
-      var secType = this.props.secondaryType;
-      var cdType = this.props.codeType;
-      
-      /// Get the ID of ServiceType/Schedule we start with
-      var obj = _.find(scheduleConfig.schedules, {'id': id});
-      //// Get the secondary type object based on the chosen type
-      obj = _.find(obj.secondaryType, secType);
-      
-      /// Get the array of facility types 
-      obj = _.find(obj[secType].codeType[0][cdType]);
-      console.log(obj);
-      
-      provTypes.push(<option key="default" value="">Select</option>);
-      _.forEach(obj, function(key, opt) {
-        // Make the key unique to prevent the choice from sticking on front-end
-        provTypes.push(<option key={[id]+[secType]+[cdType]+[key]+[opt]} value={obj[opt]}>{obj[opt]}</option>);
-      });
-      
-      // If the only contents of the provTypes array is the default option we fed to it, don't render
-      if (provTypes.length === 1) {
-        return(
-          null
-          );
-      } else {
-        // If the array has contents, it is valid to display
-        return(
-          <Col md={5}>
-            <FormGroup>
-              <ControlLabel>Provider Type*</ControlLabel>
-                <FormControl componentClass="select" onChange={this.props.changeProviderType}>
-                  {provTypes}
-                </FormControl>
-            </FormGroup>
-          </Col>
-          );
-        }
-      }
-    catch(err) {
-      console.log(err);
-      return(
-          null
-        );
-    }
-  }
-}
-
-
-
-
-class SearchButton extends Component {
-  render() {
-    return (
-      <Button bsStyle="primary" type="button" onClick={this.props.handleSearch}  >
-                                                        Search</Button>
-      );
-  }
-}
-
-
-
 
 class Results extends Component {
   
@@ -1191,27 +927,6 @@ class RecentResults extends Component {
       );
   }
 }
-
-
-
-
-// To be used for displaying helpful terms and definitions. 
-class MfsKey extends Component {
-  render() {
-    return (
-        <div className="mfs-key" >
-          <h3>Terms and Information</h3>
-          <ListGroup>
-            <ListGroupItem header="Put the term here">Definition goes here.</ListGroupItem>
-            <ListGroupItem header="Put the term here">Definition goes here.</ListGroupItem>
-          </ListGroup>
-        </div>
-      );
-  }
-}
-
-
-
 
 class Footer extends Component {
   render() {
